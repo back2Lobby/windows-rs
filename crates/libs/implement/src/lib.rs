@@ -1,11 +1,35 @@
 use quote::{quote, ToTokens};
 
+/// Implements one or more COM interfaces.
+///
+/// # Example
+/// ```rust,ignore
+/// #[interface("094d70d6-5202-44b8-abb8-43860da5aca2")]
+/// unsafe trait IValue: IUnknown {
+///     fn GetValue(&self, value: *mut i32) -> HRESULT;
+/// }
+///
+/// #[implement(IValue)]
+/// struct Value(i32);
+///
+/// impl IValue_Impl for Value {
+///     unsafe fn GetValue(&self, value: *mut i32) -> HRESULT {
+///         *value = self.0;
+///         HRESULT(0)
+///     }
+/// }
+///
+/// fn main() {
+///     let object: IValue = Value(123).into();
+///     // Call interface methods...
+/// }
+/// ```
 #[proc_macro_attribute]
 pub fn implement(attributes: proc_macro::TokenStream, original_type: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let attributes = syn::parse_macro_input!(attributes as ImplementAttributes);
     let interfaces_len = proc_macro2::Literal::usize_unsuffixed(attributes.implement.len());
 
-    let identity_type = if let Some(first) = attributes.implement.get(0) {
+    let identity_type = if let Some(first) = attributes.implement.first() {
         first.to_ident()
     } else {
         quote! { ::windows::core::IInspectable }
