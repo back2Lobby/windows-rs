@@ -115,6 +115,15 @@ impl Reader {
         true
     }
 
+    pub fn find_item(&self, name: &str) -> Option<(&str, Vec<Item>)> {
+        for (namespace, items) in &self.items {
+            if let Some(items) = items.get(name) {
+                return Some((namespace, items.clone()));
+            }
+        }
+        None
+    }
+
     fn get_item(&self, namespace: &str, name: &str) -> impl Iterator<Item = Item> + '_ {
         if let Some(items) = self.items.get(namespace) {
             if let Some(items) = items.get(name) {

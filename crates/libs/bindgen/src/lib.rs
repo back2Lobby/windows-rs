@@ -124,6 +124,48 @@ where
     }
 }
 
+pub fn features(name: &str) -> Result<String> {
+    let input = read_input(&[])?;
+    let reader = metadata::Reader::filter(input, &[], &[]);
+
+    let Some((namespace, items)) = reader.find_item(name) else {
+        return Err(Error::new("name not found").with_path(name));
+    };
+
+    let mut cfg = rust::Cfg::default();
+
+    for item in items {
+        cfg.add_feature(namespace);
+
+        match item {
+            metadata::Item::Type(def) => {
+                cfg = cfg.union(&rust::type_def_cfg(def, &[]));
+            }
+            metadata::Item::Const(field) => {
+                cfg = cfg.union(&rust::field_cfg(field));
+            }
+            metadata::Item::Fn(method, _) => cfg = cfg.union(&rust::signature_cfg(method)),
+        }
+    }
+
+    let mut result = format!(r#"In your Rust source file:
+
+use windows/windows_sys::{}::{name};
+
+In your Cargo.toml file:
+
+features = [
+"#, namespace.replace('.', "::"));
+
+    for feature in rust::cfg_features(&cfg) {
+        use std::fmt::Write;
+        writeln!(result, "    \"{feature}\",").unwrap();
+    }
+
+    result.push_str("]\n");
+    Ok(result)
+}
+
 fn filter_input(input: &[&str], extensions: &[&str]) -> Result<Vec<String>> {
     fn try_push(path: &str, extensions: &[&str], results: &mut Vec<String>) -> Result<()> {
         // First canonicalize input so that the extension check below will match the case of the path.

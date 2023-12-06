@@ -18,8 +18,9 @@ mod winrt_methods;
 mod writer;
 use super::*;
 use crate::{Error, Result, Tree};
-use cfg::*;
+pub use cfg::*;
 use rayon::prelude::*;
+pub use writer::*;
 
 pub fn from_reader(reader: &'static metadata::Reader, mut config: std::collections::BTreeMap<&str, &str>, output: &str) -> Result<()> {
     let mut writer = Writer::new(reader, output);
@@ -135,7 +136,6 @@ use method_names::*;
 use std::collections::*;
 use std::fmt::Write;
 use try_format::*;
-use writer::*;
 
 fn namespace(writer: &Writer, tree: &Tree) -> String {
     let writer = &mut writer.clone();
