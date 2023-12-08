@@ -77,7 +77,7 @@ pub unsafe fn CheckSumMappedFile(baseaddress: *const ::core::ffi::c_void, filele
 }
 #[inline]
 pub unsafe fn CloseThreadWaitChainSession(wcthandle: *const ::core::ffi::c_void) {
-    ::windows_targets::link!("advapi32.dll" "system" fn CloseThreadWaitChainSession(wcthandle : *const ::core::ffi::c_void) -> ());
+    ::windows_targets::link!("advapi32.dll" "system" fn CloseThreadWaitChainSession(wcthandle : *const ::core::ffi::c_void));
     CloseThreadWaitChainSession(wcthandle)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -133,7 +133,7 @@ pub unsafe fn DebugActiveProcessStop(dwprocessid: u32) -> ::windows_core::Result
 }
 #[inline]
 pub unsafe fn DebugBreak() {
-    ::windows_targets::link!("kernel32.dll" "system" fn DebugBreak() -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn DebugBreak());
     DebugBreak()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -276,7 +276,7 @@ pub unsafe fn FatalAppExitA<P0>(uaction: u32, lpmessagetext: P0)
 where
     P0: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
-    ::windows_targets::link!("kernel32.dll" "system" fn FatalAppExitA(uaction : u32, lpmessagetext : ::windows_core::PCSTR) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn FatalAppExitA(uaction : u32, lpmessagetext : ::windows_core::PCSTR));
     FatalAppExitA(uaction, lpmessagetext.into_param().abi())
 }
 #[inline]
@@ -284,7 +284,7 @@ pub unsafe fn FatalAppExitW<P0>(uaction: u32, lpmessagetext: P0)
 where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
-    ::windows_targets::link!("kernel32.dll" "system" fn FatalAppExitW(uaction : u32, lpmessagetext : ::windows_core::PCWSTR) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn FatalAppExitW(uaction : u32, lpmessagetext : ::windows_core::PCWSTR));
     FatalAppExitW(uaction, lpmessagetext.into_param().abi())
 }
 #[inline]
@@ -535,7 +535,7 @@ where
     P0: ::windows_core::IntoParam<super::super::super::Foundation::HANDLE>,
 {
     ::windows_targets::link!("imagehlp.dll" "system" fn ImageEnumerateCertificates(filehandle : super::super::super::Foundation:: HANDLE, typefilter : u16, certificatecount : *mut u32, indices : *mut u32, indexcount : u32) -> super::super::super::Foundation:: BOOL);
-    ImageEnumerateCertificates(filehandle.into_param().abi(), typefilter, certificatecount, ::core::mem::transmute(indices.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), indices.as_deref().map_or(0, |slice| slice.len() as _)).ok()
+    ImageEnumerateCertificates(filehandle.into_param().abi(), typefilter, certificatecount, ::core::mem::transmute(indices.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), indices.as_deref().map_or(0, |slice| slice.len().try_into().unwrap())).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Security_WinTrust\"`"]
 #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security_WinTrust"))]
@@ -758,7 +758,7 @@ pub unsafe fn OutputDebugStringA<P0>(lpoutputstring: P0)
 where
     P0: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
-    ::windows_targets::link!("kernel32.dll" "system" fn OutputDebugStringA(lpoutputstring : ::windows_core::PCSTR) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn OutputDebugStringA(lpoutputstring : ::windows_core::PCSTR));
     OutputDebugStringA(lpoutputstring.into_param().abi())
 }
 #[inline]
@@ -766,19 +766,19 @@ pub unsafe fn OutputDebugStringW<P0>(lpoutputstring: P0)
 where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
-    ::windows_targets::link!("kernel32.dll" "system" fn OutputDebugStringW(lpoutputstring : ::windows_core::PCWSTR) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn OutputDebugStringW(lpoutputstring : ::windows_core::PCWSTR));
     OutputDebugStringW(lpoutputstring.into_param().abi())
 }
 #[inline]
 pub unsafe fn RaiseException(dwexceptioncode: u32, dwexceptionflags: u32, lparguments: ::core::option::Option<&[usize]>) {
-    ::windows_targets::link!("kernel32.dll" "system" fn RaiseException(dwexceptioncode : u32, dwexceptionflags : u32, nnumberofarguments : u32, lparguments : *const usize) -> ());
-    RaiseException(dwexceptioncode, dwexceptionflags, lparguments.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(lparguments.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())))
+    ::windows_targets::link!("kernel32.dll" "system" fn RaiseException(dwexceptioncode : u32, dwexceptionflags : u32, nnumberofarguments : u32, lparguments : *const usize));
+    RaiseException(dwexceptioncode, dwexceptionflags, lparguments.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(lparguments.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())))
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_System_Kernel\"`"]
 #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Kernel"))]
 #[inline]
 pub unsafe fn RaiseFailFastException(pexceptionrecord: ::core::option::Option<*const EXCEPTION_RECORD>, pcontextrecord: ::core::option::Option<*const CONTEXT>, dwflags: u32) {
-    ::windows_targets::link!("kernel32.dll" "system" fn RaiseFailFastException(pexceptionrecord : *const EXCEPTION_RECORD, pcontextrecord : *const CONTEXT, dwflags : u32) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn RaiseFailFastException(pexceptionrecord : *const EXCEPTION_RECORD, pcontextrecord : *const CONTEXT, dwflags : u32));
     RaiseFailFastException(::core::mem::transmute(pexceptionrecord.unwrap_or(::std::ptr::null())), ::core::mem::transmute(pcontextrecord.unwrap_or(::std::ptr::null())), dwflags)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -798,7 +798,7 @@ pub unsafe fn RangeMapCreate() -> *mut ::core::ffi::c_void {
 }
 #[inline]
 pub unsafe fn RangeMapFree(rmaphandle: ::core::option::Option<*const ::core::ffi::c_void>) {
-    ::windows_targets::link!("dbghelp.dll" "system" fn RangeMapFree(rmaphandle : *const ::core::ffi::c_void) -> ());
+    ::windows_targets::link!("dbghelp.dll" "system" fn RangeMapFree(rmaphandle : *const ::core::ffi::c_void));
     RangeMapFree(::core::mem::transmute(rmaphandle.unwrap_or(::std::ptr::null())))
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -862,7 +862,7 @@ where
 }
 #[inline]
 pub unsafe fn RegisterWaitChainCOMCallback(callstatecallback: PCOGETCALLSTATE, activationstatecallback: PCOGETACTIVATIONSTATE) {
-    ::windows_targets::link!("advapi32.dll" "system" fn RegisterWaitChainCOMCallback(callstatecallback : PCOGETCALLSTATE, activationstatecallback : PCOGETACTIVATIONSTATE) -> ());
+    ::windows_targets::link!("advapi32.dll" "system" fn RegisterWaitChainCOMCallback(callstatecallback : PCOGETCALLSTATE, activationstatecallback : PCOGETACTIVATIONSTATE));
     RegisterWaitChainCOMCallback(callstatecallback, activationstatecallback)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -872,7 +872,7 @@ pub unsafe fn RemoveInvalidModuleList<P0>(hprocess: P0)
 where
     P0: ::windows_core::IntoParam<super::super::super::Foundation::HANDLE>,
 {
-    ::windows_targets::link!("dbghelp.dll" "system" fn RemoveInvalidModuleList(hprocess : super::super::super::Foundation:: HANDLE) -> ());
+    ::windows_targets::link!("dbghelp.dll" "system" fn RemoveInvalidModuleList(hprocess : super::super::super::Foundation:: HANDLE));
     RemoveInvalidModuleList(hprocess.into_param().abi())
 }
 #[inline]
@@ -902,7 +902,7 @@ where
 #[inline]
 pub unsafe fn RtlAddFunctionTable(functiontable: &[IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY], baseaddress: usize) -> super::super::super::Foundation::BOOLEAN {
     ::windows_targets::link!("kernel32.dll" "system" fn RtlAddFunctionTable(functiontable : *const IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY, entrycount : u32, baseaddress : usize) -> super::super::super::Foundation:: BOOLEAN);
-    RtlAddFunctionTable(::core::mem::transmute(functiontable.as_ptr()), functiontable.len() as _, baseaddress)
+    RtlAddFunctionTable(::core::mem::transmute(functiontable.as_ptr()), functiontable.len().try_into().unwrap(), baseaddress)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(target_arch = "x86_64")]
@@ -910,25 +910,25 @@ pub unsafe fn RtlAddFunctionTable(functiontable: &[IMAGE_ARM64_RUNTIME_FUNCTION_
 #[inline]
 pub unsafe fn RtlAddFunctionTable(functiontable: &[IMAGE_RUNTIME_FUNCTION_ENTRY], baseaddress: u64) -> super::super::super::Foundation::BOOLEAN {
     ::windows_targets::link!("kernel32.dll" "system" fn RtlAddFunctionTable(functiontable : *const IMAGE_RUNTIME_FUNCTION_ENTRY, entrycount : u32, baseaddress : u64) -> super::super::super::Foundation:: BOOLEAN);
-    RtlAddFunctionTable(::core::mem::transmute(functiontable.as_ptr()), functiontable.len() as _, baseaddress)
+    RtlAddFunctionTable(::core::mem::transmute(functiontable.as_ptr()), functiontable.len().try_into().unwrap(), baseaddress)
 }
 #[cfg(target_arch = "aarch64")]
 #[inline]
 pub unsafe fn RtlAddGrowableFunctionTable(dynamictable: *mut *mut ::core::ffi::c_void, functiontable: &[IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY], entrycount: u32, rangebase: usize, rangeend: usize) -> u32 {
     ::windows_targets::link!("ntdll.dll" "system" fn RtlAddGrowableFunctionTable(dynamictable : *mut *mut ::core::ffi::c_void, functiontable : *const IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY, entrycount : u32, maximumentrycount : u32, rangebase : usize, rangeend : usize) -> u32);
-    RtlAddGrowableFunctionTable(dynamictable, ::core::mem::transmute(functiontable.as_ptr()), entrycount, functiontable.len() as _, rangebase, rangeend)
+    RtlAddGrowableFunctionTable(dynamictable, ::core::mem::transmute(functiontable.as_ptr()), entrycount, functiontable.len().try_into().unwrap(), rangebase, rangeend)
 }
 #[cfg(target_arch = "x86_64")]
 #[inline]
 pub unsafe fn RtlAddGrowableFunctionTable(dynamictable: *mut *mut ::core::ffi::c_void, functiontable: &[IMAGE_RUNTIME_FUNCTION_ENTRY], entrycount: u32, rangebase: usize, rangeend: usize) -> u32 {
     ::windows_targets::link!("ntdll.dll" "system" fn RtlAddGrowableFunctionTable(dynamictable : *mut *mut ::core::ffi::c_void, functiontable : *const IMAGE_RUNTIME_FUNCTION_ENTRY, entrycount : u32, maximumentrycount : u32, rangebase : usize, rangeend : usize) -> u32);
-    RtlAddGrowableFunctionTable(dynamictable, ::core::mem::transmute(functiontable.as_ptr()), entrycount, functiontable.len() as _, rangebase, rangeend)
+    RtlAddGrowableFunctionTable(dynamictable, ::core::mem::transmute(functiontable.as_ptr()), entrycount, functiontable.len().try_into().unwrap(), rangebase, rangeend)
 }
 #[doc = "Required features: `\"Win32_System_Kernel\"`"]
 #[cfg(feature = "Win32_System_Kernel")]
 #[inline]
 pub unsafe fn RtlCaptureContext(contextrecord: *mut CONTEXT) {
-    ::windows_targets::link!("kernel32.dll" "system" fn RtlCaptureContext(contextrecord : *mut CONTEXT) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn RtlCaptureContext(contextrecord : *mut CONTEXT));
     RtlCaptureContext(contextrecord)
 }
 #[doc = "Required features: `\"Win32_System_Kernel\"`"]
@@ -936,13 +936,13 @@ pub unsafe fn RtlCaptureContext(contextrecord: *mut CONTEXT) {
 #[cfg(feature = "Win32_System_Kernel")]
 #[inline]
 pub unsafe fn RtlCaptureContext2(contextrecord: *mut CONTEXT) {
-    ::windows_targets::link!("kernel32.dll" "system" fn RtlCaptureContext2(contextrecord : *mut CONTEXT) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn RtlCaptureContext2(contextrecord : *mut CONTEXT));
     RtlCaptureContext2(contextrecord)
 }
 #[inline]
 pub unsafe fn RtlCaptureStackBackTrace(framestoskip: u32, backtrace: &mut [*mut ::core::ffi::c_void], backtracehash: ::core::option::Option<*mut u32>) -> u16 {
     ::windows_targets::link!("kernel32.dll" "system" fn RtlCaptureStackBackTrace(framestoskip : u32, framestocapture : u32, backtrace : *mut *mut ::core::ffi::c_void, backtracehash : *mut u32) -> u16);
-    RtlCaptureStackBackTrace(framestoskip, backtrace.len() as _, ::core::mem::transmute(backtrace.as_ptr()), ::core::mem::transmute(backtracehash.unwrap_or(::std::ptr::null_mut())))
+    RtlCaptureStackBackTrace(framestoskip, backtrace.len().try_into().unwrap(), ::core::mem::transmute(backtrace.as_ptr()), ::core::mem::transmute(backtracehash.unwrap_or(::std::ptr::null_mut())))
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(target_arch = "aarch64")]
@@ -963,13 +963,13 @@ pub unsafe fn RtlDeleteFunctionTable(functiontable: *const IMAGE_RUNTIME_FUNCTIO
 #[cfg(any(target_arch = "aarch64", target_arch = "x86_64"))]
 #[inline]
 pub unsafe fn RtlDeleteGrowableFunctionTable(dynamictable: *const ::core::ffi::c_void) {
-    ::windows_targets::link!("ntdll.dll" "system" fn RtlDeleteGrowableFunctionTable(dynamictable : *const ::core::ffi::c_void) -> ());
+    ::windows_targets::link!("ntdll.dll" "system" fn RtlDeleteGrowableFunctionTable(dynamictable : *const ::core::ffi::c_void));
     RtlDeleteGrowableFunctionTable(dynamictable)
 }
 #[cfg(any(target_arch = "aarch64", target_arch = "x86_64"))]
 #[inline]
 pub unsafe fn RtlGrowFunctionTable(dynamictable: *mut ::core::ffi::c_void, newentrycount: u32) {
-    ::windows_targets::link!("ntdll.dll" "system" fn RtlGrowFunctionTable(dynamictable : *mut ::core::ffi::c_void, newentrycount : u32) -> ());
+    ::windows_targets::link!("ntdll.dll" "system" fn RtlGrowFunctionTable(dynamictable : *mut ::core::ffi::c_void, newentrycount : u32));
     RtlGrowFunctionTable(dynamictable, newentrycount)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1015,21 +1015,21 @@ pub unsafe fn RtlPcToFileHeader(pcvalue: *const ::core::ffi::c_void, baseofimage
 #[cfg(feature = "Win32_Foundation")]
 #[inline]
 pub unsafe fn RtlRaiseException(exceptionrecord: *const EXCEPTION_RECORD) {
-    ::windows_targets::link!("kernel32.dll" "system" fn RtlRaiseException(exceptionrecord : *const EXCEPTION_RECORD) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn RtlRaiseException(exceptionrecord : *const EXCEPTION_RECORD));
     RtlRaiseException(exceptionrecord)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_System_Kernel\"`"]
 #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Kernel"))]
 #[inline]
 pub unsafe fn RtlRestoreContext(contextrecord: *const CONTEXT, exceptionrecord: ::core::option::Option<*const EXCEPTION_RECORD>) {
-    ::windows_targets::link!("kernel32.dll" "cdecl" fn RtlRestoreContext(contextrecord : *const CONTEXT, exceptionrecord : *const EXCEPTION_RECORD) -> ());
+    ::windows_targets::link!("kernel32.dll" "cdecl" fn RtlRestoreContext(contextrecord : *const CONTEXT, exceptionrecord : *const EXCEPTION_RECORD));
     RtlRestoreContext(contextrecord, ::core::mem::transmute(exceptionrecord.unwrap_or(::std::ptr::null())))
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
 #[inline]
 pub unsafe fn RtlUnwind(targetframe: ::core::option::Option<*const ::core::ffi::c_void>, targetip: ::core::option::Option<*const ::core::ffi::c_void>, exceptionrecord: ::core::option::Option<*const EXCEPTION_RECORD>, returnvalue: *const ::core::ffi::c_void) {
-    ::windows_targets::link!("kernel32.dll" "system" fn RtlUnwind(targetframe : *const ::core::ffi::c_void, targetip : *const ::core::ffi::c_void, exceptionrecord : *const EXCEPTION_RECORD, returnvalue : *const ::core::ffi::c_void) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn RtlUnwind(targetframe : *const ::core::ffi::c_void, targetip : *const ::core::ffi::c_void, exceptionrecord : *const EXCEPTION_RECORD, returnvalue : *const ::core::ffi::c_void));
     RtlUnwind(::core::mem::transmute(targetframe.unwrap_or(::std::ptr::null())), ::core::mem::transmute(targetip.unwrap_or(::std::ptr::null())), ::core::mem::transmute(exceptionrecord.unwrap_or(::std::ptr::null())), returnvalue)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_System_Kernel\"`"]
@@ -1037,7 +1037,7 @@ pub unsafe fn RtlUnwind(targetframe: ::core::option::Option<*const ::core::ffi::
 #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Kernel"))]
 #[inline]
 pub unsafe fn RtlUnwindEx(targetframe: ::core::option::Option<*const ::core::ffi::c_void>, targetip: ::core::option::Option<*const ::core::ffi::c_void>, exceptionrecord: ::core::option::Option<*const EXCEPTION_RECORD>, returnvalue: *const ::core::ffi::c_void, contextrecord: *const CONTEXT, historytable: ::core::option::Option<*const UNWIND_HISTORY_TABLE>) {
-    ::windows_targets::link!("kernel32.dll" "system" fn RtlUnwindEx(targetframe : *const ::core::ffi::c_void, targetip : *const ::core::ffi::c_void, exceptionrecord : *const EXCEPTION_RECORD, returnvalue : *const ::core::ffi::c_void, contextrecord : *const CONTEXT, historytable : *const UNWIND_HISTORY_TABLE) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn RtlUnwindEx(targetframe : *const ::core::ffi::c_void, targetip : *const ::core::ffi::c_void, exceptionrecord : *const EXCEPTION_RECORD, returnvalue : *const ::core::ffi::c_void, contextrecord : *const CONTEXT, historytable : *const UNWIND_HISTORY_TABLE));
     RtlUnwindEx(::core::mem::transmute(targetframe.unwrap_or(::std::ptr::null())), ::core::mem::transmute(targetip.unwrap_or(::std::ptr::null())), ::core::mem::transmute(exceptionrecord.unwrap_or(::std::ptr::null())), returnvalue, contextrecord, ::core::mem::transmute(historytable.unwrap_or(::std::ptr::null())))
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_System_Kernel\"`"]
@@ -1080,7 +1080,7 @@ where
 }
 #[inline]
 pub unsafe fn SetCheckUserInterruptShared(lpstartaddress: LPCALL_BACK_USER_INTERRUPT_ROUTINE) {
-    ::windows_targets::link!("dbghelp.dll" "system" fn SetCheckUserInterruptShared(lpstartaddress : LPCALL_BACK_USER_INTERRUPT_ROUTINE) -> ());
+    ::windows_targets::link!("dbghelp.dll" "system" fn SetCheckUserInterruptShared(lpstartaddress : LPCALL_BACK_USER_INTERRUPT_ROUTINE));
     SetCheckUserInterruptShared(lpstartaddress)
 }
 #[inline]
@@ -1106,7 +1106,7 @@ pub unsafe fn SetImageConfigInformation(loadedimage: *mut LOADED_IMAGE, imagecon
 }
 #[inline]
 pub unsafe fn SetSymLoadError(error: u32) {
-    ::windows_targets::link!("dbghelp.dll" "system" fn SetSymLoadError(error : u32) -> ());
+    ::windows_targets::link!("dbghelp.dll" "system" fn SetSymLoadError(error : u32));
     SetSymLoadError(error)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_System_Kernel\"`"]
@@ -1195,7 +1195,7 @@ where
     P1: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymAddSourceStream(hprocess : super::super::super::Foundation:: HANDLE, base : u64, streamfile : ::windows_core::PCSTR, buffer : *const u8, size : usize) -> super::super::super::Foundation:: BOOL);
-    SymAddSourceStream(hprocess.into_param().abi(), base, streamfile.into_param().abi(), ::core::mem::transmute(buffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), buffer.as_deref().map_or(0, |slice| slice.len() as _)).ok()
+    SymAddSourceStream(hprocess.into_param().abi(), base, streamfile.into_param().abi(), ::core::mem::transmute(buffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), buffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap())).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -1206,7 +1206,7 @@ where
     P1: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymAddSourceStreamA(hprocess : super::super::super::Foundation:: HANDLE, base : u64, streamfile : ::windows_core::PCSTR, buffer : *const u8, size : usize) -> super::super::super::Foundation:: BOOL);
-    SymAddSourceStreamA(hprocess.into_param().abi(), base, streamfile.into_param().abi(), ::core::mem::transmute(buffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), buffer.as_deref().map_or(0, |slice| slice.len() as _))
+    SymAddSourceStreamA(hprocess.into_param().abi(), base, streamfile.into_param().abi(), ::core::mem::transmute(buffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), buffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -1217,7 +1217,7 @@ where
     P1: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymAddSourceStreamW(hprocess : super::super::super::Foundation:: HANDLE, base : u64, filespec : ::windows_core::PCWSTR, buffer : *const u8, size : usize) -> super::super::super::Foundation:: BOOL);
-    SymAddSourceStreamW(hprocess.into_param().abi(), base, filespec.into_param().abi(), ::core::mem::transmute(buffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), buffer.as_deref().map_or(0, |slice| slice.len() as _)).ok()
+    SymAddSourceStreamW(hprocess.into_param().abi(), base, filespec.into_param().abi(), ::core::mem::transmute(buffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), buffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap())).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -1791,17 +1791,17 @@ where
     P2: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetFileLineOffsets64(hprocess : super::super::super::Foundation:: HANDLE, modulename : ::windows_core::PCSTR, filename : ::windows_core::PCSTR, buffer : *mut u64, bufferlines : u32) -> u32);
-    SymGetFileLineOffsets64(hprocess.into_param().abi(), modulename.into_param().abi(), filename.into_param().abi(), ::core::mem::transmute(buffer.as_ptr()), buffer.len() as _)
+    SymGetFileLineOffsets64(hprocess.into_param().abi(), modulename.into_param().abi(), filename.into_param().abi(), ::core::mem::transmute(buffer.as_ptr()), buffer.len().try_into().unwrap())
 }
 #[inline]
 pub unsafe fn SymGetHomeDirectory(r#type: IMAGEHLP_HD_TYPE, dir: &mut [u8]) -> ::windows_core::PSTR {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetHomeDirectory(r#type : u32, dir : ::windows_core::PSTR, size : usize) -> ::windows_core::PSTR);
-    SymGetHomeDirectory(r#type.0 as _, ::core::mem::transmute(dir.as_ptr()), dir.len() as _)
+    SymGetHomeDirectory(r#type.0 as _, ::core::mem::transmute(dir.as_ptr()), dir.len().try_into().unwrap())
 }
 #[inline]
 pub unsafe fn SymGetHomeDirectoryW(r#type: IMAGEHLP_HD_TYPE, dir: &mut [u16]) -> ::windows_core::PWSTR {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetHomeDirectoryW(r#type : u32, dir : ::windows_core::PWSTR, size : usize) -> ::windows_core::PWSTR);
-    SymGetHomeDirectoryW(r#type.0 as _, ::core::mem::transmute(dir.as_ptr()), dir.len() as _)
+    SymGetHomeDirectoryW(r#type.0 as _, ::core::mem::transmute(dir.as_ptr()), dir.len().try_into().unwrap())
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(target_arch = "x86")]
@@ -2059,7 +2059,7 @@ where
     P0: ::windows_core::IntoParam<super::super::super::Foundation::HANDLE>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSearchPath(hprocess : super::super::super::Foundation:: HANDLE, searchpatha : ::windows_core::PSTR, searchpathlength : u32) -> super::super::super::Foundation:: BOOL);
-    SymGetSearchPath(hprocess.into_param().abi(), ::core::mem::transmute(searchpatha.as_ptr()), searchpatha.len() as _).ok()
+    SymGetSearchPath(hprocess.into_param().abi(), ::core::mem::transmute(searchpatha.as_ptr()), searchpatha.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2069,7 +2069,7 @@ where
     P0: ::windows_core::IntoParam<super::super::super::Foundation::HANDLE>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSearchPathW(hprocess : super::super::super::Foundation:: HANDLE, searchpatha : ::windows_core::PWSTR, searchpathlength : u32) -> super::super::super::Foundation:: BOOL);
-    SymGetSearchPathW(hprocess.into_param().abi(), ::core::mem::transmute(searchpatha.as_ptr()), searchpatha.len() as _).ok()
+    SymGetSearchPathW(hprocess.into_param().abi(), ::core::mem::transmute(searchpatha.as_ptr()), searchpatha.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2081,7 +2081,7 @@ where
     P2: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSourceFile(hprocess : super::super::super::Foundation:: HANDLE, base : u64, params : ::windows_core::PCSTR, filespec : ::windows_core::PCSTR, filepath : ::windows_core::PSTR, size : u32) -> super::super::super::Foundation:: BOOL);
-    SymGetSourceFile(hprocess.into_param().abi(), base, params.into_param().abi(), filespec.into_param().abi(), ::core::mem::transmute(filepath.as_ptr()), filepath.len() as _).ok()
+    SymGetSourceFile(hprocess.into_param().abi(), base, params.into_param().abi(), filespec.into_param().abi(), ::core::mem::transmute(filepath.as_ptr()), filepath.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2092,7 +2092,7 @@ where
     P1: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSourceFileChecksum(hprocess : super::super::super::Foundation:: HANDLE, base : u64, filespec : ::windows_core::PCSTR, pchecksumtype : *mut u32, pchecksum : *mut u8, checksumsize : u32, pactualbyteswritten : *mut u32) -> super::super::super::Foundation:: BOOL);
-    SymGetSourceFileChecksum(hprocess.into_param().abi(), base, filespec.into_param().abi(), pchecksumtype, ::core::mem::transmute(pchecksum.as_ptr()), pchecksum.len() as _, pactualbyteswritten).ok()
+    SymGetSourceFileChecksum(hprocess.into_param().abi(), base, filespec.into_param().abi(), pchecksumtype, ::core::mem::transmute(pchecksum.as_ptr()), pchecksum.len().try_into().unwrap(), pactualbyteswritten).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2103,7 +2103,7 @@ where
     P1: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSourceFileChecksumW(hprocess : super::super::super::Foundation:: HANDLE, base : u64, filespec : ::windows_core::PCWSTR, pchecksumtype : *mut u32, pchecksum : *mut u8, checksumsize : u32, pactualbyteswritten : *mut u32) -> super::super::super::Foundation:: BOOL);
-    SymGetSourceFileChecksumW(hprocess.into_param().abi(), base, filespec.into_param().abi(), pchecksumtype, ::core::mem::transmute(pchecksum.as_ptr()), pchecksum.len() as _, pactualbyteswritten).ok()
+    SymGetSourceFileChecksumW(hprocess.into_param().abi(), base, filespec.into_param().abi(), pchecksumtype, ::core::mem::transmute(pchecksum.as_ptr()), pchecksum.len().try_into().unwrap(), pactualbyteswritten).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2114,7 +2114,7 @@ where
     P1: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSourceFileFromToken(hprocess : super::super::super::Foundation:: HANDLE, token : *const ::core::ffi::c_void, params : ::windows_core::PCSTR, filepath : ::windows_core::PSTR, size : u32) -> super::super::super::Foundation:: BOOL);
-    SymGetSourceFileFromToken(hprocess.into_param().abi(), token, params.into_param().abi(), ::core::mem::transmute(filepath.as_ptr()), filepath.len() as _).ok()
+    SymGetSourceFileFromToken(hprocess.into_param().abi(), token, params.into_param().abi(), ::core::mem::transmute(filepath.as_ptr()), filepath.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2126,7 +2126,7 @@ where
     P2: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSourceFileFromTokenByTokenName(hprocess : super::super::super::Foundation:: HANDLE, token : *const ::core::ffi::c_void, tokenname : ::windows_core::PCSTR, params : ::windows_core::PCSTR, filepath : ::windows_core::PSTR, size : u32) -> super::super::super::Foundation:: BOOL);
-    SymGetSourceFileFromTokenByTokenName(hprocess.into_param().abi(), token, tokenname.into_param().abi(), params.into_param().abi(), ::core::mem::transmute(filepath.as_ptr()), filepath.len() as _)
+    SymGetSourceFileFromTokenByTokenName(hprocess.into_param().abi(), token, tokenname.into_param().abi(), params.into_param().abi(), ::core::mem::transmute(filepath.as_ptr()), filepath.len().try_into().unwrap())
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2138,7 +2138,7 @@ where
     P2: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSourceFileFromTokenByTokenNameW(hprocess : super::super::super::Foundation:: HANDLE, token : *const ::core::ffi::c_void, tokenname : ::windows_core::PCWSTR, params : ::windows_core::PCWSTR, filepath : ::windows_core::PWSTR, size : u32) -> super::super::super::Foundation:: BOOL);
-    SymGetSourceFileFromTokenByTokenNameW(hprocess.into_param().abi(), token, tokenname.into_param().abi(), params.into_param().abi(), ::core::mem::transmute(filepath.as_ptr()), filepath.len() as _)
+    SymGetSourceFileFromTokenByTokenNameW(hprocess.into_param().abi(), token, tokenname.into_param().abi(), params.into_param().abi(), ::core::mem::transmute(filepath.as_ptr()), filepath.len().try_into().unwrap())
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2149,7 +2149,7 @@ where
     P1: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSourceFileFromTokenW(hprocess : super::super::super::Foundation:: HANDLE, token : *const ::core::ffi::c_void, params : ::windows_core::PCWSTR, filepath : ::windows_core::PWSTR, size : u32) -> super::super::super::Foundation:: BOOL);
-    SymGetSourceFileFromTokenW(hprocess.into_param().abi(), token, params.into_param().abi(), ::core::mem::transmute(filepath.as_ptr()), filepath.len() as _).ok()
+    SymGetSourceFileFromTokenW(hprocess.into_param().abi(), token, params.into_param().abi(), ::core::mem::transmute(filepath.as_ptr()), filepath.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2209,7 +2209,7 @@ where
     P2: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSourceFileW(hprocess : super::super::super::Foundation:: HANDLE, base : u64, params : ::windows_core::PCWSTR, filespec : ::windows_core::PCWSTR, filepath : ::windows_core::PWSTR, size : u32) -> super::super::super::Foundation:: BOOL);
-    SymGetSourceFileW(hprocess.into_param().abi(), base, params.into_param().abi(), filespec.into_param().abi(), ::core::mem::transmute(filepath.as_ptr()), filepath.len() as _).ok()
+    SymGetSourceFileW(hprocess.into_param().abi(), base, params.into_param().abi(), filespec.into_param().abi(), ::core::mem::transmute(filepath.as_ptr()), filepath.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2221,7 +2221,7 @@ where
     P2: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSourceVarFromToken(hprocess : super::super::super::Foundation:: HANDLE, token : *const ::core::ffi::c_void, params : ::windows_core::PCSTR, varname : ::windows_core::PCSTR, value : ::windows_core::PSTR, size : u32) -> super::super::super::Foundation:: BOOL);
-    SymGetSourceVarFromToken(hprocess.into_param().abi(), token, params.into_param().abi(), varname.into_param().abi(), ::core::mem::transmute(value.as_ptr()), value.len() as _).ok()
+    SymGetSourceVarFromToken(hprocess.into_param().abi(), token, params.into_param().abi(), varname.into_param().abi(), ::core::mem::transmute(value.as_ptr()), value.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2233,7 +2233,7 @@ where
     P2: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSourceVarFromTokenW(hprocess : super::super::super::Foundation:: HANDLE, token : *const ::core::ffi::c_void, params : ::windows_core::PCWSTR, varname : ::windows_core::PCWSTR, value : ::windows_core::PWSTR, size : u32) -> super::super::super::Foundation:: BOOL);
-    SymGetSourceVarFromTokenW(hprocess.into_param().abi(), token, params.into_param().abi(), varname.into_param().abi(), ::core::mem::transmute(value.as_ptr()), value.len() as _).ok()
+    SymGetSourceVarFromTokenW(hprocess.into_param().abi(), token, params.into_param().abi(), varname.into_param().abi(), ::core::mem::transmute(value.as_ptr()), value.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(target_arch = "x86")]
@@ -2331,7 +2331,7 @@ where
     P2: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSymbolFile(hprocess : super::super::super::Foundation:: HANDLE, sympath : ::windows_core::PCSTR, imagefile : ::windows_core::PCSTR, r#type : u32, symbolfile : ::windows_core::PSTR, csymbolfile : usize, dbgfile : ::windows_core::PSTR, cdbgfile : usize) -> super::super::super::Foundation:: BOOL);
-    SymGetSymbolFile(hprocess.into_param().abi(), sympath.into_param().abi(), imagefile.into_param().abi(), r#type.0 as _, ::core::mem::transmute(symbolfile.as_ptr()), symbolfile.len() as _, ::core::mem::transmute(dbgfile.as_ptr()), dbgfile.len() as _).ok()
+    SymGetSymbolFile(hprocess.into_param().abi(), sympath.into_param().abi(), imagefile.into_param().abi(), r#type.0 as _, ::core::mem::transmute(symbolfile.as_ptr()), symbolfile.len().try_into().unwrap(), ::core::mem::transmute(dbgfile.as_ptr()), dbgfile.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2343,7 +2343,7 @@ where
     P2: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymGetSymbolFileW(hprocess : super::super::super::Foundation:: HANDLE, sympath : ::windows_core::PCWSTR, imagefile : ::windows_core::PCWSTR, r#type : u32, symbolfile : ::windows_core::PWSTR, csymbolfile : usize, dbgfile : ::windows_core::PWSTR, cdbgfile : usize) -> super::super::super::Foundation:: BOOL);
-    SymGetSymbolFileW(hprocess.into_param().abi(), sympath.into_param().abi(), imagefile.into_param().abi(), r#type.0 as _, ::core::mem::transmute(symbolfile.as_ptr()), symbolfile.len() as _, ::core::mem::transmute(dbgfile.as_ptr()), dbgfile.len() as _).ok()
+    SymGetSymbolFileW(hprocess.into_param().abi(), sympath.into_param().abi(), imagefile.into_param().abi(), r#type.0 as _, ::core::mem::transmute(symbolfile.as_ptr()), symbolfile.len().try_into().unwrap(), ::core::mem::transmute(dbgfile.as_ptr()), dbgfile.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2833,7 +2833,7 @@ where
     P2: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymSrvGetFileIndexString(hprocess : super::super::super::Foundation:: HANDLE, srvpath : ::windows_core::PCSTR, file : ::windows_core::PCSTR, index : ::windows_core::PSTR, size : usize, flags : u32) -> super::super::super::Foundation:: BOOL);
-    SymSrvGetFileIndexString(hprocess.into_param().abi(), srvpath.into_param().abi(), file.into_param().abi(), ::core::mem::transmute(index.as_ptr()), index.len() as _, flags).ok()
+    SymSrvGetFileIndexString(hprocess.into_param().abi(), srvpath.into_param().abi(), file.into_param().abi(), ::core::mem::transmute(index.as_ptr()), index.len().try_into().unwrap(), flags).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2845,7 +2845,7 @@ where
     P2: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymSrvGetFileIndexStringW(hprocess : super::super::super::Foundation:: HANDLE, srvpath : ::windows_core::PCWSTR, file : ::windows_core::PCWSTR, index : ::windows_core::PWSTR, size : usize, flags : u32) -> super::super::super::Foundation:: BOOL);
-    SymSrvGetFileIndexStringW(hprocess.into_param().abi(), srvpath.into_param().abi(), file.into_param().abi(), ::core::mem::transmute(index.as_ptr()), index.len() as _, flags).ok()
+    SymSrvGetFileIndexStringW(hprocess.into_param().abi(), srvpath.into_param().abi(), file.into_param().abi(), ::core::mem::transmute(index.as_ptr()), index.len().try_into().unwrap(), flags).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -2971,14 +2971,14 @@ where
 #[inline]
 pub unsafe fn SymUnDName(sym: *const IMAGEHLP_SYMBOL, undecname: &mut [u8]) -> ::windows_core::Result<()> {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymUnDName(sym : *const IMAGEHLP_SYMBOL, undecname : ::windows_core::PSTR, undecnamelength : u32) -> super::super::super::Foundation:: BOOL);
-    SymUnDName(sym, ::core::mem::transmute(undecname.as_ptr()), undecname.len() as _).ok()
+    SymUnDName(sym, ::core::mem::transmute(undecname.as_ptr()), undecname.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
 #[inline]
 pub unsafe fn SymUnDName64(sym: *const IMAGEHLP_SYMBOL64, undecname: &mut [u8]) -> ::windows_core::Result<()> {
     ::windows_targets::link!("dbghelp.dll" "system" fn SymUnDName64(sym : *const IMAGEHLP_SYMBOL64, undecname : ::windows_core::PSTR, undecnamelength : u32) -> super::super::super::Foundation:: BOOL);
-    SymUnDName64(sym, ::core::mem::transmute(undecname.as_ptr()), undecname.len() as _).ok()
+    SymUnDName64(sym, ::core::mem::transmute(undecname.as_ptr()), undecname.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(target_arch = "x86")]
@@ -3003,7 +3003,7 @@ where
 }
 #[inline]
 pub unsafe fn TerminateProcessOnMemoryExhaustion(failedallocationsize: usize) {
-    ::windows_targets::link!("api-ms-win-core-errorhandling-l1-1-3.dll" "system" fn TerminateProcessOnMemoryExhaustion(failedallocationsize : usize) -> ());
+    ::windows_targets::link!("api-ms-win-core-errorhandling-l1-1-3.dll" "system" fn TerminateProcessOnMemoryExhaustion(failedallocationsize : usize));
     TerminateProcessOnMemoryExhaustion(failedallocationsize)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -3022,7 +3022,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn UnDecorateSymbolName(name : ::windows_core::PCSTR, outputstring : ::windows_core::PSTR, maxstringlength : u32, flags : u32) -> u32);
-    UnDecorateSymbolName(name.into_param().abi(), ::core::mem::transmute(outputstring.as_ptr()), outputstring.len() as _, flags)
+    UnDecorateSymbolName(name.into_param().abi(), ::core::mem::transmute(outputstring.as_ptr()), outputstring.len().try_into().unwrap(), flags)
 }
 #[inline]
 pub unsafe fn UnDecorateSymbolNameW<P0>(name: P0, outputstring: &mut [u16], flags: u32) -> u32
@@ -3030,7 +3030,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("dbghelp.dll" "system" fn UnDecorateSymbolNameW(name : ::windows_core::PCWSTR, outputstring : ::windows_core::PWSTR, maxstringlength : u32, flags : u32) -> u32);
-    UnDecorateSymbolNameW(name.into_param().abi(), ::core::mem::transmute(outputstring.as_ptr()), outputstring.len() as _, flags)
+    UnDecorateSymbolNameW(name.into_param().abi(), ::core::mem::transmute(outputstring.as_ptr()), outputstring.len().try_into().unwrap(), flags)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_System_Kernel\"`, `\"Win32_System_SystemInformation\"`"]
 #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Kernel", feature = "Win32_System_SystemInformation"))]
@@ -3335,7 +3335,7 @@ impl IEnumDebugExtendedPropertyInfo {
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_System_Com_StructuredStorage\"`, `\"Win32_System_Ole\"`, `\"Win32_System_Variant\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_Com_StructuredStorage", feature = "Win32_System_Ole", feature = "Win32_System_Variant"))]
     pub unsafe fn Next(&self, rgextendedpropertyinfo: &mut [ExtendedDebugPropertyInfo], pceltfetched: *mut u32) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).Next)(::windows_core::Interface::as_raw(self), rgextendedpropertyinfo.len() as _, ::core::mem::transmute(rgextendedpropertyinfo.as_ptr()), pceltfetched).ok()
+        (::windows_core::Interface::vtable(self).Next)(::windows_core::Interface::as_raw(self), rgextendedpropertyinfo.len().try_into().unwrap(), ::core::mem::transmute(rgextendedpropertyinfo.as_ptr()), pceltfetched).ok()
     }
     pub unsafe fn Skip(&self, celt: u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).Skip)(::windows_core::Interface::as_raw(self), celt).ok()
@@ -3377,7 +3377,7 @@ pub struct IEnumDebugExtendedPropertyInfo_Vtbl {
 pub struct IEnumDebugPropertyInfo(::windows_core::IUnknown);
 impl IEnumDebugPropertyInfo {
     pub unsafe fn Next(&self, pi: &mut [DebugPropertyInfo], pceltsfetched: *mut u32) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).Next)(::windows_core::Interface::as_raw(self), pi.len() as _, ::core::mem::transmute(pi.as_ptr()), pceltsfetched).ok()
+        (::windows_core::Interface::vtable(self).Next)(::windows_core::Interface::as_raw(self), pi.len().try_into().unwrap(), ::core::mem::transmute(pi.as_ptr()), pceltsfetched).ok()
     }
     pub unsafe fn Skip(&self, celt: u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).Skip)(::windows_core::Interface::as_raw(self), celt).ok()
@@ -3805,7 +3805,10 @@ pub const EVENT_SRCSPEW: u32 = 100u32;
 pub const EVENT_SRCSPEW_END: u32 = 199u32;
 pub const EVENT_SRCSPEW_START: u32 = 100u32;
 pub const EVENT_TRACING_FATAL_ERROR: BUGCHECK_ERROR = BUGCHECK_ERROR(285u32);
+pub const EXCEPTION_CONTINUE_EXECUTION: i32 = -1i32;
+pub const EXCEPTION_CONTINUE_SEARCH: i32 = 0i32;
 pub const EXCEPTION_DEBUG_EVENT: DEBUG_EVENT_CODE = DEBUG_EVENT_CODE(1u32);
+pub const EXCEPTION_EXECUTE_HANDLER: i32 = 1i32;
 pub const EXCEPTION_ON_INVALID_STACK: BUGCHECK_ERROR = BUGCHECK_ERROR(426u32);
 pub const EXCEPTION_SCOPE_INVALID: BUGCHECK_ERROR = BUGCHECK_ERROR(333u32);
 pub const EXFAT_FILE_SYSTEM: BUGCHECK_ERROR = BUGCHECK_ERROR(300u32);
@@ -17152,7 +17155,7 @@ pub type PTRANSLATE_ADDRESS_ROUTINE64 = ::core::option::Option<unsafe extern "sy
 pub type PVECTORED_EXCEPTION_HANDLER = ::core::option::Option<unsafe extern "system" fn(exceptioninfo: *mut EXCEPTION_POINTERS) -> i32>;
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
-pub type PWAITCHAINCALLBACK = ::core::option::Option<unsafe extern "system" fn(wcthandle: *mut ::core::ffi::c_void, context: usize, callbackstatus: u32, nodecount: *mut u32, nodeinfoarray: *mut WAITCHAIN_NODE_INFO, iscycle: *mut super::super::super::Foundation::BOOL) -> ()>;
+pub type PWAITCHAINCALLBACK = ::core::option::Option<unsafe extern "system" fn(wcthandle: *mut ::core::ffi::c_void, context: usize, callbackstatus: u32, nodecount: *mut u32, nodeinfoarray: *mut WAITCHAIN_NODE_INFO, iscycle: *mut super::super::super::Foundation::BOOL)>;
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
 pub type SYMADDSOURCESTREAM = ::core::option::Option<unsafe extern "system" fn(param0: super::super::super::Foundation::HANDLE, param1: u64, param2: ::windows_core::PCSTR, param3: *mut u8, param4: usize) -> super::super::super::Foundation::BOOL>;
@@ -17165,6 +17168,6 @@ pub type WHEA_ERROR_SOURCE_CORRECT_DEVICE_DRIVER = ::core::option::Option<unsafe
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
 pub type WHEA_ERROR_SOURCE_INITIALIZE_DEVICE_DRIVER = ::core::option::Option<unsafe extern "system" fn(context: *mut ::core::ffi::c_void, errorsourceid: u32) -> super::super::super::Foundation::NTSTATUS>;
-pub type WHEA_ERROR_SOURCE_UNINITIALIZE_DEVICE_DRIVER = ::core::option::Option<unsafe extern "system" fn(context: *mut ::core::ffi::c_void) -> ()>;
+pub type WHEA_ERROR_SOURCE_UNINITIALIZE_DEVICE_DRIVER = ::core::option::Option<unsafe extern "system" fn(context: *mut ::core::ffi::c_void)>;
 #[cfg(feature = "implement")]
 ::core::include!("impl.rs");

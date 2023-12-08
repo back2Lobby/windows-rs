@@ -2,7 +2,7 @@
 #[cfg(feature = "Win32_Foundation")]
 #[inline]
 pub unsafe fn FreeInterfaceContextTable(interfacecontexttable: *const NET_INTERFACE_CONTEXT_TABLE) {
-    ::windows_targets::link!("ondemandconnroutehelper.dll" "system" fn FreeInterfaceContextTable(interfacecontexttable : *const NET_INTERFACE_CONTEXT_TABLE) -> ());
+    ::windows_targets::link!("ondemandconnroutehelper.dll" "system" fn FreeInterfaceContextTable(interfacecontexttable : *const NET_INTERFACE_CONTEXT_TABLE));
     FreeInterfaceContextTable(interfacecontexttable)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -15,7 +15,7 @@ where
 {
     ::windows_targets::link!("ondemandconnroutehelper.dll" "system" fn GetInterfaceContextTableForHostName(hostname : ::windows_core::PCWSTR, proxyname : ::windows_core::PCWSTR, flags : u32, connectionprofilefilterrawdata : *const u8, connectionprofilefilterrawdatasize : u32, interfacecontexttable : *mut *mut NET_INTERFACE_CONTEXT_TABLE) -> ::windows_core::HRESULT);
     let mut result__ = ::std::mem::zeroed();
-    GetInterfaceContextTableForHostName(hostname.into_param().abi(), proxyname.into_param().abi(), flags, ::core::mem::transmute(connectionprofilefilterrawdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), connectionprofilefilterrawdata.as_deref().map_or(0, |slice| slice.len() as _), &mut result__).from_abi(result__)
+    GetInterfaceContextTableForHostName(hostname.into_param().abi(), proxyname.into_param().abi(), flags, ::core::mem::transmute(connectionprofilefilterrawdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), connectionprofilefilterrawdata.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), &mut result__).from_abi(result__)
 }
 #[inline]
 pub unsafe fn OnDemandGetRoutingHint<P0>(destinationhostname: P0) -> ::windows_core::Result<u32>
@@ -46,7 +46,7 @@ where
 }
 #[inline]
 pub unsafe fn WcmFreeMemory(pmemory: *mut ::core::ffi::c_void) {
-    ::windows_targets::link!("wcmapi.dll" "system" fn WcmFreeMemory(pmemory : *mut ::core::ffi::c_void) -> ());
+    ::windows_targets::link!("wcmapi.dll" "system" fn WcmFreeMemory(pmemory : *mut ::core::ffi::c_void));
     WcmFreeMemory(pmemory)
 }
 #[inline]
@@ -78,7 +78,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("wcmapi.dll" "system" fn WcmSetProperty(pinterface : *const ::windows_core::GUID, strprofilename : ::windows_core::PCWSTR, property : WCM_PROPERTY, preserved : *const ::core::ffi::c_void, dwdatasize : u32, pbdata : *const u8) -> u32);
-    WcmSetProperty(::core::mem::transmute(pinterface.unwrap_or(::std::ptr::null())), strprofilename.into_param().abi(), property, ::core::mem::transmute(preserved.unwrap_or(::std::ptr::null())), pbdata.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(pbdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())))
+    WcmSetProperty(::core::mem::transmute(pinterface.unwrap_or(::std::ptr::null())), strprofilename.into_param().abi(), property, ::core::mem::transmute(preserved.unwrap_or(::std::ptr::null())), pbdata.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(pbdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())))
 }
 pub const NET_INTERFACE_FLAG_CONNECT_IF_NEEDED: u32 = 1u32;
 pub const NET_INTERFACE_FLAG_NONE: u32 = 0u32;
@@ -557,4 +557,4 @@ impl ::core::default::Default for WCM_USAGE_DATA {
         unsafe { ::core::mem::zeroed() }
     }
 }
-pub type ONDEMAND_NOTIFICATION_CALLBACK = ::core::option::Option<unsafe extern "system" fn(param0: *const ::core::ffi::c_void) -> ()>;
+pub type ONDEMAND_NOTIFICATION_CALLBACK = ::core::option::Option<unsafe extern "system" fn(param0: *const ::core::ffi::c_void)>;

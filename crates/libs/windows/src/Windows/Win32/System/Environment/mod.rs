@@ -74,7 +74,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("kernel32.dll" "system" fn ExpandEnvironmentStringsA(lpsrc : ::windows_core::PCSTR, lpdst : ::windows_core::PSTR, nsize : u32) -> u32);
-    ExpandEnvironmentStringsA(lpsrc.into_param().abi(), ::core::mem::transmute(lpdst.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpdst.as_deref().map_or(0, |slice| slice.len() as _))
+    ExpandEnvironmentStringsA(lpsrc.into_param().abi(), ::core::mem::transmute(lpdst.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpdst.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -85,7 +85,7 @@ where
     P1: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("userenv.dll" "system" fn ExpandEnvironmentStringsForUserA(htoken : super::super::Foundation:: HANDLE, lpsrc : ::windows_core::PCSTR, lpdest : ::windows_core::PSTR, dwsize : u32) -> super::super::Foundation:: BOOL);
-    ExpandEnvironmentStringsForUserA(htoken.into_param().abi(), lpsrc.into_param().abi(), ::core::mem::transmute(lpdest.as_ptr()), lpdest.len() as _).ok()
+    ExpandEnvironmentStringsForUserA(htoken.into_param().abi(), lpsrc.into_param().abi(), ::core::mem::transmute(lpdest.as_ptr()), lpdest.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -96,7 +96,7 @@ where
     P1: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("userenv.dll" "system" fn ExpandEnvironmentStringsForUserW(htoken : super::super::Foundation:: HANDLE, lpsrc : ::windows_core::PCWSTR, lpdest : ::windows_core::PWSTR, dwsize : u32) -> super::super::Foundation:: BOOL);
-    ExpandEnvironmentStringsForUserW(htoken.into_param().abi(), lpsrc.into_param().abi(), ::core::mem::transmute(lpdest.as_ptr()), lpdest.len() as _).ok()
+    ExpandEnvironmentStringsForUserW(htoken.into_param().abi(), lpsrc.into_param().abi(), ::core::mem::transmute(lpdest.as_ptr()), lpdest.len().try_into().unwrap()).ok()
 }
 #[inline]
 pub unsafe fn ExpandEnvironmentStringsW<P0>(lpsrc: P0, lpdst: ::core::option::Option<&mut [u16]>) -> u32
@@ -104,7 +104,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("kernel32.dll" "system" fn ExpandEnvironmentStringsW(lpsrc : ::windows_core::PCWSTR, lpdst : ::windows_core::PWSTR, nsize : u32) -> u32);
-    ExpandEnvironmentStringsW(lpsrc.into_param().abi(), ::core::mem::transmute(lpdst.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpdst.as_deref().map_or(0, |slice| slice.len() as _))
+    ExpandEnvironmentStringsW(lpsrc.into_param().abi(), ::core::mem::transmute(lpdst.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpdst.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -139,12 +139,12 @@ pub unsafe fn GetCommandLineW() -> ::windows_core::PCWSTR {
 #[inline]
 pub unsafe fn GetCurrentDirectoryA(lpbuffer: ::core::option::Option<&mut [u8]>) -> u32 {
     ::windows_targets::link!("kernel32.dll" "system" fn GetCurrentDirectoryA(nbufferlength : u32, lpbuffer : ::windows_core::PSTR) -> u32);
-    GetCurrentDirectoryA(lpbuffer.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())))
+    GetCurrentDirectoryA(lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())))
 }
 #[inline]
 pub unsafe fn GetCurrentDirectoryW(lpbuffer: ::core::option::Option<&mut [u16]>) -> u32 {
     ::windows_targets::link!("kernel32.dll" "system" fn GetCurrentDirectoryW(nbufferlength : u32, lpbuffer : ::windows_core::PWSTR) -> u32);
-    GetCurrentDirectoryW(lpbuffer.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())))
+    GetCurrentDirectoryW(lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())))
 }
 #[inline]
 pub unsafe fn GetEnvironmentStrings() -> ::windows_core::PSTR {
@@ -162,7 +162,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
     ::windows_targets::link!("kernel32.dll" "system" fn GetEnvironmentVariableA(lpname : ::windows_core::PCSTR, lpbuffer : ::windows_core::PSTR, nsize : u32) -> u32);
-    GetEnvironmentVariableA(lpname.into_param().abi(), ::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len() as _))
+    GetEnvironmentVariableA(lpname.into_param().abi(), ::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn GetEnvironmentVariableW<P0>(lpname: P0, lpbuffer: ::core::option::Option<&mut [u16]>) -> u32
@@ -170,7 +170,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("kernel32.dll" "system" fn GetEnvironmentVariableW(lpname : ::windows_core::PCWSTR, lpbuffer : ::windows_core::PWSTR, nsize : u32) -> u32);
-    GetEnvironmentVariableW(lpname.into_param().abi(), ::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len() as _))
+    GetEnvironmentVariableW(lpname.into_param().abi(), ::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -669,7 +669,7 @@ pub type VBS_BASIC_ENCLAVE_BASIC_CALL_INTERRUPT_THREAD = ::core::option::Option<
 #[cfg(target_arch = "x86")]
 pub type VBS_BASIC_ENCLAVE_BASIC_CALL_INTERRUPT_THREAD = ::core::option::Option<unsafe extern "system" fn(threaddescriptor: *const VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR32) -> i32>;
 pub type VBS_BASIC_ENCLAVE_BASIC_CALL_PROTECT_PAGES = ::core::option::Option<unsafe extern "system" fn(enclaveaddress: *const ::core::ffi::c_void, numberofytes: usize, pageprotection: u32) -> i32>;
-pub type VBS_BASIC_ENCLAVE_BASIC_CALL_RETURN_FROM_ENCLAVE = ::core::option::Option<unsafe extern "system" fn(returnvalue: usize) -> ()>;
+pub type VBS_BASIC_ENCLAVE_BASIC_CALL_RETURN_FROM_ENCLAVE = ::core::option::Option<unsafe extern "system" fn(returnvalue: usize)>;
 #[cfg(target_arch = "x86_64")]
 pub type VBS_BASIC_ENCLAVE_BASIC_CALL_RETURN_FROM_EXCEPTION = ::core::option::Option<unsafe extern "system" fn(exceptionrecord: *const VBS_BASIC_ENCLAVE_EXCEPTION_AMD64) -> i32>;
 #[cfg(any(target_arch = "aarch64", target_arch = "x86"))]

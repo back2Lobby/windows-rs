@@ -83,12 +83,12 @@ where
 }
 #[inline]
 pub unsafe fn SetLastError(dwerrcode: WIN32_ERROR) {
-    ::windows_targets::link!("kernel32.dll" "system" fn SetLastError(dwerrcode : WIN32_ERROR) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn SetLastError(dwerrcode : WIN32_ERROR));
     SetLastError(dwerrcode)
 }
 #[inline]
 pub unsafe fn SetLastErrorEx(dwerrcode: WIN32_ERROR, dwtype: u32) {
-    ::windows_targets::link!("user32.dll" "system" fn SetLastErrorEx(dwerrcode : WIN32_ERROR, dwtype : u32) -> ());
+    ::windows_targets::link!("user32.dll" "system" fn SetLastErrorEx(dwerrcode : WIN32_ERROR, dwtype : u32));
     SetLastErrorEx(dwerrcode, dwtype)
 }
 #[inline]
@@ -110,19 +110,19 @@ where
 #[inline]
 pub unsafe fn SysAllocStringByteLen(psz: ::core::option::Option<&[u8]>) -> ::windows_core::BSTR {
     ::windows_targets::link!("oleaut32.dll" "system" fn SysAllocStringByteLen(psz : ::windows_core::PCSTR, len : u32) -> ::windows_core::BSTR);
-    SysAllocStringByteLen(::core::mem::transmute(psz.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), psz.as_deref().map_or(0, |slice| slice.len() as _))
+    SysAllocStringByteLen(::core::mem::transmute(psz.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), psz.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn SysAllocStringLen(strin: ::core::option::Option<&[u16]>) -> ::windows_core::BSTR {
     ::windows_targets::link!("oleaut32.dll" "system" fn SysAllocStringLen(strin : ::windows_core::PCWSTR, ui : u32) -> ::windows_core::BSTR);
-    SysAllocStringLen(::core::mem::transmute(strin.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), strin.as_deref().map_or(0, |slice| slice.len() as _))
+    SysAllocStringLen(::core::mem::transmute(strin.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), strin.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn SysFreeString<P0>(bstrstring: P0)
 where
     P0: ::windows_core::IntoParam<::windows_core::BSTR>,
 {
-    ::windows_targets::link!("oleaut32.dll" "system" fn SysFreeString(bstrstring : ::std::mem::MaybeUninit <::windows_core::BSTR >) -> ());
+    ::windows_targets::link!("oleaut32.dll" "system" fn SysFreeString(bstrstring : ::std::mem::MaybeUninit <::windows_core::BSTR >));
     SysFreeString(bstrstring.into_param().abi())
 }
 #[inline]
@@ -146,7 +146,7 @@ pub unsafe fn SysReleaseString<P0>(bstrstring: P0)
 where
     P0: ::windows_core::IntoParam<::windows_core::BSTR>,
 {
-    ::windows_targets::link!("oleaut32.dll" "system" fn SysReleaseString(bstrstring : ::std::mem::MaybeUninit <::windows_core::BSTR >) -> ());
+    ::windows_targets::link!("oleaut32.dll" "system" fn SysReleaseString(bstrstring : ::std::mem::MaybeUninit <::windows_core::BSTR >));
     SysReleaseString(bstrstring.into_param().abi())
 }
 #[inline]
@@ -6175,15 +6175,33 @@ pub const RPC_NT_WRONG_KIND_OF_BINDING: NTSTATUS = NTSTATUS(-1073610750i32);
 pub const RPC_NT_WRONG_PIPE_VERSION: NTSTATUS = NTSTATUS(-1073545122i32);
 pub const RPC_NT_WRONG_STUB_VERSION: NTSTATUS = NTSTATUS(-1073545125i32);
 pub const RPC_NT_ZERO_DIVIDE: NTSTATUS = NTSTATUS(-1073610684i32);
+pub const RPC_S_ACCESS_DENIED: i32 = -1073741790i32;
+pub const RPC_S_ASYNC_CALL_PENDING: i32 = 259i32;
+pub const RPC_S_BUFFER_TOO_SMALL: i32 = -1073741789i32;
 pub const RPC_S_CALLPENDING: ::windows_core::HRESULT = ::windows_core::HRESULT(-2147417835i32);
+pub const RPC_S_INVALID_ARG: i32 = -1073741811i32;
+pub const RPC_S_INVALID_LEVEL: i32 = -1073741811i32;
+pub const RPC_S_INVALID_SECURITY_DESC: i32 = -1073741703i32;
+pub const RPC_S_NOT_ENOUGH_QUOTA: i32 = -1073741756i32;
+pub const RPC_S_OUT_OF_MEMORY: i32 = -1073741801i32;
+pub const RPC_S_OUT_OF_THREADS: i32 = -1073741801i32;
+pub const RPC_S_SERVER_OUT_OF_MEMORY: i32 = -1073741307i32;
+pub const RPC_S_UNKNOWN_PRINCIPAL: i32 = -1073741709i32;
 pub const RPC_S_WAITONTIMER: ::windows_core::HRESULT = ::windows_core::HRESULT(-2147417834i32);
 pub const RPC_X_BAD_STUB_DATA: i32 = 1783i32;
 pub const RPC_X_BYTE_COUNT_TOO_SMALL: i32 = 1782i32;
 pub const RPC_X_ENUM_VALUE_OUT_OF_RANGE: i32 = 1781i32;
+pub const RPC_X_ENUM_VALUE_TOO_LARGE: i32 = 1781i32;
+pub const RPC_X_INVALID_BOUND: i32 = -1073610717i32;
+pub const RPC_X_INVALID_BUFFER: i32 = -1073741306i32;
 pub const RPC_X_INVALID_ES_ACTION: i32 = 1827i32;
 pub const RPC_X_INVALID_PIPE_OBJECT: i32 = 1830i32;
+pub const RPC_X_INVALID_PIPE_OPERATION: i32 = 1831i32;
+pub const RPC_X_INVALID_TAG: i32 = -1073610718i32;
+pub const RPC_X_NO_MEMORY: i32 = -1073741801i32;
 pub const RPC_X_NO_MORE_ENTRIES: i32 = 1772i32;
 pub const RPC_X_NULL_REF_POINTER: i32 = 1780i32;
+pub const RPC_X_PIPE_APP_MEMORY: i32 = -1073741801i32;
 pub const RPC_X_PIPE_CLOSED: i32 = 1916i32;
 pub const RPC_X_PIPE_DISCIPLINE_ERROR: i32 = 1917i32;
 pub const RPC_X_PIPE_EMPTY: i32 = 1918i32;
@@ -6191,6 +6209,7 @@ pub const RPC_X_SS_CANNOT_GET_CALL_HANDLE: i32 = 1779i32;
 pub const RPC_X_SS_CHAR_TRANS_OPEN_FAIL: i32 = 1773i32;
 pub const RPC_X_SS_CHAR_TRANS_SHORT_FILE: i32 = 1774i32;
 pub const RPC_X_SS_CONTEXT_DAMAGED: i32 = 1777i32;
+pub const RPC_X_SS_CONTEXT_MISMATCH: i32 = -1073545211i32;
 pub const RPC_X_SS_HANDLES_MISMATCH: i32 = 1778i32;
 pub const RPC_X_SS_IN_NULL_CONTEXT: i32 = 1775i32;
 pub const RPC_X_WRONG_ES_VERSION: i32 = 1828i32;
@@ -11559,7 +11578,7 @@ impl ::windows_core::TypeKind for WPARAM {
 }
 pub type FARPROC = ::core::option::Option<unsafe extern "system" fn() -> isize>;
 pub type NEARPROC = ::core::option::Option<unsafe extern "system" fn() -> isize>;
-pub type PAPCFUNC = ::core::option::Option<unsafe extern "system" fn(parameter: usize) -> ()>;
+pub type PAPCFUNC = ::core::option::Option<unsafe extern "system" fn(parameter: usize)>;
 pub type PROC = ::core::option::Option<unsafe extern "system" fn() -> isize>;
 impl BOOL {
     #[inline]

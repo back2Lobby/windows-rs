@@ -11,7 +11,7 @@ where
 #[inline]
 pub unsafe fn EnumSystemFirmwareTables(firmwaretableprovidersignature: FIRMWARE_TABLE_PROVIDER, pfirmwaretableenumbuffer: ::core::option::Option<&mut [u8]>) -> u32 {
     ::windows_targets::link!("kernel32.dll" "system" fn EnumSystemFirmwareTables(firmwaretableprovidersignature : FIRMWARE_TABLE_PROVIDER, pfirmwaretableenumbuffer : *mut u8, buffersize : u32) -> u32);
-    EnumSystemFirmwareTables(firmwaretableprovidersignature, ::core::mem::transmute(pfirmwaretableenumbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pfirmwaretableenumbuffer.as_deref().map_or(0, |slice| slice.len() as _))
+    EnumSystemFirmwareTables(firmwaretableprovidersignature, ::core::mem::transmute(pfirmwaretableenumbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pfirmwaretableenumbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -44,7 +44,7 @@ pub unsafe fn GetIntegratedDisplaySize() -> ::windows_core::Result<f64> {
 #[cfg(feature = "Win32_Foundation")]
 #[inline]
 pub unsafe fn GetLocalTime() -> super::super::Foundation::SYSTEMTIME {
-    ::windows_targets::link!("kernel32.dll" "system" fn GetLocalTime(lpsystemtime : *mut super::super::Foundation:: SYSTEMTIME) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn GetLocalTime(lpsystemtime : *mut super::super::Foundation:: SYSTEMTIME));
     let mut result__ = ::std::mem::zeroed();
     GetLocalTime(&mut result__);
     ::std::mem::transmute(result__)
@@ -65,7 +65,7 @@ pub unsafe fn GetLogicalProcessorInformationEx(relationshiptype: LOGICAL_PROCESS
 }
 #[inline]
 pub unsafe fn GetNativeSystemInfo(lpsysteminfo: *mut SYSTEM_INFO) {
-    ::windows_targets::link!("kernel32.dll" "system" fn GetNativeSystemInfo(lpsysteminfo : *mut SYSTEM_INFO) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn GetNativeSystemInfo(lpsysteminfo : *mut SYSTEM_INFO));
     GetNativeSystemInfo(lpsysteminfo)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -121,21 +121,21 @@ pub unsafe fn GetSystemDEPPolicy() -> DEP_SYSTEM_POLICY_TYPE {
 #[inline]
 pub unsafe fn GetSystemDirectoryA(lpbuffer: ::core::option::Option<&mut [u8]>) -> u32 {
     ::windows_targets::link!("kernel32.dll" "system" fn GetSystemDirectoryA(lpbuffer : ::windows_core::PSTR, usize : u32) -> u32);
-    GetSystemDirectoryA(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len() as _))
+    GetSystemDirectoryA(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn GetSystemDirectoryW(lpbuffer: ::core::option::Option<&mut [u16]>) -> u32 {
     ::windows_targets::link!("kernel32.dll" "system" fn GetSystemDirectoryW(lpbuffer : ::windows_core::PWSTR, usize : u32) -> u32);
-    GetSystemDirectoryW(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len() as _))
+    GetSystemDirectoryW(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn GetSystemFirmwareTable(firmwaretableprovidersignature: FIRMWARE_TABLE_PROVIDER, firmwaretableid: u32, pfirmwaretablebuffer: ::core::option::Option<&mut [u8]>) -> u32 {
     ::windows_targets::link!("kernel32.dll" "system" fn GetSystemFirmwareTable(firmwaretableprovidersignature : FIRMWARE_TABLE_PROVIDER, firmwaretableid : u32, pfirmwaretablebuffer : *mut u8, buffersize : u32) -> u32);
-    GetSystemFirmwareTable(firmwaretableprovidersignature, firmwaretableid, ::core::mem::transmute(pfirmwaretablebuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pfirmwaretablebuffer.as_deref().map_or(0, |slice| slice.len() as _))
+    GetSystemFirmwareTable(firmwaretableprovidersignature, firmwaretableid, ::core::mem::transmute(pfirmwaretablebuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pfirmwaretablebuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn GetSystemInfo(lpsysteminfo: *mut SYSTEM_INFO) {
-    ::windows_targets::link!("kernel32.dll" "system" fn GetSystemInfo(lpsysteminfo : *mut SYSTEM_INFO) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn GetSystemInfo(lpsysteminfo : *mut SYSTEM_INFO));
     GetSystemInfo(lpsysteminfo)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -149,7 +149,7 @@ pub unsafe fn GetSystemLeapSecondInformation(enabled: *mut super::super::Foundat
 #[cfg(feature = "Win32_Foundation")]
 #[inline]
 pub unsafe fn GetSystemTime() -> super::super::Foundation::SYSTEMTIME {
-    ::windows_targets::link!("kernel32.dll" "system" fn GetSystemTime(lpsystemtime : *mut super::super::Foundation:: SYSTEMTIME) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn GetSystemTime(lpsystemtime : *mut super::super::Foundation:: SYSTEMTIME));
     let mut result__ = ::std::mem::zeroed();
     GetSystemTime(&mut result__);
     ::std::mem::transmute(result__)
@@ -172,7 +172,7 @@ pub unsafe fn GetSystemTimeAdjustmentPrecise(lptimeadjustment: *mut u64, lptimei
 #[cfg(feature = "Win32_Foundation")]
 #[inline]
 pub unsafe fn GetSystemTimeAsFileTime() -> super::super::Foundation::FILETIME {
-    ::windows_targets::link!("kernel32.dll" "system" fn GetSystemTimeAsFileTime(lpsystemtimeasfiletime : *mut super::super::Foundation:: FILETIME) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn GetSystemTimeAsFileTime(lpsystemtimeasfiletime : *mut super::super::Foundation:: FILETIME));
     let mut result__ = ::std::mem::zeroed();
     GetSystemTimeAsFileTime(&mut result__);
     ::std::mem::transmute(result__)
@@ -181,7 +181,7 @@ pub unsafe fn GetSystemTimeAsFileTime() -> super::super::Foundation::FILETIME {
 #[cfg(feature = "Win32_Foundation")]
 #[inline]
 pub unsafe fn GetSystemTimePreciseAsFileTime() -> super::super::Foundation::FILETIME {
-    ::windows_targets::link!("kernel32.dll" "system" fn GetSystemTimePreciseAsFileTime(lpsystemtimeasfiletime : *mut super::super::Foundation:: FILETIME) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn GetSystemTimePreciseAsFileTime(lpsystemtimeasfiletime : *mut super::super::Foundation:: FILETIME));
     let mut result__ = ::std::mem::zeroed();
     GetSystemTimePreciseAsFileTime(&mut result__);
     ::std::mem::transmute(result__)
@@ -189,32 +189,32 @@ pub unsafe fn GetSystemTimePreciseAsFileTime() -> super::super::Foundation::FILE
 #[inline]
 pub unsafe fn GetSystemWindowsDirectoryA(lpbuffer: ::core::option::Option<&mut [u8]>) -> u32 {
     ::windows_targets::link!("kernel32.dll" "system" fn GetSystemWindowsDirectoryA(lpbuffer : ::windows_core::PSTR, usize : u32) -> u32);
-    GetSystemWindowsDirectoryA(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len() as _))
+    GetSystemWindowsDirectoryA(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn GetSystemWindowsDirectoryW(lpbuffer: ::core::option::Option<&mut [u16]>) -> u32 {
     ::windows_targets::link!("kernel32.dll" "system" fn GetSystemWindowsDirectoryW(lpbuffer : ::windows_core::PWSTR, usize : u32) -> u32);
-    GetSystemWindowsDirectoryW(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len() as _))
+    GetSystemWindowsDirectoryW(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn GetSystemWow64Directory2A(lpbuffer: ::core::option::Option<&mut [u8]>, imagefilemachinetype: IMAGE_FILE_MACHINE) -> u32 {
     ::windows_targets::link!("api-ms-win-core-wow64-l1-1-1.dll" "system" fn GetSystemWow64Directory2A(lpbuffer : ::windows_core::PSTR, usize : u32, imagefilemachinetype : IMAGE_FILE_MACHINE) -> u32);
-    GetSystemWow64Directory2A(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len() as _), imagefilemachinetype)
+    GetSystemWow64Directory2A(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), imagefilemachinetype)
 }
 #[inline]
 pub unsafe fn GetSystemWow64Directory2W(lpbuffer: ::core::option::Option<&mut [u16]>, imagefilemachinetype: IMAGE_FILE_MACHINE) -> u32 {
     ::windows_targets::link!("api-ms-win-core-wow64-l1-1-1.dll" "system" fn GetSystemWow64Directory2W(lpbuffer : ::windows_core::PWSTR, usize : u32, imagefilemachinetype : IMAGE_FILE_MACHINE) -> u32);
-    GetSystemWow64Directory2W(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len() as _), imagefilemachinetype)
+    GetSystemWow64Directory2W(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), imagefilemachinetype)
 }
 #[inline]
 pub unsafe fn GetSystemWow64DirectoryA(lpbuffer: ::core::option::Option<&mut [u8]>) -> u32 {
     ::windows_targets::link!("kernel32.dll" "system" fn GetSystemWow64DirectoryA(lpbuffer : ::windows_core::PSTR, usize : u32) -> u32);
-    GetSystemWow64DirectoryA(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len() as _))
+    GetSystemWow64DirectoryA(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn GetSystemWow64DirectoryW(lpbuffer: ::core::option::Option<&mut [u16]>) -> u32 {
     ::windows_targets::link!("kernel32.dll" "system" fn GetSystemWow64DirectoryW(lpbuffer : ::windows_core::PWSTR, usize : u32) -> u32);
-    GetSystemWow64DirectoryW(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len() as _))
+    GetSystemWow64DirectoryW(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn GetTickCount() -> u32 {
@@ -248,16 +248,16 @@ pub unsafe fn GetVersionExW(lpversioninformation: *mut OSVERSIONINFOW) -> ::wind
 #[inline]
 pub unsafe fn GetWindowsDirectoryA(lpbuffer: ::core::option::Option<&mut [u8]>) -> u32 {
     ::windows_targets::link!("kernel32.dll" "system" fn GetWindowsDirectoryA(lpbuffer : ::windows_core::PSTR, usize : u32) -> u32);
-    GetWindowsDirectoryA(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len() as _))
+    GetWindowsDirectoryA(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn GetWindowsDirectoryW(lpbuffer: ::core::option::Option<&mut [u16]>) -> u32 {
     ::windows_targets::link!("kernel32.dll" "system" fn GetWindowsDirectoryW(lpbuffer : ::windows_core::PWSTR, usize : u32) -> u32);
-    GetWindowsDirectoryW(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len() as _))
+    GetWindowsDirectoryW(::core::mem::transmute(lpbuffer.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), lpbuffer.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn GlobalMemoryStatus(lpbuffer: *mut MEMORYSTATUS) {
-    ::windows_targets::link!("kernel32.dll" "system" fn GlobalMemoryStatus(lpbuffer : *mut MEMORYSTATUS) -> ());
+    ::windows_targets::link!("kernel32.dll" "system" fn GlobalMemoryStatus(lpbuffer : *mut MEMORYSTATUS));
     GlobalMemoryStatus(lpbuffer)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -289,7 +289,7 @@ pub unsafe fn RtlConvertDeviceFamilyInfoToString(puldevicefamilybuffersize: *mut
 }
 #[inline]
 pub unsafe fn RtlGetDeviceFamilyInfoEnum(pulluapinfo: ::core::option::Option<*mut u64>, puldevicefamily: ::core::option::Option<*mut DEVICEFAMILYINFOENUM>, puldeviceform: ::core::option::Option<*mut DEVICEFAMILYDEVICEFORM>) {
-    ::windows_targets::link!("ntdll.dll" "system" fn RtlGetDeviceFamilyInfoEnum(pulluapinfo : *mut u64, puldevicefamily : *mut DEVICEFAMILYINFOENUM, puldeviceform : *mut DEVICEFAMILYDEVICEFORM) -> ());
+    ::windows_targets::link!("ntdll.dll" "system" fn RtlGetDeviceFamilyInfoEnum(pulluapinfo : *mut u64, puldevicefamily : *mut DEVICEFAMILYINFOENUM, puldeviceform : *mut DEVICEFAMILYDEVICEFORM));
     RtlGetDeviceFamilyInfoEnum(::core::mem::transmute(pulluapinfo.unwrap_or(::std::ptr::null_mut())), ::core::mem::transmute(puldevicefamily.unwrap_or(::std::ptr::null_mut())), ::core::mem::transmute(puldeviceform.unwrap_or(::std::ptr::null_mut())))
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]

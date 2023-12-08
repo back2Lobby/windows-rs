@@ -23,6 +23,7 @@ impl Error {
         }
     }
 
+    /// Creates a new `Error` from the Win32 error code returned by `GetLastError()`.
     pub fn from_win32() -> Self {
         unsafe { Self { code: HRESULT::from_win32(crate::imp::GetLastError()), info: None } }
     }
@@ -87,6 +88,12 @@ impl std::convert::From<std::string::FromUtf16Error> for Error {
 impl std::convert::From<std::string::FromUtf8Error> for Error {
     fn from(_: std::string::FromUtf8Error) -> Self {
         Self { code: HRESULT::from_win32(crate::imp::ERROR_NO_UNICODE_TRANSLATION), info: None }
+    }
+}
+
+impl std::convert::From<std::num::TryFromIntError> for Error {
+    fn from(_: std::num::TryFromIntError) -> Self {
+        Self { code: HRESULT(crate::imp::E_INVALIDARG), info: None }
     }
 }
 

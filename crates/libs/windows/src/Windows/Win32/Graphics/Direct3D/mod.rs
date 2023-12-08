@@ -405,6 +405,7 @@ pub const D3D_FEATURE_LEVEL_12_0: D3D_FEATURE_LEVEL = D3D_FEATURE_LEVEL(49152i32
 pub const D3D_FEATURE_LEVEL_12_1: D3D_FEATURE_LEVEL = D3D_FEATURE_LEVEL(49408i32);
 pub const D3D_FEATURE_LEVEL_12_2: D3D_FEATURE_LEVEL = D3D_FEATURE_LEVEL(49664i32);
 pub const D3D_FEATURE_LEVEL_1_0_CORE: D3D_FEATURE_LEVEL = D3D_FEATURE_LEVEL(4096i32);
+pub const D3D_FEATURE_LEVEL_1_0_GENERIC: D3D_FEATURE_LEVEL = D3D_FEATURE_LEVEL(256i32);
 pub const D3D_FEATURE_LEVEL_9_1: D3D_FEATURE_LEVEL = D3D_FEATURE_LEVEL(37120i32);
 pub const D3D_FEATURE_LEVEL_9_2: D3D_FEATURE_LEVEL = D3D_FEATURE_LEVEL(37376i32);
 pub const D3D_FEATURE_LEVEL_9_3: D3D_FEATURE_LEVEL = D3D_FEATURE_LEVEL(37632i32);
@@ -1353,6 +1354,6 @@ impl ::core::default::Default for D3D_SHADER_MACRO {
         unsafe { ::core::mem::zeroed() }
     }
 }
-pub type PFN_DESTRUCTION_CALLBACK = ::core::option::Option<unsafe extern "system" fn(pdata: *mut ::core::ffi::c_void) -> ()>;
+pub type PFN_DESTRUCTION_CALLBACK = ::core::option::Option<unsafe extern "system" fn(pdata: *mut ::core::ffi::c_void)>;
 #[cfg(feature = "implement")]
 ::core::include!("impl.rs");

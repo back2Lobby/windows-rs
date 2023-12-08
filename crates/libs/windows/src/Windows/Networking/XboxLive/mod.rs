@@ -392,7 +392,7 @@ impl XboxLiveDeviceAddress {
     }
     pub fn GetSnapshotAsBytes(&self, buffer: &mut [u8], byteswritten: &mut u32) -> ::windows_core::Result<()> {
         let this = self;
-        unsafe { (::windows_core::Interface::vtable(this).GetSnapshotAsBytes)(::windows_core::Interface::as_raw(this), buffer.len() as u32, buffer.as_mut_ptr(), byteswritten).ok() }
+        unsafe { (::windows_core::Interface::vtable(this).GetSnapshotAsBytes)(::windows_core::Interface::as_raw(this), buffer.len().try_into().unwrap(), buffer.as_mut_ptr(), byteswritten).ok() }
     }
     pub fn Compare<P0>(&self, otherdeviceaddress: P0) -> ::windows_core::Result<i32>
     where
@@ -445,7 +445,7 @@ impl XboxLiveDeviceAddress {
     pub fn CreateFromSnapshotBytes(buffer: &[u8]) -> ::windows_core::Result<XboxLiveDeviceAddress> {
         Self::IXboxLiveDeviceAddressStatics(|this| unsafe {
             let mut result__ = ::std::mem::zeroed();
-            (::windows_core::Interface::vtable(this).CreateFromSnapshotBytes)(::windows_core::Interface::as_raw(this), buffer.len() as u32, buffer.as_ptr(), &mut result__).from_abi(result__)
+            (::windows_core::Interface::vtable(this).CreateFromSnapshotBytes)(::windows_core::Interface::as_raw(this), buffer.len().try_into().unwrap(), buffer.as_ptr(), &mut result__).from_abi(result__)
         })
     }
     pub fn GetLocal() -> ::windows_core::Result<XboxLiveDeviceAddress> {
@@ -467,7 +467,7 @@ impl XboxLiveDeviceAddress {
     }
 }
 impl ::windows_core::RuntimeType for XboxLiveDeviceAddress {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Networking.XboxLive.XboxLiveDeviceAddress;{f5bbd279-3c86-4b57-a31a-b9462408fd01})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for XboxLiveDeviceAddress {
     type Vtable = IXboxLiveDeviceAddress_Vtbl;
@@ -514,11 +514,11 @@ impl XboxLiveEndpointPair {
     }
     pub fn GetRemoteSocketAddressBytes(&self, socketaddress: &mut [u8]) -> ::windows_core::Result<()> {
         let this = self;
-        unsafe { (::windows_core::Interface::vtable(this).GetRemoteSocketAddressBytes)(::windows_core::Interface::as_raw(this), socketaddress.len() as u32, socketaddress.as_mut_ptr()).ok() }
+        unsafe { (::windows_core::Interface::vtable(this).GetRemoteSocketAddressBytes)(::windows_core::Interface::as_raw(this), socketaddress.len().try_into().unwrap(), socketaddress.as_mut_ptr()).ok() }
     }
     pub fn GetLocalSocketAddressBytes(&self, socketaddress: &mut [u8]) -> ::windows_core::Result<()> {
         let this = self;
-        unsafe { (::windows_core::Interface::vtable(this).GetLocalSocketAddressBytes)(::windows_core::Interface::as_raw(this), socketaddress.len() as u32, socketaddress.as_mut_ptr()).ok() }
+        unsafe { (::windows_core::Interface::vtable(this).GetLocalSocketAddressBytes)(::windows_core::Interface::as_raw(this), socketaddress.len().try_into().unwrap(), socketaddress.as_mut_ptr()).ok() }
     }
     pub fn State(&self) -> ::windows_core::Result<XboxLiveEndpointPairState> {
         let this = self;
@@ -572,7 +572,7 @@ impl XboxLiveEndpointPair {
     pub fn FindEndpointPairBySocketAddressBytes(localsocketaddress: &[u8], remotesocketaddress: &[u8]) -> ::windows_core::Result<XboxLiveEndpointPair> {
         Self::IXboxLiveEndpointPairStatics(|this| unsafe {
             let mut result__ = ::std::mem::zeroed();
-            (::windows_core::Interface::vtable(this).FindEndpointPairBySocketAddressBytes)(::windows_core::Interface::as_raw(this), localsocketaddress.len() as u32, localsocketaddress.as_ptr(), remotesocketaddress.len() as u32, remotesocketaddress.as_ptr(), &mut result__).from_abi(result__)
+            (::windows_core::Interface::vtable(this).FindEndpointPairBySocketAddressBytes)(::windows_core::Interface::as_raw(this), localsocketaddress.len().try_into().unwrap(), localsocketaddress.as_ptr(), remotesocketaddress.len().try_into().unwrap(), remotesocketaddress.as_ptr(), &mut result__).from_abi(result__)
         })
     }
     pub fn FindEndpointPairByHostNamesAndPorts<P0, P1>(localhostname: P0, localport: &::windows_core::HSTRING, remotehostname: P1, remoteport: &::windows_core::HSTRING) -> ::windows_core::Result<XboxLiveEndpointPair>
@@ -592,7 +592,7 @@ impl XboxLiveEndpointPair {
     }
 }
 impl ::windows_core::RuntimeType for XboxLiveEndpointPair {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Networking.XboxLive.XboxLiveEndpointPair;{1e9a839b-813e-44e0-b87f-c87a093475e4})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for XboxLiveEndpointPair {
     type Vtable = IXboxLiveEndpointPair_Vtbl;
@@ -640,7 +640,7 @@ impl XboxLiveEndpointPairCreationResult {
     }
 }
 impl ::windows_core::RuntimeType for XboxLiveEndpointPairCreationResult {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Networking.XboxLive.XboxLiveEndpointPairCreationResult;{d9a8bb95-2aab-4d1e-9794-33ecc0dcf0fe})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for XboxLiveEndpointPairCreationResult {
     type Vtable = IXboxLiveEndpointPairCreationResult_Vtbl;
@@ -674,7 +674,7 @@ impl XboxLiveEndpointPairStateChangedEventArgs {
     }
 }
 impl ::windows_core::RuntimeType for XboxLiveEndpointPairStateChangedEventArgs {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Networking.XboxLive.XboxLiveEndpointPairStateChangedEventArgs;{592e3b55-de08-44e7-ac3b-b9b9a169583a})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for XboxLiveEndpointPairStateChangedEventArgs {
     type Vtable = IXboxLiveEndpointPairStateChangedEventArgs_Vtbl;
@@ -830,7 +830,7 @@ impl XboxLiveEndpointPairTemplate {
     }
 }
 impl ::windows_core::RuntimeType for XboxLiveEndpointPairTemplate {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Networking.XboxLive.XboxLiveEndpointPairTemplate;{6b286ecf-3457-40ce-b9a1-c0cfe0213ea7})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for XboxLiveEndpointPairTemplate {
     type Vtable = IXboxLiveEndpointPairTemplate_Vtbl;
@@ -857,7 +857,7 @@ impl XboxLiveInboundEndpointPairCreatedEventArgs {
     }
 }
 impl ::windows_core::RuntimeType for XboxLiveInboundEndpointPairCreatedEventArgs {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Networking.XboxLive.XboxLiveInboundEndpointPairCreatedEventArgs;{dc183b62-22ba-48d2-80de-c23968bd198b})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for XboxLiveInboundEndpointPairCreatedEventArgs {
     type Vtable = IXboxLiveInboundEndpointPairCreatedEventArgs_Vtbl;
@@ -1009,7 +1009,7 @@ impl XboxLiveQualityOfServiceMeasurement {
         }
     }
     pub fn PublishPrivatePayloadBytes(payload: &[u8]) -> ::windows_core::Result<()> {
-        Self::IXboxLiveQualityOfServiceMeasurementStatics(|this| unsafe { (::windows_core::Interface::vtable(this).PublishPrivatePayloadBytes)(::windows_core::Interface::as_raw(this), payload.len() as u32, payload.as_ptr()).ok() })
+        Self::IXboxLiveQualityOfServiceMeasurementStatics(|this| unsafe { (::windows_core::Interface::vtable(this).PublishPrivatePayloadBytes)(::windows_core::Interface::as_raw(this), payload.len().try_into().unwrap(), payload.as_ptr()).ok() })
     }
     pub fn ClearPrivatePayload() -> ::windows_core::Result<()> {
         Self::IXboxLiveQualityOfServiceMeasurementStatics(|this| unsafe { (::windows_core::Interface::vtable(this).ClearPrivatePayload)(::windows_core::Interface::as_raw(this)).ok() })
@@ -1070,7 +1070,7 @@ impl XboxLiveQualityOfServiceMeasurement {
     }
 }
 impl ::windows_core::RuntimeType for XboxLiveQualityOfServiceMeasurement {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Networking.XboxLive.XboxLiveQualityOfServiceMeasurement;{4d682bce-a5d6-47e6-a236-cfde5fbdf2ed})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for XboxLiveQualityOfServiceMeasurement {
     type Vtable = IXboxLiveQualityOfServiceMeasurement_Vtbl;
@@ -1118,7 +1118,7 @@ impl XboxLiveQualityOfServiceMetricResult {
     }
 }
 impl ::windows_core::RuntimeType for XboxLiveQualityOfServiceMetricResult {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Networking.XboxLive.XboxLiveQualityOfServiceMetricResult;{aeec53d1-3561-4782-b0cf-d3ae29d9fa87})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for XboxLiveQualityOfServiceMetricResult {
     type Vtable = IXboxLiveQualityOfServiceMetricResult_Vtbl;
@@ -1161,7 +1161,7 @@ impl XboxLiveQualityOfServicePrivatePayloadResult {
     }
 }
 impl ::windows_core::RuntimeType for XboxLiveQualityOfServicePrivatePayloadResult {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Networking.XboxLive.XboxLiveQualityOfServicePrivatePayloadResult;{5a6302ae-6f38-41c0-9fcc-ea6cb978cafc})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for XboxLiveQualityOfServicePrivatePayloadResult {
     type Vtable = IXboxLiveQualityOfServicePrivatePayloadResult_Vtbl;

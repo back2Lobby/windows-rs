@@ -874,7 +874,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("advapi32.dll" "system" fn PerfEnumerateCounterSet(szmachine : ::windows_core::PCWSTR, pcountersetids : *mut ::windows_core::GUID, ccountersetids : u32, pccountersetidsactual : *mut u32) -> u32);
-    PerfEnumerateCounterSet(szmachine.into_param().abi(), ::core::mem::transmute(pcountersetids.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pcountersetids.as_deref().map_or(0, |slice| slice.len() as _), pccountersetidsactual)
+    PerfEnumerateCounterSet(szmachine.into_param().abi(), ::core::mem::transmute(pcountersetids.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pcountersetids.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), pccountersetidsactual)
 }
 #[inline]
 pub unsafe fn PerfEnumerateCounterSetInstances<P0>(szmachine: P0, pcountersetid: *const ::windows_core::GUID, pinstances: ::core::option::Option<*mut PERF_INSTANCE_HEADER>, cbinstances: u32, pcbinstancesactual: *mut u32) -> u32
@@ -940,7 +940,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("advapi32.dll" "system" fn PerfQueryCounterSetRegistrationInfo(szmachine : ::windows_core::PCWSTR, pcountersetid : *const ::windows_core::GUID, requestcode : PerfRegInfoType, requestlangid : u32, pbreginfo : *mut u8, cbreginfo : u32, pcbreginfoactual : *mut u32) -> u32);
-    PerfQueryCounterSetRegistrationInfo(szmachine.into_param().abi(), pcountersetid, requestcode, requestlangid, ::core::mem::transmute(pbreginfo.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pbreginfo.as_deref().map_or(0, |slice| slice.len() as _), pcbreginfoactual)
+    PerfQueryCounterSetRegistrationInfo(szmachine.into_param().abi(), pcountersetid, requestcode, requestlangid, ::core::mem::transmute(pbreginfo.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pbreginfo.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), pcbreginfoactual)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -9815,8 +9815,8 @@ impl ::core::default::Default for PERF_STRING_COUNTER_HEADER {
 pub type CounterPathCallBack = ::core::option::Option<unsafe extern "system" fn(param0: usize) -> i32>;
 pub type PERFLIBREQUEST = ::core::option::Option<unsafe extern "system" fn(requestcode: u32, buffer: *mut ::core::ffi::c_void, buffersize: u32) -> u32>;
 pub type PERF_MEM_ALLOC = ::core::option::Option<unsafe extern "system" fn(allocsize: usize, pcontext: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void>;
-pub type PERF_MEM_FREE = ::core::option::Option<unsafe extern "system" fn(pbuffer: *mut ::core::ffi::c_void, pcontext: *mut ::core::ffi::c_void) -> ()>;
-pub type PLA_CABEXTRACT_CALLBACK = ::core::option::Option<unsafe extern "system" fn(filename: ::windows_core::PCWSTR, context: *mut ::core::ffi::c_void) -> ()>;
+pub type PERF_MEM_FREE = ::core::option::Option<unsafe extern "system" fn(pbuffer: *mut ::core::ffi::c_void, pcontext: *mut ::core::ffi::c_void)>;
+pub type PLA_CABEXTRACT_CALLBACK = ::core::option::Option<unsafe extern "system" fn(filename: ::windows_core::PCWSTR, context: *mut ::core::ffi::c_void)>;
 pub type PM_CLOSE_PROC = ::core::option::Option<unsafe extern "system" fn() -> u32>;
 pub type PM_COLLECT_PROC = ::core::option::Option<unsafe extern "system" fn(pvaluename: ::windows_core::PCWSTR, ppdata: *mut *mut ::core::ffi::c_void, pcbtotalbytes: *mut u32, pnumobjecttypes: *mut u32) -> u32>;
 pub type PM_OPEN_PROC = ::core::option::Option<unsafe extern "system" fn(pcontext: ::windows_core::PCWSTR) -> u32>;

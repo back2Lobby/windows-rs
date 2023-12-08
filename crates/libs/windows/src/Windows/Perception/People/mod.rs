@@ -195,7 +195,7 @@ impl EyesPose {
     }
 }
 impl ::windows_core::RuntimeType for EyesPose {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Perception.People.EyesPose;{682a9b23-8a1e-5b86-a060-906ffacb62a4})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for EyesPose {
     type Vtable = IEyesPose_Vtbl;
@@ -238,7 +238,7 @@ impl HandMeshObserver {
     }
     pub fn GetTriangleIndices(&self, indices: &mut [u16]) -> ::windows_core::Result<()> {
         let this = self;
-        unsafe { (::windows_core::Interface::vtable(this).GetTriangleIndices)(::windows_core::Interface::as_raw(this), indices.len() as u32, indices.as_mut_ptr()).ok() }
+        unsafe { (::windows_core::Interface::vtable(this).GetTriangleIndices)(::windows_core::Interface::as_raw(this), indices.len().try_into().unwrap(), indices.as_mut_ptr()).ok() }
     }
     pub fn GetVertexStateForPose<P0>(&self, handpose: P0) -> ::windows_core::Result<HandMeshVertexState>
     where
@@ -273,7 +273,7 @@ impl HandMeshObserver {
     }
 }
 impl ::windows_core::RuntimeType for HandMeshObserver {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Perception.People.HandMeshObserver;{85ae30cb-6fc3-55c4-a7b4-29e33896ca69})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for HandMeshObserver {
     type Vtable = IHandMeshObserver_Vtbl;
@@ -304,7 +304,7 @@ impl HandMeshVertexState {
     #[cfg(feature = "Foundation_Numerics")]
     pub fn GetVertices(&self, vertices: &mut [HandMeshVertex]) -> ::windows_core::Result<()> {
         let this = self;
-        unsafe { (::windows_core::Interface::vtable(this).GetVertices)(::windows_core::Interface::as_raw(this), vertices.len() as u32, vertices.as_mut_ptr()).ok() }
+        unsafe { (::windows_core::Interface::vtable(this).GetVertices)(::windows_core::Interface::as_raw(this), vertices.len().try_into().unwrap(), vertices.as_mut_ptr()).ok() }
     }
     pub fn UpdateTimestamp(&self) -> ::windows_core::Result<super::PerceptionTimestamp> {
         let this = self;
@@ -315,7 +315,7 @@ impl HandMeshVertexState {
     }
 }
 impl ::windows_core::RuntimeType for HandMeshVertexState {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Perception.People.HandMeshVertexState;{046c5fef-1d8b-55de-ab2c-1cd424886d8f})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for HandMeshVertexState {
     type Vtable = IHandMeshVertexState_Vtbl;
@@ -354,7 +354,7 @@ impl HandPose {
         let this = self;
         unsafe {
             let mut result__ = ::std::mem::zeroed();
-            (::windows_core::Interface::vtable(this).TryGetJoints)(::windows_core::Interface::as_raw(this), coordinatesystem.into_param().abi(), joints.len() as u32, joints.as_ptr(), jointposes.len() as u32, jointposes.as_mut_ptr(), &mut result__).from_abi(result__)
+            (::windows_core::Interface::vtable(this).TryGetJoints)(::windows_core::Interface::as_raw(this), coordinatesystem.into_param().abi(), joints.len().try_into().unwrap(), joints.as_ptr(), jointposes.len().try_into().unwrap(), jointposes.as_mut_ptr(), &mut result__).from_abi(result__)
         }
     }
     #[doc = "Required features: `\"Foundation_Numerics\"`"]
@@ -370,11 +370,11 @@ impl HandPose {
     #[cfg(feature = "Foundation_Numerics")]
     pub fn GetRelativeJoints(&self, joints: &[HandJointKind], referencejoints: &[HandJointKind], jointposes: &mut [JointPose]) -> ::windows_core::Result<()> {
         let this = self;
-        unsafe { (::windows_core::Interface::vtable(this).GetRelativeJoints)(::windows_core::Interface::as_raw(this), joints.len() as u32, joints.as_ptr(), referencejoints.len() as u32, referencejoints.as_ptr(), jointposes.len() as u32, jointposes.as_mut_ptr()).ok() }
+        unsafe { (::windows_core::Interface::vtable(this).GetRelativeJoints)(::windows_core::Interface::as_raw(this), joints.len().try_into().unwrap(), joints.as_ptr(), referencejoints.len().try_into().unwrap(), referencejoints.as_ptr(), jointposes.len().try_into().unwrap(), jointposes.as_mut_ptr()).ok() }
     }
 }
 impl ::windows_core::RuntimeType for HandPose {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Perception.People.HandPose;{4d98e79a-bb08-5d09-91de-df0dd3fae46c})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for HandPose {
     type Vtable = IHandPose_Vtbl;
@@ -421,7 +421,7 @@ impl HeadPose {
     }
 }
 impl ::windows_core::RuntimeType for HeadPose {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.Perception.People.HeadPose;{7f5ac5a5-49db-379f-9429-32a2faf34fa6})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for HeadPose {
     type Vtable = IHeadPose_Vtbl;

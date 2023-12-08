@@ -4,7 +4,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("mstask.dll" "system" fn GetNetScheduleAccountInformation(pwszservername : ::windows_core::PCWSTR, ccaccount : u32, wszaccount : ::windows_core::PWSTR) -> ::windows_core::HRESULT);
-    GetNetScheduleAccountInformation(pwszservername.into_param().abi(), wszaccount.len() as _, ::core::mem::transmute(wszaccount.as_ptr())).ok()
+    GetNetScheduleAccountInformation(pwszservername.into_param().abi(), wszaccount.len().try_into().unwrap(), ::core::mem::transmute(wszaccount.as_ptr())).ok()
 }
 #[inline]
 pub unsafe fn I_NetLogonControl2<P0>(servername: P0, functioncode: u32, querylevel: u32, data: *const u8, buffer: *mut *mut u8) -> u32
@@ -16,23 +16,23 @@ where
 }
 #[inline]
 pub unsafe fn LogErrorA(dwmessageid: u32, plpwssubstrings: &[::windows_core::PCSTR], dwerrorcode: u32) {
-    ::windows_targets::link!("rtutils.dll" "system" fn LogErrorA(dwmessageid : u32, cnumberofsubstrings : u32, plpwssubstrings : *const ::windows_core::PCSTR, dwerrorcode : u32) -> ());
-    LogErrorA(dwmessageid, plpwssubstrings.len() as _, ::core::mem::transmute(plpwssubstrings.as_ptr()), dwerrorcode)
+    ::windows_targets::link!("rtutils.dll" "system" fn LogErrorA(dwmessageid : u32, cnumberofsubstrings : u32, plpwssubstrings : *const ::windows_core::PCSTR, dwerrorcode : u32));
+    LogErrorA(dwmessageid, plpwssubstrings.len().try_into().unwrap(), ::core::mem::transmute(plpwssubstrings.as_ptr()), dwerrorcode)
 }
 #[inline]
 pub unsafe fn LogErrorW(dwmessageid: u32, plpwssubstrings: &[::windows_core::PCWSTR], dwerrorcode: u32) {
-    ::windows_targets::link!("rtutils.dll" "system" fn LogErrorW(dwmessageid : u32, cnumberofsubstrings : u32, plpwssubstrings : *const ::windows_core::PCWSTR, dwerrorcode : u32) -> ());
-    LogErrorW(dwmessageid, plpwssubstrings.len() as _, ::core::mem::transmute(plpwssubstrings.as_ptr()), dwerrorcode)
+    ::windows_targets::link!("rtutils.dll" "system" fn LogErrorW(dwmessageid : u32, cnumberofsubstrings : u32, plpwssubstrings : *const ::windows_core::PCWSTR, dwerrorcode : u32));
+    LogErrorW(dwmessageid, plpwssubstrings.len().try_into().unwrap(), ::core::mem::transmute(plpwssubstrings.as_ptr()), dwerrorcode)
 }
 #[inline]
 pub unsafe fn LogEventA(weventtype: u32, dwmessageid: u32, plpwssubstrings: &[::windows_core::PCSTR]) {
-    ::windows_targets::link!("rtutils.dll" "system" fn LogEventA(weventtype : u32, dwmessageid : u32, cnumberofsubstrings : u32, plpwssubstrings : *const ::windows_core::PCSTR) -> ());
-    LogEventA(weventtype, dwmessageid, plpwssubstrings.len() as _, ::core::mem::transmute(plpwssubstrings.as_ptr()))
+    ::windows_targets::link!("rtutils.dll" "system" fn LogEventA(weventtype : u32, dwmessageid : u32, cnumberofsubstrings : u32, plpwssubstrings : *const ::windows_core::PCSTR));
+    LogEventA(weventtype, dwmessageid, plpwssubstrings.len().try_into().unwrap(), ::core::mem::transmute(plpwssubstrings.as_ptr()))
 }
 #[inline]
 pub unsafe fn LogEventW(weventtype: u32, dwmessageid: u32, plpwssubstrings: &[::windows_core::PCWSTR]) {
-    ::windows_targets::link!("rtutils.dll" "system" fn LogEventW(weventtype : u32, dwmessageid : u32, cnumberofsubstrings : u32, plpwssubstrings : *const ::windows_core::PCWSTR) -> ());
-    LogEventW(weventtype, dwmessageid, plpwssubstrings.len() as _, ::core::mem::transmute(plpwssubstrings.as_ptr()))
+    ::windows_targets::link!("rtutils.dll" "system" fn LogEventW(weventtype : u32, dwmessageid : u32, cnumberofsubstrings : u32, plpwssubstrings : *const ::windows_core::PCWSTR));
+    LogEventW(weventtype, dwmessageid, plpwssubstrings.len().try_into().unwrap(), ::core::mem::transmute(plpwssubstrings.as_ptr()))
 }
 #[inline]
 pub unsafe fn MprSetupProtocolEnum(dwtransportid: u32, lplpbuffer: *mut *mut u8, lpdwentriesread: *mut u32) -> u32 {
@@ -267,7 +267,7 @@ where
 #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Security_Cryptography"))]
 #[inline]
 pub unsafe fn NetFreeAadJoinInformation(pjoininfo: ::core::option::Option<*const DSREG_JOIN_INFO>) {
-    ::windows_targets::link!("netapi32.dll" "system" fn NetFreeAadJoinInformation(pjoininfo : *const DSREG_JOIN_INFO) -> ());
+    ::windows_targets::link!("netapi32.dll" "system" fn NetFreeAadJoinInformation(pjoininfo : *const DSREG_JOIN_INFO));
     NetFreeAadJoinInformation(::core::mem::transmute(pjoininfo.unwrap_or(::std::ptr::null())))
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Security_Cryptography\"`"]
@@ -793,7 +793,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("netapi32.dll" "system" fn NetRequestOfflineDomainJoin(pprovisionbindata : *const u8, cbprovisionbindatasize : u32, dwoptions : NET_REQUEST_PROVISION_OPTIONS, lpwindowspath : ::windows_core::PCWSTR) -> u32);
-    NetRequestOfflineDomainJoin(::core::mem::transmute(pprovisionbindata.as_ptr()), pprovisionbindata.len() as _, dwoptions, lpwindowspath.into_param().abi())
+    NetRequestOfflineDomainJoin(::core::mem::transmute(pprovisionbindata.as_ptr()), pprovisionbindata.len().try_into().unwrap(), dwoptions, lpwindowspath.into_param().abi())
 }
 #[inline]
 pub unsafe fn NetRequestProvisioningPackageInstall<P0>(ppackagebindata: &[u8], dwprovisionoptions: NET_REQUEST_PROVISION_OPTIONS, lpwindowspath: P0, pvreserved: ::core::option::Option<*const ::core::ffi::c_void>) -> u32
@@ -801,7 +801,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("netapi32.dll" "system" fn NetRequestProvisioningPackageInstall(ppackagebindata : *const u8, dwpackagebindatasize : u32, dwprovisionoptions : NET_REQUEST_PROVISION_OPTIONS, lpwindowspath : ::windows_core::PCWSTR, pvreserved : *const ::core::ffi::c_void) -> u32);
-    NetRequestProvisioningPackageInstall(::core::mem::transmute(ppackagebindata.as_ptr()), ppackagebindata.len() as _, dwprovisionoptions, lpwindowspath.into_param().abi(), ::core::mem::transmute(pvreserved.unwrap_or(::std::ptr::null())))
+    NetRequestProvisioningPackageInstall(::core::mem::transmute(ppackagebindata.as_ptr()), ppackagebindata.len().try_into().unwrap(), dwprovisionoptions, lpwindowspath.into_param().abi(), ::core::mem::transmute(pvreserved.unwrap_or(::std::ptr::null())))
 }
 #[inline]
 pub unsafe fn NetScheduleJobAdd<P0>(servername: P0, buffer: *mut u8, jobid: *mut u32) -> u32
@@ -952,7 +952,7 @@ where
     P1: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("netapi32.dll" "system" fn NetServiceInstall(servername : ::windows_core::PCWSTR, service : ::windows_core::PCWSTR, argc : u32, argv : *const ::windows_core::PCWSTR, bufptr : *mut *mut u8) -> u32);
-    NetServiceInstall(servername.into_param().abi(), service.into_param().abi(), argv.len() as _, ::core::mem::transmute(argv.as_ptr()), bufptr)
+    NetServiceInstall(servername.into_param().abi(), service.into_param().abi(), argv.len().try_into().unwrap(), ::core::mem::transmute(argv.as_ptr()), bufptr)
 }
 #[inline]
 pub unsafe fn NetSetPrimaryComputerName<P0, P1, P2, P3>(server: P0, primaryname: P1, domainaccount: P2, domainaccountpassword: P3, reserved: u32) -> u32
@@ -1193,7 +1193,7 @@ where
     P1: ::windows_core::IntoParam<::windows_core::PCSTR>,
     P2: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
-    ::windows_targets::link!("rtutils.dll" "system" fn RouterAssert(pszfailedassertion : ::windows_core::PCSTR, pszfilename : ::windows_core::PCSTR, dwlinenumber : u32, pszmessage : ::windows_core::PCSTR) -> ());
+    ::windows_targets::link!("rtutils.dll" "system" fn RouterAssert(pszfailedassertion : ::windows_core::PCSTR, pszfilename : ::windows_core::PCSTR, dwlinenumber : u32, pszmessage : ::windows_core::PCSTR));
     RouterAssert(pszfailedassertion.into_param().abi(), pszfilename.into_param().abi(), dwlinenumber, pszmessage.into_param().abi())
 }
 #[inline]
@@ -1213,7 +1213,7 @@ pub unsafe fn RouterLogDeregisterA<P0>(hloghandle: P0)
 where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
 {
-    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogDeregisterA(hloghandle : super::super::Foundation:: HANDLE) -> ());
+    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogDeregisterA(hloghandle : super::super::Foundation:: HANDLE));
     RouterLogDeregisterA(hloghandle.into_param().abi())
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1223,7 +1223,7 @@ pub unsafe fn RouterLogDeregisterW<P0>(hloghandle: P0)
 where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
 {
-    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogDeregisterW(hloghandle : super::super::Foundation:: HANDLE) -> ());
+    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogDeregisterW(hloghandle : super::super::Foundation:: HANDLE));
     RouterLogDeregisterW(hloghandle.into_param().abi())
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1233,8 +1233,8 @@ pub unsafe fn RouterLogEventA<P0>(hloghandle: P0, dweventtype: u32, dwmessageid:
 where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
 {
-    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventA(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwmessageid : u32, dwsubstringcount : u32, plpszsubstringarray : *const ::windows_core::PCSTR, dwerrorcode : u32) -> ());
-    RouterLogEventA(hloghandle.into_param().abi(), dweventtype, dwmessageid, plpszsubstringarray.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(plpszsubstringarray.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), dwerrorcode)
+    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventA(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwmessageid : u32, dwsubstringcount : u32, plpszsubstringarray : *const ::windows_core::PCSTR, dwerrorcode : u32));
+    RouterLogEventA(hloghandle.into_param().abi(), dweventtype, dwmessageid, plpszsubstringarray.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(plpszsubstringarray.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), dwerrorcode)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -1243,8 +1243,8 @@ pub unsafe fn RouterLogEventDataA<P0>(hloghandle: P0, dweventtype: u32, dwmessag
 where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
 {
-    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventDataA(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwmessageid : u32, dwsubstringcount : u32, plpszsubstringarray : *const ::windows_core::PCSTR, dwdatabytes : u32, lpdatabytes : *mut u8) -> ());
-    RouterLogEventDataA(hloghandle.into_param().abi(), dweventtype, dwmessageid, plpszsubstringarray.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(plpszsubstringarray.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), dwdatabytes, lpdatabytes)
+    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventDataA(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwmessageid : u32, dwsubstringcount : u32, plpszsubstringarray : *const ::windows_core::PCSTR, dwdatabytes : u32, lpdatabytes : *mut u8));
+    RouterLogEventDataA(hloghandle.into_param().abi(), dweventtype, dwmessageid, plpszsubstringarray.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(plpszsubstringarray.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), dwdatabytes, lpdatabytes)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -1253,8 +1253,8 @@ pub unsafe fn RouterLogEventDataW<P0>(hloghandle: P0, dweventtype: u32, dwmessag
 where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
 {
-    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventDataW(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwmessageid : u32, dwsubstringcount : u32, plpszsubstringarray : *const ::windows_core::PCWSTR, dwdatabytes : u32, lpdatabytes : *mut u8) -> ());
-    RouterLogEventDataW(hloghandle.into_param().abi(), dweventtype, dwmessageid, plpszsubstringarray.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(plpszsubstringarray.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), dwdatabytes, lpdatabytes)
+    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventDataW(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwmessageid : u32, dwsubstringcount : u32, plpszsubstringarray : *const ::windows_core::PCWSTR, dwdatabytes : u32, lpdatabytes : *mut u8));
+    RouterLogEventDataW(hloghandle.into_param().abi(), dweventtype, dwmessageid, plpszsubstringarray.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(plpszsubstringarray.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), dwdatabytes, lpdatabytes)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -1264,7 +1264,7 @@ where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
     P1: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
-    ::windows_targets::link!("rtutils.dll" "cdecl" fn RouterLogEventExA(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwerrorcode : u32, dwmessageid : u32, ptszformat : ::windows_core::PCSTR) -> ());
+    ::windows_targets::link!("rtutils.dll" "cdecl" fn RouterLogEventExA(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwerrorcode : u32, dwmessageid : u32, ptszformat : ::windows_core::PCSTR));
     RouterLogEventExA(hloghandle.into_param().abi(), dweventtype, dwerrorcode, dwmessageid, ptszformat.into_param().abi())
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1275,7 +1275,7 @@ where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
     P1: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
-    ::windows_targets::link!("rtutils.dll" "cdecl" fn RouterLogEventExW(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwerrorcode : u32, dwmessageid : u32, ptszformat : ::windows_core::PCWSTR) -> ());
+    ::windows_targets::link!("rtutils.dll" "cdecl" fn RouterLogEventExW(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwerrorcode : u32, dwmessageid : u32, ptszformat : ::windows_core::PCWSTR));
     RouterLogEventExW(hloghandle.into_param().abi(), dweventtype, dwerrorcode, dwmessageid, ptszformat.into_param().abi())
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1285,8 +1285,8 @@ pub unsafe fn RouterLogEventStringA<P0>(hloghandle: P0, dweventtype: u32, dwmess
 where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
 {
-    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventStringA(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwmessageid : u32, dwsubstringcount : u32, plpszsubstringarray : *const ::windows_core::PCSTR, dwerrorcode : u32, dwerrorindex : u32) -> ());
-    RouterLogEventStringA(hloghandle.into_param().abi(), dweventtype, dwmessageid, plpszsubstringarray.len() as _, ::core::mem::transmute(plpszsubstringarray.as_ptr()), dwerrorcode, dwerrorindex)
+    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventStringA(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwmessageid : u32, dwsubstringcount : u32, plpszsubstringarray : *const ::windows_core::PCSTR, dwerrorcode : u32, dwerrorindex : u32));
+    RouterLogEventStringA(hloghandle.into_param().abi(), dweventtype, dwmessageid, plpszsubstringarray.len().try_into().unwrap(), ::core::mem::transmute(plpszsubstringarray.as_ptr()), dwerrorcode, dwerrorindex)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -1295,8 +1295,8 @@ pub unsafe fn RouterLogEventStringW<P0>(hloghandle: P0, dweventtype: u32, dwmess
 where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
 {
-    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventStringW(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwmessageid : u32, dwsubstringcount : u32, plpszsubstringarray : *const ::windows_core::PCWSTR, dwerrorcode : u32, dwerrorindex : u32) -> ());
-    RouterLogEventStringW(hloghandle.into_param().abi(), dweventtype, dwmessageid, plpszsubstringarray.len() as _, ::core::mem::transmute(plpszsubstringarray.as_ptr()), dwerrorcode, dwerrorindex)
+    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventStringW(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwmessageid : u32, dwsubstringcount : u32, plpszsubstringarray : *const ::windows_core::PCWSTR, dwerrorcode : u32, dwerrorindex : u32));
+    RouterLogEventStringW(hloghandle.into_param().abi(), dweventtype, dwmessageid, plpszsubstringarray.len().try_into().unwrap(), ::core::mem::transmute(plpszsubstringarray.as_ptr()), dwerrorcode, dwerrorindex)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -1306,7 +1306,7 @@ where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
     P1: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
-    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventValistExA(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwerrorcode : u32, dwmessageid : u32, ptszformat : ::windows_core::PCSTR, arglist : *mut i8) -> ());
+    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventValistExA(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwerrorcode : u32, dwmessageid : u32, ptszformat : ::windows_core::PCSTR, arglist : *mut i8));
     RouterLogEventValistExA(hloghandle.into_param().abi(), dweventtype, dwerrorcode, dwmessageid, ptszformat.into_param().abi(), arglist)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1317,7 +1317,7 @@ where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
     P1: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
-    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventValistExW(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwerrorcode : u32, dwmessageid : u32, ptszformat : ::windows_core::PCWSTR, arglist : *mut i8) -> ());
+    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventValistExW(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwerrorcode : u32, dwmessageid : u32, ptszformat : ::windows_core::PCWSTR, arglist : *mut i8));
     RouterLogEventValistExW(hloghandle.into_param().abi(), dweventtype, dwerrorcode, dwmessageid, ptszformat.into_param().abi(), arglist)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1327,8 +1327,8 @@ pub unsafe fn RouterLogEventW<P0>(hloghandle: P0, dweventtype: u32, dwmessageid:
 where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
 {
-    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventW(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwmessageid : u32, dwsubstringcount : u32, plpszsubstringarray : *const ::windows_core::PCWSTR, dwerrorcode : u32) -> ());
-    RouterLogEventW(hloghandle.into_param().abi(), dweventtype, dwmessageid, plpszsubstringarray.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(plpszsubstringarray.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), dwerrorcode)
+    ::windows_targets::link!("rtutils.dll" "system" fn RouterLogEventW(hloghandle : super::super::Foundation:: HANDLE, dweventtype : u32, dwmessageid : u32, dwsubstringcount : u32, plpszsubstringarray : *const ::windows_core::PCWSTR, dwerrorcode : u32));
+    RouterLogEventW(hloghandle.into_param().abi(), dweventtype, dwmessageid, plpszsubstringarray.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(plpszsubstringarray.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), dwerrorcode)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -1501,7 +1501,7 @@ where
 pub struct IEnumNetCfgBindingInterface(::windows_core::IUnknown);
 impl IEnumNetCfgBindingInterface {
     pub unsafe fn Next(&self, rgelt: &mut [::core::option::Option<INetCfgBindingInterface>], pceltfetched: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).Next)(::windows_core::Interface::as_raw(self), rgelt.len() as _, ::core::mem::transmute(rgelt.as_ptr()), ::core::mem::transmute(pceltfetched.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).Next)(::windows_core::Interface::as_raw(self), rgelt.len().try_into().unwrap(), ::core::mem::transmute(rgelt.as_ptr()), ::core::mem::transmute(pceltfetched.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn Skip(&self, celt: u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).Skip)(::windows_core::Interface::as_raw(self), celt).ok()
@@ -1534,7 +1534,7 @@ pub struct IEnumNetCfgBindingInterface_Vtbl {
 pub struct IEnumNetCfgBindingPath(::windows_core::IUnknown);
 impl IEnumNetCfgBindingPath {
     pub unsafe fn Next(&self, rgelt: &mut [::core::option::Option<INetCfgBindingPath>], pceltfetched: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).Next)(::windows_core::Interface::as_raw(self), rgelt.len() as _, ::core::mem::transmute(rgelt.as_ptr()), ::core::mem::transmute(pceltfetched.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).Next)(::windows_core::Interface::as_raw(self), rgelt.len().try_into().unwrap(), ::core::mem::transmute(rgelt.as_ptr()), ::core::mem::transmute(pceltfetched.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn Skip(&self, celt: u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).Skip)(::windows_core::Interface::as_raw(self), celt).ok()
@@ -1567,7 +1567,7 @@ pub struct IEnumNetCfgBindingPath_Vtbl {
 pub struct IEnumNetCfgComponent(::windows_core::IUnknown);
 impl IEnumNetCfgComponent {
     pub unsafe fn Next(&self, rgelt: &mut [::core::option::Option<INetCfgComponent>], pceltfetched: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).Next)(::windows_core::Interface::as_raw(self), rgelt.len() as _, ::core::mem::transmute(rgelt.as_ptr()), ::core::mem::transmute(pceltfetched.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).Next)(::windows_core::Interface::as_raw(self), rgelt.len().try_into().unwrap(), ::core::mem::transmute(rgelt.as_ptr()), ::core::mem::transmute(pceltfetched.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn Skip(&self, celt: u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).Skip)(::windows_core::Interface::as_raw(self), celt).ok()
@@ -2298,7 +2298,7 @@ impl INetCfgComponentUpperEdge {
     where
         P0: ::windows_core::IntoParam<INetCfgComponent>,
     {
-        (::windows_core::Interface::vtable(self).RemoveInterfacesFromAdapter)(::windows_core::Interface::as_raw(self), padapter.into_param().abi(), pguidinterfaceids.len() as _, ::core::mem::transmute(pguidinterfaceids.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).RemoveInterfacesFromAdapter)(::windows_core::Interface::as_raw(self), padapter.into_param().abi(), pguidinterfaceids.len().try_into().unwrap(), ::core::mem::transmute(pguidinterfaceids.as_ptr())).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(INetCfgComponentUpperEdge, ::windows_core::IUnknown);
@@ -16719,6 +16719,6 @@ impl ::core::default::Default for WKSTA_USER_INFO_1101 {
         unsafe { ::core::mem::zeroed() }
     }
 }
-pub type WORKERFUNCTION = ::core::option::Option<unsafe extern "system" fn(param0: *mut ::core::ffi::c_void) -> ()>;
+pub type WORKERFUNCTION = ::core::option::Option<unsafe extern "system" fn(param0: *mut ::core::ffi::c_void)>;
 #[cfg(feature = "implement")]
 ::core::include!("impl.rs");

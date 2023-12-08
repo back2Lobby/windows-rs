@@ -5,7 +5,7 @@ pub unsafe fn CfCloseHandle<P0>(filehandle: P0)
 where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
 {
-    ::windows_targets::link!("cldapi.dll" "system" fn CfCloseHandle(filehandle : super::super::Foundation:: HANDLE) -> ());
+    ::windows_targets::link!("cldapi.dll" "system" fn CfCloseHandle(filehandle : super::super::Foundation:: HANDLE));
     CfCloseHandle(filehandle.into_param().abi())
 }
 #[doc = "Required features: `\"Win32_System_CorrelationVector\"`"]
@@ -37,7 +37,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("cldapi.dll" "system" fn CfCreatePlaceholders(basedirectorypath : ::windows_core::PCWSTR, placeholderarray : *mut CF_PLACEHOLDER_CREATE_INFO, placeholdercount : u32, createflags : CF_CREATE_FLAGS, entriesprocessed : *mut u32) -> ::windows_core::HRESULT);
-    CfCreatePlaceholders(basedirectorypath.into_param().abi(), ::core::mem::transmute(placeholderarray.as_ptr()), placeholderarray.len() as _, createflags, ::core::mem::transmute(entriesprocessed.unwrap_or(::std::ptr::null_mut()))).ok()
+    CfCreatePlaceholders(basedirectorypath.into_param().abi(), ::core::mem::transmute(placeholderarray.as_ptr()), placeholderarray.len().try_into().unwrap(), createflags, ::core::mem::transmute(entriesprocessed.unwrap_or(::std::ptr::null_mut()))).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_System_IO\"`"]
 #[cfg(all(feature = "Win32_Foundation", feature = "Win32_System_IO"))]
@@ -221,7 +221,7 @@ pub unsafe fn CfReleaseProtectedHandle<P0>(protectedhandle: P0)
 where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
 {
-    ::windows_targets::link!("cldapi.dll" "system" fn CfReleaseProtectedHandle(protectedhandle : super::super::Foundation:: HANDLE) -> ());
+    ::windows_targets::link!("cldapi.dll" "system" fn CfReleaseProtectedHandle(protectedhandle : super::super::Foundation:: HANDLE));
     CfReleaseProtectedHandle(protectedhandle.into_param().abi())
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -231,7 +231,7 @@ pub unsafe fn CfReleaseTransferKey<P0>(filehandle: P0, transferkey: *const i64)
 where
     P0: ::windows_core::IntoParam<super::super::Foundation::HANDLE>,
 {
-    ::windows_targets::link!("cldapi.dll" "system" fn CfReleaseTransferKey(filehandle : super::super::Foundation:: HANDLE, transferkey : *const i64) -> ());
+    ::windows_targets::link!("cldapi.dll" "system" fn CfReleaseTransferKey(filehandle : super::super::Foundation:: HANDLE, transferkey : *const i64));
     CfReleaseTransferKey(filehandle.into_param().abi(), transferkey)
 }
 #[inline]
@@ -320,7 +320,7 @@ where
         ::core::mem::transmute(fileidentity.unwrap_or(::std::ptr::null())),
         fileidentitylength,
         ::core::mem::transmute(dehydraterangearray.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())),
-        dehydraterangearray.as_deref().map_or(0, |slice| slice.len() as _),
+        dehydraterangearray.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()),
         updateflags,
         ::core::mem::transmute(updateusn.unwrap_or(::std::ptr::null_mut())),
         ::core::mem::transmute(overlapped.unwrap_or(::std::ptr::null_mut())),
@@ -4417,4 +4417,4 @@ impl ::core::default::Default for CF_SYNC_STATUS {
 }
 #[doc = "Required features: `\"Win32_System_CorrelationVector\"`"]
 #[cfg(feature = "Win32_System_CorrelationVector")]
-pub type CF_CALLBACK = ::core::option::Option<unsafe extern "system" fn(callbackinfo: *const CF_CALLBACK_INFO, callbackparameters: *const CF_CALLBACK_PARAMETERS) -> ()>;
+pub type CF_CALLBACK = ::core::option::Option<unsafe extern "system" fn(callbackinfo: *const CF_CALLBACK_INFO, callbackparameters: *const CF_CALLBACK_PARAMETERS)>;

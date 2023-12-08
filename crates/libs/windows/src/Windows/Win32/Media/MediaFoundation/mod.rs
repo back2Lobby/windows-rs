@@ -765,7 +765,7 @@ pub unsafe fn MFCreatePresentationClock() -> ::windows_core::Result<IMFPresentat
 pub unsafe fn MFCreatePresentationDescriptor(apstreamdescriptors: ::core::option::Option<&[::core::option::Option<IMFStreamDescriptor>]>) -> ::windows_core::Result<IMFPresentationDescriptor> {
     ::windows_targets::link!("mfplat.dll" "system" fn MFCreatePresentationDescriptor(cstreamdescriptors : u32, apstreamdescriptors : *const * mut::core::ffi::c_void, pppresentationdescriptor : *mut * mut::core::ffi::c_void) -> ::windows_core::HRESULT);
     let mut result__ = ::std::mem::zeroed();
-    MFCreatePresentationDescriptor(apstreamdescriptors.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(apstreamdescriptors.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), &mut result__).from_abi(result__)
+    MFCreatePresentationDescriptor(apstreamdescriptors.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(apstreamdescriptors.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), &mut result__).from_abi(result__)
 }
 #[inline]
 pub unsafe fn MFCreatePresentationDescriptorFromASFProfile<P0>(piprofile: P0) -> ::windows_core::Result<IMFPresentationDescriptor>
@@ -973,7 +973,7 @@ pub unsafe fn MFCreateStandardQualityManager() -> ::windows_core::Result<IMFQual
 pub unsafe fn MFCreateStreamDescriptor(dwstreamidentifier: u32, apmediatypes: &[::core::option::Option<IMFMediaType>]) -> ::windows_core::Result<IMFStreamDescriptor> {
     ::windows_targets::link!("mfplat.dll" "system" fn MFCreateStreamDescriptor(dwstreamidentifier : u32, cmediatypes : u32, apmediatypes : *const * mut::core::ffi::c_void, ppdescriptor : *mut * mut::core::ffi::c_void) -> ::windows_core::HRESULT);
     let mut result__ = ::std::mem::zeroed();
-    MFCreateStreamDescriptor(dwstreamidentifier, apmediatypes.len() as _, ::core::mem::transmute(apmediatypes.as_ptr()), &mut result__).from_abi(result__)
+    MFCreateStreamDescriptor(dwstreamidentifier, apmediatypes.len().try_into().unwrap(), ::core::mem::transmute(apmediatypes.as_ptr()), &mut result__).from_abi(result__)
 }
 #[doc = "Required features: `\"Win32_System_Com\"`"]
 #[cfg(feature = "Win32_System_Com")]
@@ -1168,7 +1168,7 @@ where
 {
     ::windows_targets::link!("mfsensorgroup.dll" "system" fn MFCreateVirtualCamera(r#type : MFVirtualCameraType, lifetime : MFVirtualCameraLifetime, access : MFVirtualCameraAccess, friendlyname : ::windows_core::PCWSTR, sourceid : ::windows_core::PCWSTR, categories : *const ::windows_core::GUID, categorycount : u32, virtualcamera : *mut * mut::core::ffi::c_void) -> ::windows_core::HRESULT);
     let mut result__ = ::std::mem::zeroed();
-    MFCreateVirtualCamera(r#type, lifetime, access, friendlyname.into_param().abi(), sourceid.into_param().abi(), ::core::mem::transmute(categories.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), categories.as_deref().map_or(0, |slice| slice.len() as _), &mut result__).from_abi(result__)
+    MFCreateVirtualCamera(r#type, lifetime, access, friendlyname.into_param().abi(), sourceid.into_param().abi(), ::core::mem::transmute(categories.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), categories.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), &mut result__).from_abi(result__)
 }
 #[inline]
 pub unsafe fn MFCreateWAVEMediaSink<P0, P1>(ptargetbytestream: P0, paudiomediatype: P1) -> ::windows_core::Result<IMFMediaSink>
@@ -1238,7 +1238,7 @@ where
 pub unsafe fn MFDeserializePresentationDescriptor(pbdata: &[u8]) -> ::windows_core::Result<IMFPresentationDescriptor> {
     ::windows_targets::link!("mfplat.dll" "system" fn MFDeserializePresentationDescriptor(cbdata : u32, pbdata : *const u8, pppd : *mut * mut::core::ffi::c_void) -> ::windows_core::HRESULT);
     let mut result__ = ::std::mem::zeroed();
-    MFDeserializePresentationDescriptor(pbdata.len() as _, ::core::mem::transmute(pbdata.as_ptr()), &mut result__).from_abi(result__)
+    MFDeserializePresentationDescriptor(pbdata.len().try_into().unwrap(), ::core::mem::transmute(pbdata.as_ptr()), &mut result__).from_abi(result__)
 }
 #[inline]
 pub unsafe fn MFEndCreateFile<P0>(presult: P0) -> ::windows_core::Result<IMFByteStream>
@@ -1286,7 +1286,7 @@ where
     P0: ::windows_core::IntoParam<IMFAttributes>,
 {
     ::windows_targets::link!("mfplat.dll" "system" fn MFGetAttributesAsBlob(pattributes : * mut::core::ffi::c_void, pbuf : *mut u8, cbbufsize : u32) -> ::windows_core::HRESULT);
-    MFGetAttributesAsBlob(pattributes.into_param().abi(), ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+    MFGetAttributesAsBlob(pattributes.into_param().abi(), ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
 }
 #[inline]
 pub unsafe fn MFGetAttributesAsBlobSize<P0>(pattributes: P0) -> ::windows_core::Result<u32>
@@ -1307,7 +1307,7 @@ pub unsafe fn MFGetContentProtectionSystemCLSID(guidprotectionsystemid: *const :
 pub unsafe fn MFGetLocalId(verifier: &[u8]) -> ::windows_core::Result<::windows_core::PWSTR> {
     ::windows_targets::link!("mf.dll" "system" fn MFGetLocalId(verifier : *const u8, size : u32, id : *mut ::windows_core::PWSTR) -> ::windows_core::HRESULT);
     let mut result__ = ::std::mem::zeroed();
-    MFGetLocalId(::core::mem::transmute(verifier.as_ptr()), verifier.len() as _, &mut result__).from_abi(result__)
+    MFGetLocalId(::core::mem::transmute(verifier.as_ptr()), verifier.len().try_into().unwrap(), &mut result__).from_abi(result__)
 }
 #[inline]
 pub unsafe fn MFGetMFTMerit<P0>(pmft: P0, verifier: &[u8]) -> ::windows_core::Result<u32>
@@ -1316,7 +1316,7 @@ where
 {
     ::windows_targets::link!("mfplat.dll" "system" fn MFGetMFTMerit(pmft : * mut::core::ffi::c_void, cbverifier : u32, verifier : *const u8, merit : *mut u32) -> ::windows_core::HRESULT);
     let mut result__ = ::std::mem::zeroed();
-    MFGetMFTMerit(pmft.into_param().abi(), verifier.len() as _, ::core::mem::transmute(verifier.as_ptr()), &mut result__).from_abi(result__)
+    MFGetMFTMerit(pmft.into_param().abi(), verifier.len().try_into().unwrap(), ::core::mem::transmute(verifier.as_ptr()), &mut result__).from_abi(result__)
 }
 #[inline]
 pub unsafe fn MFGetPlaneSize(format: u32, dwwidth: u32, dwheight: u32) -> ::windows_core::Result<u32> {
@@ -1423,7 +1423,7 @@ where
 }
 #[inline]
 pub unsafe fn MFHeapFree(pv: *mut ::core::ffi::c_void) {
-    ::windows_targets::link!("mfplat.dll" "system" fn MFHeapFree(pv : *mut ::core::ffi::c_void) -> ());
+    ::windows_targets::link!("mfplat.dll" "system" fn MFHeapFree(pv : *mut ::core::ffi::c_void));
     MFHeapFree(pv)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1442,7 +1442,7 @@ where
     P0: ::windows_core::IntoParam<IMFAttributes>,
 {
     ::windows_targets::link!("mfplat.dll" "system" fn MFInitAttributesFromBlob(pattributes : * mut::core::ffi::c_void, pbuf : *const u8, cbbufsize : u32) -> ::windows_core::HRESULT);
-    MFInitAttributesFromBlob(pattributes.into_param().abi(), ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+    MFInitAttributesFromBlob(pattributes.into_param().abi(), ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -1758,7 +1758,7 @@ where
     P0: ::windows_core::IntoParam<IMFSample>,
 {
     ::windows_targets::link!("mfplat.dll" "system" fn MFSplitSample(psample : * mut::core::ffi::c_void, poutputsamples : *mut * mut::core::ffi::c_void, dwoutputsamplemaxcount : u32, pdwoutputsamplecount : *mut u32) -> ::windows_core::HRESULT);
-    MFSplitSample(psample.into_param().abi(), ::core::mem::transmute(poutputsamples.as_ptr()), poutputsamples.len() as _, pdwoutputsamplecount).ok()
+    MFSplitSample(psample.into_param().abi(), ::core::mem::transmute(poutputsamples.as_ptr()), poutputsamples.len().try_into().unwrap(), pdwoutputsamplecount).ok()
 }
 #[inline]
 pub unsafe fn MFStartup(version: u32, dwflags: u32) -> ::windows_core::Result<()> {
@@ -1798,7 +1798,18 @@ where
     P1: ::windows_core::IntoParam<IMFAttributes>,
 {
     ::windows_targets::link!("mfplat.dll" "system" fn MFTRegister(clsidmft : ::windows_core::GUID, guidcategory : ::windows_core::GUID, pszname : ::windows_core::PCWSTR, flags : u32, cinputtypes : u32, pinputtypes : *const MFT_REGISTER_TYPE_INFO, coutputtypes : u32, poutputtypes : *const MFT_REGISTER_TYPE_INFO, pattributes : * mut::core::ffi::c_void) -> ::windows_core::HRESULT);
-    MFTRegister(::core::mem::transmute(clsidmft), ::core::mem::transmute(guidcategory), pszname.into_param().abi(), flags, pinputtypes.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(pinputtypes.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), poutputtypes.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(poutputtypes.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pattributes.into_param().abi()).ok()
+    MFTRegister(
+        ::core::mem::transmute(clsidmft),
+        ::core::mem::transmute(guidcategory),
+        pszname.into_param().abi(),
+        flags,
+        pinputtypes.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()),
+        ::core::mem::transmute(pinputtypes.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())),
+        poutputtypes.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()),
+        ::core::mem::transmute(poutputtypes.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())),
+        pattributes.into_param().abi(),
+    )
+    .ok()
 }
 #[doc = "Required features: `\"Win32_System_Com\"`"]
 #[cfg(feature = "Win32_System_Com")]
@@ -1809,7 +1820,7 @@ where
     P1: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("mfplat.dll" "system" fn MFTRegisterLocal(pclassfactory : * mut::core::ffi::c_void, guidcategory : *const ::windows_core::GUID, pszname : ::windows_core::PCWSTR, flags : u32, cinputtypes : u32, pinputtypes : *const MFT_REGISTER_TYPE_INFO, coutputtypes : u32, poutputtypes : *const MFT_REGISTER_TYPE_INFO) -> ::windows_core::HRESULT);
-    MFTRegisterLocal(pclassfactory.into_param().abi(), guidcategory, pszname.into_param().abi(), flags, pinputtypes.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(pinputtypes.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), poutputtypes.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(poutputtypes.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr()))).ok()
+    MFTRegisterLocal(pclassfactory.into_param().abi(), guidcategory, pszname.into_param().abi(), flags, pinputtypes.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(pinputtypes.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), poutputtypes.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(poutputtypes.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr()))).ok()
 }
 #[inline]
 pub unsafe fn MFTRegisterLocalByCLSID<P0>(clisdmft: *const ::windows_core::GUID, guidcategory: *const ::windows_core::GUID, pszname: P0, flags: u32, pinputtypes: ::core::option::Option<&[MFT_REGISTER_TYPE_INFO]>, poutputtypes: ::core::option::Option<&[MFT_REGISTER_TYPE_INFO]>) -> ::windows_core::Result<()>
@@ -1817,7 +1828,7 @@ where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("mfplat.dll" "system" fn MFTRegisterLocalByCLSID(clisdmft : *const ::windows_core::GUID, guidcategory : *const ::windows_core::GUID, pszname : ::windows_core::PCWSTR, flags : u32, cinputtypes : u32, pinputtypes : *const MFT_REGISTER_TYPE_INFO, coutputtypes : u32, poutputtypes : *const MFT_REGISTER_TYPE_INFO) -> ::windows_core::HRESULT);
-    MFTRegisterLocalByCLSID(clisdmft, guidcategory, pszname.into_param().abi(), flags, pinputtypes.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(pinputtypes.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), poutputtypes.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(poutputtypes.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr()))).ok()
+    MFTRegisterLocalByCLSID(clisdmft, guidcategory, pszname.into_param().abi(), flags, pinputtypes.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(pinputtypes.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), poutputtypes.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(poutputtypes.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr()))).ok()
 }
 #[inline]
 pub unsafe fn MFTUnregister(clsidmft: ::windows_core::GUID) -> ::windows_core::Result<()> {
@@ -1880,7 +1891,7 @@ where
 #[inline]
 pub unsafe fn MFValidateMediaTypeSize(formattype: ::windows_core::GUID, pblock: ::core::option::Option<&[u8]>) -> ::windows_core::Result<()> {
     ::windows_targets::link!("mfplat.dll" "system" fn MFValidateMediaTypeSize(formattype : ::windows_core::GUID, pblock : *const u8, cbsize : u32) -> ::windows_core::HRESULT);
-    MFValidateMediaTypeSize(::core::mem::transmute(formattype), ::core::mem::transmute(pblock.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pblock.as_deref().map_or(0, |slice| slice.len() as _)).ok()
+    MFValidateMediaTypeSize(::core::mem::transmute(formattype), ::core::mem::transmute(pblock.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pblock.as_deref().map_or(0, |slice| slice.len().try_into().unwrap())).ok()
 }
 #[inline]
 pub unsafe fn MFWrapMediaType<P0>(porig: P0, majortype: *const ::windows_core::GUID, subtype: *const ::windows_core::GUID) -> ::windows_core::Result<IMFMediaType>
@@ -2253,7 +2264,7 @@ impl ID3D12VideoDecodeCommandList {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn ResourceBarrier(&self, pbarriers: &[super::super::Graphics::Direct3D12::D3D12_RESOURCE_BARRIER]) {
-        (::windows_core::Interface::vtable(self).ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len() as _, ::core::mem::transmute(pbarriers.as_ptr()))
+        (::windows_core::Interface::vtable(self).ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len().try_into().unwrap(), ::core::mem::transmute(pbarriers.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D12"))]
@@ -2443,7 +2454,7 @@ impl ID3D12VideoDecodeCommandList1 {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn ResourceBarrier(&self, pbarriers: &[super::super::Graphics::Direct3D12::D3D12_RESOURCE_BARRIER]) {
-        (::windows_core::Interface::vtable(self).base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len() as _, ::core::mem::transmute(pbarriers.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len().try_into().unwrap(), ::core::mem::transmute(pbarriers.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D12"))]
@@ -2604,7 +2615,7 @@ impl ID3D12VideoDecodeCommandList2 {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn ResourceBarrier(&self, pbarriers: &[super::super::Graphics::Direct3D12::D3D12_RESOURCE_BARRIER]) {
-        (::windows_core::Interface::vtable(self).base__.base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len() as _, ::core::mem::transmute(pbarriers.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len().try_into().unwrap(), ::core::mem::transmute(pbarriers.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D12"))]
@@ -2797,7 +2808,7 @@ impl ID3D12VideoDecodeCommandList3 {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn ResourceBarrier(&self, pbarriers: &[super::super::Graphics::Direct3D12::D3D12_RESOURCE_BARRIER]) {
-        (::windows_core::Interface::vtable(self).base__.base__.base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len() as _, ::core::mem::transmute(pbarriers.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.base__.base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len().try_into().unwrap(), ::core::mem::transmute(pbarriers.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D12"))]
@@ -2897,7 +2908,7 @@ impl ID3D12VideoDecodeCommandList3 {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn Barrier(&self, pbarriergroups: &[super::super::Graphics::Direct3D12::D3D12_BARRIER_GROUP]) {
-        (::windows_core::Interface::vtable(self).Barrier)(::windows_core::Interface::as_raw(self), pbarriergroups.len() as _, ::core::mem::transmute(pbarriergroups.as_ptr()))
+        (::windows_core::Interface::vtable(self).Barrier)(::windows_core::Interface::as_raw(self), pbarriergroups.len().try_into().unwrap(), ::core::mem::transmute(pbarriergroups.as_ptr()))
     }
 }
 #[cfg(feature = "Win32_Graphics_Direct3D12")]
@@ -3245,7 +3256,7 @@ impl ID3D12VideoDevice {
         T: ::windows_core::ComInterface,
     {
         let mut result__ = ::std::ptr::null_mut();
-        (::windows_core::Interface::vtable(self).CreateVideoProcessor)(::windows_core::Interface::as_raw(self), nodemask, poutputstreamdesc, pinputstreamdescs.len() as _, ::core::mem::transmute(pinputstreamdescs.as_ptr()), &<T as ::windows_core::ComInterface>::IID, &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).CreateVideoProcessor)(::windows_core::Interface::as_raw(self), nodemask, poutputstreamdesc, pinputstreamdescs.len().try_into().unwrap(), ::core::mem::transmute(pinputstreamdescs.as_ptr()), &<T as ::windows_core::ComInterface>::IID, &mut result__).from_abi(result__)
     }
 }
 ::windows_core::imp::interface_hierarchy!(ID3D12VideoDevice, ::windows_core::IUnknown);
@@ -3302,7 +3313,7 @@ impl ID3D12VideoDevice1 {
         T: ::windows_core::ComInterface,
     {
         let mut result__ = ::std::ptr::null_mut();
-        (::windows_core::Interface::vtable(self).base__.CreateVideoProcessor)(::windows_core::Interface::as_raw(self), nodemask, poutputstreamdesc, pinputstreamdescs.len() as _, ::core::mem::transmute(pinputstreamdescs.as_ptr()), &<T as ::windows_core::ComInterface>::IID, &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).base__.CreateVideoProcessor)(::windows_core::Interface::as_raw(self), nodemask, poutputstreamdesc, pinputstreamdescs.len().try_into().unwrap(), ::core::mem::transmute(pinputstreamdescs.as_ptr()), &<T as ::windows_core::ComInterface>::IID, &mut result__).from_abi(result__)
     }
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`, `\"Win32_Graphics_Dxgi_Common\"`"]
     #[cfg(all(feature = "Win32_Graphics_Direct3D12", feature = "Win32_Graphics_Dxgi_Common"))]
@@ -3377,7 +3388,7 @@ impl ID3D12VideoDevice2 {
         T: ::windows_core::ComInterface,
     {
         let mut result__ = ::std::ptr::null_mut();
-        (::windows_core::Interface::vtable(self).base__.base__.CreateVideoProcessor)(::windows_core::Interface::as_raw(self), nodemask, poutputstreamdesc, pinputstreamdescs.len() as _, ::core::mem::transmute(pinputstreamdescs.as_ptr()), &<T as ::windows_core::ComInterface>::IID, &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).base__.base__.CreateVideoProcessor)(::windows_core::Interface::as_raw(self), nodemask, poutputstreamdesc, pinputstreamdescs.len().try_into().unwrap(), ::core::mem::transmute(pinputstreamdescs.as_ptr()), &<T as ::windows_core::ComInterface>::IID, &mut result__).from_abi(result__)
     }
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`, `\"Win32_Graphics_Dxgi_Common\"`"]
     #[cfg(all(feature = "Win32_Graphics_Direct3D12", feature = "Win32_Graphics_Dxgi_Common"))]
@@ -3427,7 +3438,7 @@ impl ID3D12VideoDevice2 {
         T: ::windows_core::ComInterface,
     {
         let mut result__ = ::std::ptr::null_mut();
-        (::windows_core::Interface::vtable(self).CreateVideoProcessor1)(::windows_core::Interface::as_raw(self), nodemask, poutputstreamdesc, pinputstreamdescs.len() as _, ::core::mem::transmute(pinputstreamdescs.as_ptr()), pprotectedresourcesession.into_param().abi(), &<T as ::windows_core::ComInterface>::IID, &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).CreateVideoProcessor1)(::windows_core::Interface::as_raw(self), nodemask, poutputstreamdesc, pinputstreamdescs.len().try_into().unwrap(), ::core::mem::transmute(pinputstreamdescs.as_ptr()), pprotectedresourcesession.into_param().abi(), &<T as ::windows_core::ComInterface>::IID, &mut result__).from_abi(result__)
     }
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
@@ -3512,7 +3523,7 @@ impl ID3D12VideoDevice3 {
         T: ::windows_core::ComInterface,
     {
         let mut result__ = ::std::ptr::null_mut();
-        (::windows_core::Interface::vtable(self).base__.base__.base__.CreateVideoProcessor)(::windows_core::Interface::as_raw(self), nodemask, poutputstreamdesc, pinputstreamdescs.len() as _, ::core::mem::transmute(pinputstreamdescs.as_ptr()), &<T as ::windows_core::ComInterface>::IID, &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).base__.base__.base__.CreateVideoProcessor)(::windows_core::Interface::as_raw(self), nodemask, poutputstreamdesc, pinputstreamdescs.len().try_into().unwrap(), ::core::mem::transmute(pinputstreamdescs.as_ptr()), &<T as ::windows_core::ComInterface>::IID, &mut result__).from_abi(result__)
     }
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`, `\"Win32_Graphics_Dxgi_Common\"`"]
     #[cfg(all(feature = "Win32_Graphics_Direct3D12", feature = "Win32_Graphics_Dxgi_Common"))]
@@ -3562,7 +3573,7 @@ impl ID3D12VideoDevice3 {
         T: ::windows_core::ComInterface,
     {
         let mut result__ = ::std::ptr::null_mut();
-        (::windows_core::Interface::vtable(self).base__.CreateVideoProcessor1)(::windows_core::Interface::as_raw(self), nodemask, poutputstreamdesc, pinputstreamdescs.len() as _, ::core::mem::transmute(pinputstreamdescs.as_ptr()), pprotectedresourcesession.into_param().abi(), &<T as ::windows_core::ComInterface>::IID, &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).base__.CreateVideoProcessor1)(::windows_core::Interface::as_raw(self), nodemask, poutputstreamdesc, pinputstreamdescs.len().try_into().unwrap(), ::core::mem::transmute(pinputstreamdescs.as_ptr()), pprotectedresourcesession.into_param().abi(), &<T as ::windows_core::ComInterface>::IID, &mut result__).from_abi(result__)
     }
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
@@ -3681,7 +3692,7 @@ impl ID3D12VideoEncodeCommandList {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn ResourceBarrier(&self, pbarriers: &[super::super::Graphics::Direct3D12::D3D12_RESOURCE_BARRIER]) {
-        (::windows_core::Interface::vtable(self).ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len() as _, ::core::mem::transmute(pbarriers.as_ptr()))
+        (::windows_core::Interface::vtable(self).ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len().try_into().unwrap(), ::core::mem::transmute(pbarriers.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D12"))]
@@ -3892,7 +3903,7 @@ impl ID3D12VideoEncodeCommandList1 {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn ResourceBarrier(&self, pbarriers: &[super::super::Graphics::Direct3D12::D3D12_RESOURCE_BARRIER]) {
-        (::windows_core::Interface::vtable(self).base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len() as _, ::core::mem::transmute(pbarriers.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len().try_into().unwrap(), ::core::mem::transmute(pbarriers.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D12"))]
@@ -4078,7 +4089,7 @@ impl ID3D12VideoEncodeCommandList2 {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn ResourceBarrier(&self, pbarriers: &[super::super::Graphics::Direct3D12::D3D12_RESOURCE_BARRIER]) {
-        (::windows_core::Interface::vtable(self).base__.base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len() as _, ::core::mem::transmute(pbarriers.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len().try_into().unwrap(), ::core::mem::transmute(pbarriers.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D12"))]
@@ -4278,7 +4289,7 @@ impl ID3D12VideoEncodeCommandList3 {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn ResourceBarrier(&self, pbarriers: &[super::super::Graphics::Direct3D12::D3D12_RESOURCE_BARRIER]) {
-        (::windows_core::Interface::vtable(self).base__.base__.base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len() as _, ::core::mem::transmute(pbarriers.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.base__.base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len().try_into().unwrap(), ::core::mem::transmute(pbarriers.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D12"))]
@@ -4389,7 +4400,7 @@ impl ID3D12VideoEncodeCommandList3 {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn Barrier(&self, pbarriergroups: &[super::super::Graphics::Direct3D12::D3D12_BARRIER_GROUP]) {
-        (::windows_core::Interface::vtable(self).Barrier)(::windows_core::Interface::as_raw(self), pbarriergroups.len() as _, ::core::mem::transmute(pbarriergroups.as_ptr()))
+        (::windows_core::Interface::vtable(self).Barrier)(::windows_core::Interface::as_raw(self), pbarriergroups.len().try_into().unwrap(), ::core::mem::transmute(pbarriergroups.as_ptr()))
     }
 }
 #[cfg(feature = "Win32_Graphics_Direct3D12")]
@@ -4571,7 +4582,7 @@ impl ID3D12VideoEncoderHeap {
         (::windows_core::Interface::vtable(self).GetResolutionListCount)(::windows_core::Interface::as_raw(self))
     }
     pub unsafe fn GetResolutionList(&self, presolutionlist: &mut [D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetResolutionList)(::windows_core::Interface::as_raw(self), presolutionlist.len() as _, ::core::mem::transmute(presolutionlist.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).GetResolutionList)(::windows_core::Interface::as_raw(self), presolutionlist.len().try_into().unwrap(), ::core::mem::transmute(presolutionlist.as_ptr())).ok()
     }
 }
 #[cfg(feature = "Win32_Graphics_Direct3D12")]
@@ -4899,7 +4910,7 @@ impl ID3D12VideoProcessCommandList {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn ResourceBarrier(&self, pbarriers: &[super::super::Graphics::Direct3D12::D3D12_RESOURCE_BARRIER]) {
-        (::windows_core::Interface::vtable(self).ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len() as _, ::core::mem::transmute(pbarriers.as_ptr()))
+        (::windows_core::Interface::vtable(self).ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len().try_into().unwrap(), ::core::mem::transmute(pbarriers.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D12"))]
@@ -4957,7 +4968,7 @@ impl ID3D12VideoProcessCommandList {
     where
         P0: ::windows_core::IntoParam<ID3D12VideoProcessor>,
     {
-        (::windows_core::Interface::vtable(self).ProcessFrames)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len() as _, ::core::mem::transmute(pinputarguments.as_ptr()))
+        (::windows_core::Interface::vtable(self).ProcessFrames)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len().try_into().unwrap(), ::core::mem::transmute(pinputarguments.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
@@ -5089,7 +5100,7 @@ impl ID3D12VideoProcessCommandList1 {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn ResourceBarrier(&self, pbarriers: &[super::super::Graphics::Direct3D12::D3D12_RESOURCE_BARRIER]) {
-        (::windows_core::Interface::vtable(self).base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len() as _, ::core::mem::transmute(pbarriers.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len().try_into().unwrap(), ::core::mem::transmute(pbarriers.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D12"))]
@@ -5147,7 +5158,7 @@ impl ID3D12VideoProcessCommandList1 {
     where
         P0: ::windows_core::IntoParam<ID3D12VideoProcessor>,
     {
-        (::windows_core::Interface::vtable(self).base__.ProcessFrames)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len() as _, ::core::mem::transmute(pinputarguments.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.ProcessFrames)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len().try_into().unwrap(), ::core::mem::transmute(pinputarguments.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
@@ -5160,7 +5171,7 @@ impl ID3D12VideoProcessCommandList1 {
     where
         P0: ::windows_core::IntoParam<ID3D12VideoProcessor>,
     {
-        (::windows_core::Interface::vtable(self).ProcessFrames1)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len() as _, ::core::mem::transmute(pinputarguments.as_ptr()))
+        (::windows_core::Interface::vtable(self).ProcessFrames1)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len().try_into().unwrap(), ::core::mem::transmute(pinputarguments.as_ptr()))
     }
 }
 #[cfg(feature = "Win32_Graphics_Direct3D12")]
@@ -5250,7 +5261,7 @@ impl ID3D12VideoProcessCommandList2 {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn ResourceBarrier(&self, pbarriers: &[super::super::Graphics::Direct3D12::D3D12_RESOURCE_BARRIER]) {
-        (::windows_core::Interface::vtable(self).base__.base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len() as _, ::core::mem::transmute(pbarriers.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len().try_into().unwrap(), ::core::mem::transmute(pbarriers.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D12"))]
@@ -5308,7 +5319,7 @@ impl ID3D12VideoProcessCommandList2 {
     where
         P0: ::windows_core::IntoParam<ID3D12VideoProcessor>,
     {
-        (::windows_core::Interface::vtable(self).base__.base__.ProcessFrames)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len() as _, ::core::mem::transmute(pinputarguments.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.base__.ProcessFrames)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len().try_into().unwrap(), ::core::mem::transmute(pinputarguments.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
@@ -5321,7 +5332,7 @@ impl ID3D12VideoProcessCommandList2 {
     where
         P0: ::windows_core::IntoParam<ID3D12VideoProcessor>,
     {
-        (::windows_core::Interface::vtable(self).base__.ProcessFrames1)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len() as _, ::core::mem::transmute(pinputarguments.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.ProcessFrames1)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len().try_into().unwrap(), ::core::mem::transmute(pinputarguments.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
@@ -5443,7 +5454,7 @@ impl ID3D12VideoProcessCommandList3 {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn ResourceBarrier(&self, pbarriers: &[super::super::Graphics::Direct3D12::D3D12_RESOURCE_BARRIER]) {
-        (::windows_core::Interface::vtable(self).base__.base__.base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len() as _, ::core::mem::transmute(pbarriers.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.base__.base__.ResourceBarrier)(::windows_core::Interface::as_raw(self), pbarriers.len().try_into().unwrap(), ::core::mem::transmute(pbarriers.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D12"))]
@@ -5501,7 +5512,7 @@ impl ID3D12VideoProcessCommandList3 {
     where
         P0: ::windows_core::IntoParam<ID3D12VideoProcessor>,
     {
-        (::windows_core::Interface::vtable(self).base__.base__.base__.ProcessFrames)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len() as _, ::core::mem::transmute(pinputarguments.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.base__.base__.ProcessFrames)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len().try_into().unwrap(), ::core::mem::transmute(pinputarguments.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
@@ -5514,7 +5525,7 @@ impl ID3D12VideoProcessCommandList3 {
     where
         P0: ::windows_core::IntoParam<ID3D12VideoProcessor>,
     {
-        (::windows_core::Interface::vtable(self).base__.base__.ProcessFrames1)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len() as _, ::core::mem::transmute(pinputarguments.as_ptr()))
+        (::windows_core::Interface::vtable(self).base__.base__.ProcessFrames1)(::windows_core::Interface::as_raw(self), pvideoprocessor.into_param().abi(), poutputarguments, pinputarguments.len().try_into().unwrap(), ::core::mem::transmute(pinputarguments.as_ptr()))
     }
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
@@ -5543,7 +5554,7 @@ impl ID3D12VideoProcessCommandList3 {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D12\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D12")]
     pub unsafe fn Barrier(&self, pbarriergroups: &[super::super::Graphics::Direct3D12::D3D12_BARRIER_GROUP]) {
-        (::windows_core::Interface::vtable(self).Barrier)(::windows_core::Interface::as_raw(self), pbarriergroups.len() as _, ::core::mem::transmute(pbarriergroups.as_ptr()))
+        (::windows_core::Interface::vtable(self).Barrier)(::windows_core::Interface::as_raw(self), pbarriergroups.len().try_into().unwrap(), ::core::mem::transmute(pbarriergroups.as_ptr()))
     }
 }
 #[cfg(feature = "Win32_Graphics_Direct3D12")]
@@ -5620,7 +5631,7 @@ impl ID3D12VideoProcessor {
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Dxgi_Common\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Dxgi_Common"))]
     pub unsafe fn GetInputStreamDescs(&self, pinputstreamdescs: &mut [D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetInputStreamDescs)(::windows_core::Interface::as_raw(self), pinputstreamdescs.len() as _, ::core::mem::transmute(pinputstreamdescs.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).GetInputStreamDescs)(::windows_core::Interface::as_raw(self), pinputstreamdescs.len().try_into().unwrap(), ::core::mem::transmute(pinputstreamdescs.as_ptr())).ok()
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Dxgi_Common\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Dxgi_Common"))]
@@ -5710,7 +5721,7 @@ impl ID3D12VideoProcessor1 {
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Dxgi_Common\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Dxgi_Common"))]
     pub unsafe fn GetInputStreamDescs(&self, pinputstreamdescs: &mut [D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetInputStreamDescs)(::windows_core::Interface::as_raw(self), pinputstreamdescs.len() as _, ::core::mem::transmute(pinputstreamdescs.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).base__.GetInputStreamDescs)(::windows_core::Interface::as_raw(self), pinputstreamdescs.len().try_into().unwrap(), ::core::mem::transmute(pinputstreamdescs.as_ptr())).ok()
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Dxgi_Common\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Dxgi_Common"))]
@@ -5754,7 +5765,7 @@ impl IDXVAHD_Device {
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D9\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D9"))]
     pub unsafe fn CreateVideoSurface(&self, width: u32, height: u32, format: super::super::Graphics::Direct3D9::D3DFORMAT, pool: super::super::Graphics::Direct3D9::D3DPOOL, usage: u32, r#type: DXVAHD_SURFACE_TYPE, ppsurfaces: &mut [::core::option::Option<super::super::Graphics::Direct3D9::IDirect3DSurface9>], psharedhandle: ::core::option::Option<*mut super::super::Foundation::HANDLE>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).CreateVideoSurface)(::windows_core::Interface::as_raw(self), width, height, format, pool, usage, r#type, ppsurfaces.len() as _, ::core::mem::transmute(ppsurfaces.as_ptr()), ::core::mem::transmute(psharedhandle.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).CreateVideoSurface)(::windows_core::Interface::as_raw(self), width, height, format, pool, usage, r#type, ppsurfaces.len().try_into().unwrap(), ::core::mem::transmute(ppsurfaces.as_ptr()), ::core::mem::transmute(psharedhandle.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     #[doc = "Required features: `\"Win32_Graphics_Direct3D9\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D9")]
@@ -5764,20 +5775,20 @@ impl IDXVAHD_Device {
     #[doc = "Required features: `\"Win32_Graphics_Direct3D9\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D9")]
     pub unsafe fn GetVideoProcessorOutputFormats(&self, pformats: &mut [super::super::Graphics::Direct3D9::D3DFORMAT]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetVideoProcessorOutputFormats)(::windows_core::Interface::as_raw(self), pformats.len() as _, ::core::mem::transmute(pformats.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).GetVideoProcessorOutputFormats)(::windows_core::Interface::as_raw(self), pformats.len().try_into().unwrap(), ::core::mem::transmute(pformats.as_ptr())).ok()
     }
     #[doc = "Required features: `\"Win32_Graphics_Direct3D9\"`"]
     #[cfg(feature = "Win32_Graphics_Direct3D9")]
     pub unsafe fn GetVideoProcessorInputFormats(&self, pformats: &mut [super::super::Graphics::Direct3D9::D3DFORMAT]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetVideoProcessorInputFormats)(::windows_core::Interface::as_raw(self), pformats.len() as _, ::core::mem::transmute(pformats.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).GetVideoProcessorInputFormats)(::windows_core::Interface::as_raw(self), pformats.len().try_into().unwrap(), ::core::mem::transmute(pformats.as_ptr())).ok()
     }
     pub unsafe fn GetVideoProcessorCaps(&self, pcaps: &mut [DXVAHD_VPCAPS]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetVideoProcessorCaps)(::windows_core::Interface::as_raw(self), pcaps.len() as _, ::core::mem::transmute(pcaps.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).GetVideoProcessorCaps)(::windows_core::Interface::as_raw(self), pcaps.len().try_into().unwrap(), ::core::mem::transmute(pcaps.as_ptr())).ok()
     }
     #[doc = "Required features: `\"Win32_Foundation\"`"]
     #[cfg(feature = "Win32_Foundation")]
     pub unsafe fn GetVideoProcessorCustomRates(&self, pvpguid: *const ::windows_core::GUID, prates: &mut [DXVAHD_CUSTOM_RATE_DATA]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetVideoProcessorCustomRates)(::windows_core::Interface::as_raw(self), pvpguid, prates.len() as _, ::core::mem::transmute(prates.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).GetVideoProcessorCustomRates)(::windows_core::Interface::as_raw(self), pvpguid, prates.len().try_into().unwrap(), ::core::mem::transmute(prates.as_ptr())).ok()
     }
     pub unsafe fn GetVideoProcessorFilterRange(&self, filter: DXVAHD_FILTER) -> ::windows_core::Result<DXVAHD_FILTER_RANGE_DATA> {
         let mut result__ = ::std::mem::zeroed();
@@ -5845,7 +5856,7 @@ impl IDXVAHD_VideoProcessor {
     where
         P0: ::windows_core::IntoParam<super::super::Graphics::Direct3D9::IDirect3DSurface9>,
     {
-        (::windows_core::Interface::vtable(self).VideoProcessBltHD)(::windows_core::Interface::as_raw(self), poutputsurface.into_param().abi(), outputframe, pstreams.len() as _, ::core::mem::transmute(pstreams.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).VideoProcessBltHD)(::windows_core::Interface::as_raw(self), poutputsurface.into_param().abi(), outputframe, pstreams.len().try_into().unwrap(), ::core::mem::transmute(pstreams.as_ptr())).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IDXVAHD_VideoProcessor, ::windows_core::IUnknown);
@@ -6271,7 +6282,7 @@ impl IDirectXVideoDecoderService {
     #[cfg(feature = "Win32_Graphics_Direct3D9")]
     pub unsafe fn CreateVideoDecoder(&self, guid: *const ::windows_core::GUID, pvideodesc: *const DXVA2_VideoDesc, pconfig: *const DXVA2_ConfigPictureDecode, ppdecoderrendertargets: &[::core::option::Option<super::super::Graphics::Direct3D9::IDirect3DSurface9>]) -> ::windows_core::Result<IDirectXVideoDecoder> {
         let mut result__ = ::std::mem::zeroed();
-        (::windows_core::Interface::vtable(self).CreateVideoDecoder)(::windows_core::Interface::as_raw(self), guid, pvideodesc, pconfig, ::core::mem::transmute(ppdecoderrendertargets.as_ptr()), ppdecoderrendertargets.len() as _, &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).CreateVideoDecoder)(::windows_core::Interface::as_raw(self), guid, pvideodesc, pconfig, ::core::mem::transmute(ppdecoderrendertargets.as_ptr()), ppdecoderrendertargets.len().try_into().unwrap(), &mut result__).from_abi(result__)
     }
 }
 ::windows_core::imp::interface_hierarchy!(IDirectXVideoDecoderService, ::windows_core::IUnknown, IDirectXVideoAccelerationService);
@@ -6357,7 +6368,7 @@ impl IDirectXVideoProcessor {
     where
         P0: ::windows_core::IntoParam<super::super::Graphics::Direct3D9::IDirect3DSurface9>,
     {
-        (::windows_core::Interface::vtable(self).VideoProcessBlt)(::windows_core::Interface::as_raw(self), prendertarget.into_param().abi(), pbltparams, ::core::mem::transmute(psamples.as_ptr()), psamples.len() as _, ::core::mem::transmute(phandlecomplete.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).VideoProcessBlt)(::windows_core::Interface::as_raw(self), prendertarget.into_param().abi(), pbltparams, ::core::mem::transmute(psamples.as_ptr()), psamples.len().try_into().unwrap(), ::core::mem::transmute(phandlecomplete.unwrap_or(::std::ptr::null_mut()))).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IDirectXVideoProcessor, ::windows_core::IUnknown);
@@ -6754,10 +6765,10 @@ impl IMF2DBuffer {
         (::windows_core::Interface::vtable(self).GetContiguousLength)(::windows_core::Interface::as_raw(self), &mut result__).from_abi(result__)
     }
     pub unsafe fn ContiguousCopyTo(&self, pbdestbuffer: &mut [u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).ContiguousCopyTo)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbdestbuffer.as_ptr()), pbdestbuffer.len() as _).ok()
+        (::windows_core::Interface::vtable(self).ContiguousCopyTo)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbdestbuffer.as_ptr()), pbdestbuffer.len().try_into().unwrap()).ok()
     }
     pub unsafe fn ContiguousCopyFrom(&self, pbsrcbuffer: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).ContiguousCopyFrom)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbsrcbuffer.as_ptr()), pbsrcbuffer.len() as _).ok()
+        (::windows_core::Interface::vtable(self).ContiguousCopyFrom)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbsrcbuffer.as_ptr()), pbsrcbuffer.len().try_into().unwrap()).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMF2DBuffer, ::windows_core::IUnknown);
@@ -6806,10 +6817,10 @@ impl IMF2DBuffer2 {
         (::windows_core::Interface::vtable(self).base__.GetContiguousLength)(::windows_core::Interface::as_raw(self), &mut result__).from_abi(result__)
     }
     pub unsafe fn ContiguousCopyTo(&self, pbdestbuffer: &mut [u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.ContiguousCopyTo)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbdestbuffer.as_ptr()), pbdestbuffer.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.ContiguousCopyTo)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbdestbuffer.as_ptr()), pbdestbuffer.len().try_into().unwrap()).ok()
     }
     pub unsafe fn ContiguousCopyFrom(&self, pbsrcbuffer: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.ContiguousCopyFrom)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbsrcbuffer.as_ptr()), pbsrcbuffer.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.ContiguousCopyFrom)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbsrcbuffer.as_ptr()), pbsrcbuffer.len().try_into().unwrap()).ok()
     }
     pub unsafe fn Lock2DSize(&self, lockflags: MF2DBuffer_LockFlags, ppbscanline0: *mut *mut u8, plpitch: *mut i32, ppbbufferstart: *mut *mut u8, pcbbufferlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).Lock2DSize)(::windows_core::Interface::as_raw(self), lockflags, ppbscanline0, plpitch, ppbbufferstart, pcbbufferlength).ok()
@@ -7178,7 +7189,7 @@ impl IMFASFProfile {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -7188,7 +7199,7 @@ impl IMFASFProfile {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -7230,7 +7241,7 @@ impl IMFASFProfile {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -7467,7 +7478,7 @@ impl IMFASFStreamConfig {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -7477,7 +7488,7 @@ impl IMFASFStreamConfig {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -7519,7 +7530,7 @@ impl IMFASFStreamConfig {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -7576,7 +7587,7 @@ impl IMFASFStreamConfig {
         (::windows_core::Interface::vtable(self).GetPayloadExtension)(::windows_core::Interface::as_raw(self), wpayloadextensionnumber, pguidextensionsystemid, pcbextensiondatasize, pbextensionsysteminfo, pcbextensionsysteminfo).ok()
     }
     pub unsafe fn AddPayloadExtension(&self, guidextensionsystemid: ::windows_core::GUID, cbextensiondatasize: u16, pbextensionsysteminfo: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).AddPayloadExtension)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(guidextensionsystemid), cbextensiondatasize, ::core::mem::transmute(pbextensionsysteminfo.as_ptr()), pbextensionsysteminfo.len() as _).ok()
+        (::windows_core::Interface::vtable(self).AddPayloadExtension)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(guidextensionsystemid), cbextensiondatasize, ::core::mem::transmute(pbextensionsysteminfo.as_ptr()), pbextensionsysteminfo.len().try_into().unwrap()).ok()
     }
     pub unsafe fn RemoveAllPayloadExtensions(&self) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).RemoveAllPayloadExtensions)(::windows_core::Interface::as_raw(self)).ok()
@@ -7779,7 +7790,7 @@ impl IMFActivate {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -7789,7 +7800,7 @@ impl IMFActivate {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -7831,7 +7842,7 @@ impl IMFActivate {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -8039,7 +8050,7 @@ impl IMFAttributes {
         (::windows_core::Interface::vtable(self).GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -8049,7 +8060,7 @@ impl IMFAttributes {
         (::windows_core::Interface::vtable(self).GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -8091,7 +8102,7 @@ impl IMFAttributes {
         (::windows_core::Interface::vtable(self).SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -8227,7 +8238,7 @@ impl IMFAudioMediaType {
         (::windows_core::Interface::vtable(self).base__.base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -8237,7 +8248,7 @@ impl IMFAudioMediaType {
         (::windows_core::Interface::vtable(self).base__.base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -8279,7 +8290,7 @@ impl IMFAudioMediaType {
         (::windows_core::Interface::vtable(self).base__.base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -8419,10 +8430,10 @@ impl IMFAudioStreamVolume {
         (::windows_core::Interface::vtable(self).GetChannelVolume)(::windows_core::Interface::as_raw(self), dwindex, &mut result__).from_abi(result__)
     }
     pub unsafe fn SetAllVolumes(&self, pfvolumes: &[f32]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).SetAllVolumes)(::windows_core::Interface::as_raw(self), pfvolumes.len() as _, ::core::mem::transmute(pfvolumes.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).SetAllVolumes)(::windows_core::Interface::as_raw(self), pfvolumes.len().try_into().unwrap(), ::core::mem::transmute(pfvolumes.as_ptr())).ok()
     }
     pub unsafe fn GetAllVolumes(&self, pfvolumes: &mut [f32]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetAllVolumes)(::windows_core::Interface::as_raw(self), pfvolumes.len() as _, ::core::mem::transmute(pfvolumes.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).GetAllVolumes)(::windows_core::Interface::as_raw(self), pfvolumes.len().try_into().unwrap(), ::core::mem::transmute(pfvolumes.as_ptr())).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFAudioStreamVolume, ::windows_core::IUnknown);
@@ -8496,14 +8507,14 @@ impl IMFByteStream {
         (::windows_core::Interface::vtable(self).IsEndOfStream)(::windows_core::Interface::as_raw(self), &mut result__).from_abi(result__)
     }
     pub unsafe fn Read(&self, pb: &mut [u8], pcbread: *mut u32) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).Read)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pb.as_ptr()), pb.len() as _, pcbread).ok()
+        (::windows_core::Interface::vtable(self).Read)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pb.as_ptr()), pb.len().try_into().unwrap(), pcbread).ok()
     }
     pub unsafe fn BeginRead<P0, P1>(&self, pb: &mut [u8], pcallback: P0, punkstate: P1) -> ::windows_core::Result<()>
     where
         P0: ::windows_core::IntoParam<IMFAsyncCallback>,
         P1: ::windows_core::IntoParam<::windows_core::IUnknown>,
     {
-        (::windows_core::Interface::vtable(self).BeginRead)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pb.as_ptr()), pb.len() as _, pcallback.into_param().abi(), punkstate.into_param().abi()).ok()
+        (::windows_core::Interface::vtable(self).BeginRead)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pb.as_ptr()), pb.len().try_into().unwrap(), pcallback.into_param().abi(), punkstate.into_param().abi()).ok()
     }
     pub unsafe fn EndRead<P0>(&self, presult: P0) -> ::windows_core::Result<u32>
     where
@@ -8514,14 +8525,14 @@ impl IMFByteStream {
     }
     pub unsafe fn Write(&self, pb: &[u8]) -> ::windows_core::Result<u32> {
         let mut result__ = ::std::mem::zeroed();
-        (::windows_core::Interface::vtable(self).Write)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pb.as_ptr()), pb.len() as _, &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).Write)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pb.as_ptr()), pb.len().try_into().unwrap(), &mut result__).from_abi(result__)
     }
     pub unsafe fn BeginWrite<P0, P1>(&self, pb: &[u8], pcallback: P0, punkstate: P1) -> ::windows_core::Result<()>
     where
         P0: ::windows_core::IntoParam<IMFAsyncCallback>,
         P1: ::windows_core::IntoParam<::windows_core::IUnknown>,
     {
-        (::windows_core::Interface::vtable(self).BeginWrite)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pb.as_ptr()), pb.len() as _, pcallback.into_param().abi(), punkstate.into_param().abi()).ok()
+        (::windows_core::Interface::vtable(self).BeginWrite)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pb.as_ptr()), pb.len().try_into().unwrap(), pcallback.into_param().abi(), punkstate.into_param().abi()).ok()
     }
     pub unsafe fn EndWrite<P0>(&self, presult: P0) -> ::windows_core::Result<u32>
     where
@@ -8900,7 +8911,7 @@ impl IMFCameraControlDefaultsCollection {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -8910,7 +8921,7 @@ impl IMFCameraControlDefaultsCollection {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -8952,7 +8963,7 @@ impl IMFCameraControlDefaultsCollection {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -10019,11 +10030,11 @@ impl IMFContentDecryptionModule {
         (::windows_core::Interface::vtable(self).CreateSession)(::windows_core::Interface::as_raw(self), sessiontype, callbacks.into_param().abi(), &mut result__).from_abi(result__)
     }
     pub unsafe fn SetServerCertificate(&self, certificate: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).SetServerCertificate)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(certificate.as_ptr()), certificate.len() as _).ok()
+        (::windows_core::Interface::vtable(self).SetServerCertificate)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(certificate.as_ptr()), certificate.len().try_into().unwrap()).ok()
     }
     pub unsafe fn CreateTrustedInput(&self, contentinitdata: &[u8]) -> ::windows_core::Result<IMFTrustedInput> {
         let mut result__ = ::std::mem::zeroed();
-        (::windows_core::Interface::vtable(self).CreateTrustedInput)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(contentinitdata.as_ptr()), contentinitdata.len() as _, &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).CreateTrustedInput)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(contentinitdata.as_ptr()), contentinitdata.len().try_into().unwrap(), &mut result__).from_abi(result__)
     }
     pub unsafe fn GetProtectionSystemIds(&self, systemids: *mut *mut ::windows_core::GUID, count: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).GetProtectionSystemIds)(::windows_core::Interface::as_raw(self), systemids, count).ok()
@@ -10113,7 +10124,7 @@ impl IMFContentDecryptionModuleFactory {
         P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
     {
         let mut result__ = ::std::mem::zeroed();
-        (::windows_core::Interface::vtable(self).CreateContentDecryptionModuleAccess)(::windows_core::Interface::as_raw(self), keysystem.into_param().abi(), ::core::mem::transmute(configurations.as_ptr()), configurations.len() as _, &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).CreateContentDecryptionModuleAccess)(::windows_core::Interface::as_raw(self), keysystem.into_param().abi(), ::core::mem::transmute(configurations.as_ptr()), configurations.len().try_into().unwrap(), &mut result__).from_abi(result__)
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFContentDecryptionModuleFactory, ::windows_core::IUnknown);
@@ -10164,10 +10175,10 @@ impl IMFContentDecryptionModuleSession {
     where
         P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
     {
-        (::windows_core::Interface::vtable(self).GenerateRequest)(::windows_core::Interface::as_raw(self), initdatatype.into_param().abi(), ::core::mem::transmute(initdata.as_ptr()), initdata.len() as _).ok()
+        (::windows_core::Interface::vtable(self).GenerateRequest)(::windows_core::Interface::as_raw(self), initdatatype.into_param().abi(), ::core::mem::transmute(initdata.as_ptr()), initdata.len().try_into().unwrap()).ok()
     }
     pub unsafe fn Update(&self, response: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).Update)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(response.as_ptr()), response.len() as _).ok()
+        (::windows_core::Interface::vtable(self).Update)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(response.as_ptr()), response.len().try_into().unwrap()).ok()
     }
     pub unsafe fn Close(&self) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).Close)(::windows_core::Interface::as_raw(self)).ok()
@@ -10207,7 +10218,7 @@ impl IMFContentDecryptionModuleSessionCallbacks {
     where
         P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
     {
-        (::windows_core::Interface::vtable(self).KeyMessage)(::windows_core::Interface::as_raw(self), messagetype, ::core::mem::transmute(message.as_ptr()), message.len() as _, destinationurl.into_param().abi()).ok()
+        (::windows_core::Interface::vtable(self).KeyMessage)(::windows_core::Interface::as_raw(self), messagetype, ::core::mem::transmute(message.as_ptr()), message.len().try_into().unwrap(), destinationurl.into_param().abi()).ok()
     }
     pub unsafe fn KeyStatusChanged(&self) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).KeyStatusChanged)(::windows_core::Interface::as_raw(self)).ok()
@@ -10233,7 +10244,7 @@ pub struct IMFContentDecryptorContext(::windows_core::IUnknown);
 impl IMFContentDecryptorContext {
     pub unsafe fn InitializeHardwareKey(&self, inputprivatedata: ::core::option::Option<&[u8]>) -> ::windows_core::Result<u64> {
         let mut result__ = ::std::mem::zeroed();
-        (::windows_core::Interface::vtable(self).InitializeHardwareKey)(::windows_core::Interface::as_raw(self), inputprivatedata.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(inputprivatedata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).InitializeHardwareKey)(::windows_core::Interface::as_raw(self), inputprivatedata.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(inputprivatedata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), &mut result__).from_abi(result__)
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFContentDecryptorContext, ::windows_core::IUnknown);
@@ -10306,7 +10317,7 @@ pub struct IMFContentEnabler_Vtbl {
 pub struct IMFContentProtectionDevice(::windows_core::IUnknown);
 impl IMFContentProtectionDevice {
     pub unsafe fn InvokeFunction(&self, functionid: u32, inputbuffer: &[u8], outputbufferbytecount: *mut u32, outputbuffer: *mut u8) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).InvokeFunction)(::windows_core::Interface::as_raw(self), functionid, inputbuffer.len() as _, ::core::mem::transmute(inputbuffer.as_ptr()), outputbufferbytecount, outputbuffer).ok()
+        (::windows_core::Interface::vtable(self).InvokeFunction)(::windows_core::Interface::as_raw(self), functionid, inputbuffer.len().try_into().unwrap(), ::core::mem::transmute(inputbuffer.as_ptr()), outputbufferbytecount, outputbuffer).ok()
     }
     pub unsafe fn GetPrivateDataByteCount(&self, privateinputbytecount: *mut u32, privateoutputbytecount: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).GetPrivateDataByteCount)(::windows_core::Interface::as_raw(self), privateinputbytecount, privateoutputbytecount).ok()
@@ -10493,7 +10504,7 @@ pub struct IMFDLNASinkInit_Vtbl {
 pub struct IMFDRMNetHelper(::windows_core::IUnknown);
 impl IMFDRMNetHelper {
     pub unsafe fn ProcessLicenseRequest(&self, plicenserequest: &[u8], pplicenseresponse: *mut *mut u8, pcblicenseresponse: *mut u32, pbstrkid: *mut ::windows_core::BSTR) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).ProcessLicenseRequest)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(plicenserequest.as_ptr()), plicenserequest.len() as _, pplicenseresponse, pcblicenseresponse, ::core::mem::transmute(pbstrkid)).ok()
+        (::windows_core::Interface::vtable(self).ProcessLicenseRequest)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(plicenserequest.as_ptr()), plicenserequest.len().try_into().unwrap(), pplicenseresponse, pcblicenseresponse, ::core::mem::transmute(pbstrkid)).ok()
     }
     pub unsafe fn GetChainedLicenseResponse(&self, pplicenseresponse: *mut *mut u8, pcblicenseresponse: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).GetChainedLicenseResponse)(::windows_core::Interface::as_raw(self), pplicenseresponse, pcblicenseresponse).ok()
@@ -10939,7 +10950,7 @@ pub struct IMFExtendedCameraIntrinsicModel_Vtbl {
 pub struct IMFExtendedCameraIntrinsics(::windows_core::IUnknown);
 impl IMFExtendedCameraIntrinsics {
     pub unsafe fn InitializeFromBuffer(&self, pbbuffer: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).InitializeFromBuffer)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbbuffer.as_ptr()), pbbuffer.len() as _).ok()
+        (::windows_core::Interface::vtable(self).InitializeFromBuffer)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbbuffer.as_ptr()), pbbuffer.len().try_into().unwrap()).ok()
     }
     pub unsafe fn GetBufferSize(&self) -> ::windows_core::Result<u32> {
         let mut result__ = ::std::mem::zeroed();
@@ -11222,7 +11233,7 @@ impl IMFHttpDownloadRequest {
         P0: ::windows_core::IntoParam<IMFAsyncCallback>,
         P1: ::windows_core::IntoParam<::windows_core::IUnknown>,
     {
-        (::windows_core::Interface::vtable(self).BeginSendRequest)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbpayload.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pbpayload.as_deref().map_or(0, |slice| slice.len() as _), pcallback.into_param().abi(), punkstate.into_param().abi()).ok()
+        (::windows_core::Interface::vtable(self).BeginSendRequest)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbpayload.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pbpayload.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), pcallback.into_param().abi(), punkstate.into_param().abi()).ok()
     }
     pub unsafe fn EndSendRequest<P0>(&self, presult: P0) -> ::windows_core::Result<()>
     where
@@ -11248,7 +11259,7 @@ impl IMFHttpDownloadRequest {
         P0: ::windows_core::IntoParam<IMFAsyncCallback>,
         P1: ::windows_core::IntoParam<::windows_core::IUnknown>,
     {
-        (::windows_core::Interface::vtable(self).BeginReadPayload)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pb.as_ptr()), pb.len() as _, pcallback.into_param().abi(), punkstate.into_param().abi()).ok()
+        (::windows_core::Interface::vtable(self).BeginReadPayload)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pb.as_ptr()), pb.len().try_into().unwrap(), pcallback.into_param().abi(), punkstate.into_param().abi()).ok()
     }
     pub unsafe fn EndReadPayload<P0>(&self, presult: P0, pqwoffset: *mut u64, pcbread: *mut u32) -> ::windows_core::Result<()>
     where
@@ -11507,7 +11518,7 @@ pub struct IMFInputTrustAuthority_Vtbl {
 pub struct IMFLocalMFTRegistration(::windows_core::IUnknown);
 impl IMFLocalMFTRegistration {
     pub unsafe fn RegisterMFTs(&self, pmfts: &[MFT_REGISTRATION_INFO]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).RegisterMFTs)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pmfts.as_ptr()), pmfts.len() as _).ok()
+        (::windows_core::Interface::vtable(self).RegisterMFTs)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pmfts.as_ptr()), pmfts.len().try_into().unwrap()).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFLocalMFTRegistration, ::windows_core::IUnknown);
@@ -11937,7 +11948,7 @@ impl IMFMediaEngineClassFactory3 {
         P0: ::windows_core::IntoParam<::windows_core::BSTR>,
     {
         let mut result__ = ::std::mem::zeroed();
-        (::windows_core::Interface::vtable(self).CreateMediaKeySystemAccess)(::windows_core::Interface::as_raw(self), keysystem.into_param().abi(), ::core::mem::transmute(ppsupportedconfigurationsarray.as_ptr()), ppsupportedconfigurationsarray.len() as _, &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).CreateMediaKeySystemAccess)(::windows_core::Interface::as_raw(self), keysystem.into_param().abi(), ::core::mem::transmute(ppsupportedconfigurationsarray.as_ptr()), ppsupportedconfigurationsarray.len().try_into().unwrap(), &mut result__).from_abi(result__)
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFMediaEngineClassFactory3, ::windows_core::IUnknown);
@@ -12080,7 +12091,7 @@ impl IMFMediaEngineEMENotify {
     where
         P0: ::windows_core::IntoParam<::windows_core::BSTR>,
     {
-        (::windows_core::Interface::vtable(self).Encrypted)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbinitdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pbinitdata.as_deref().map_or(0, |slice| slice.len() as _), bstrinitdatatype.into_param().abi())
+        (::windows_core::Interface::vtable(self).Encrypted)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbinitdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pbinitdata.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), bstrinitdatatype.into_param().abi())
     }
     pub unsafe fn WaitingForKey(&self) {
         (::windows_core::Interface::vtable(self).WaitingForKey)(::windows_core::Interface::as_raw(self))
@@ -12638,7 +12649,7 @@ pub struct IMFMediaEngineExtension_Vtbl {
 pub struct IMFMediaEngineNeedKeyNotify(::windows_core::IUnknown);
 impl IMFMediaEngineNeedKeyNotify {
     pub unsafe fn NeedKey(&self, initdata: ::core::option::Option<&[u8]>) {
-        (::windows_core::Interface::vtable(self).NeedKey)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(initdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), initdata.as_deref().map_or(0, |slice| slice.len() as _))
+        (::windows_core::Interface::vtable(self).NeedKey)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(initdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), initdata.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFMediaEngineNeedKeyNotify, ::windows_core::IUnknown);
@@ -12739,7 +12750,7 @@ impl IMFMediaEngineProtectedContent {
         (::windows_core::Interface::vtable(self).SetContentProtectionManager)(::windows_core::Interface::as_raw(self), pcpm.into_param().abi()).ok()
     }
     pub unsafe fn SetApplicationCertificate(&self, pbblob: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).SetApplicationCertificate)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbblob.as_ptr()), pbblob.len() as _).ok()
+        (::windows_core::Interface::vtable(self).SetApplicationCertificate)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbblob.as_ptr()), pbblob.len().try_into().unwrap()).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFMediaEngineProtectedContent, ::windows_core::IUnknown);
@@ -13054,7 +13065,7 @@ impl IMFMediaEvent {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -13064,7 +13075,7 @@ impl IMFMediaEvent {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -13106,7 +13117,7 @@ impl IMFMediaEvent {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -13301,7 +13312,7 @@ impl IMFMediaKeySession {
         (::windows_core::Interface::vtable(self).SessionId)(::windows_core::Interface::as_raw(self), &mut result__).from_abi(result__)
     }
     pub unsafe fn Update(&self, key: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).Update)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(key.as_ptr()), key.len() as _).ok()
+        (::windows_core::Interface::vtable(self).Update)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(key.as_ptr()), key.len().try_into().unwrap()).ok()
     }
     pub unsafe fn Close(&self) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).Close)(::windows_core::Interface::as_raw(self)).ok()
@@ -13340,7 +13351,7 @@ impl IMFMediaKeySession2 {
         (::windows_core::Interface::vtable(self).base__.SessionId)(::windows_core::Interface::as_raw(self), &mut result__).from_abi(result__)
     }
     pub unsafe fn Update(&self, key: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.Update)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(key.as_ptr()), key.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.Update)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(key.as_ptr()), key.len().try_into().unwrap()).ok()
     }
     pub unsafe fn Close(&self) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.Close)(::windows_core::Interface::as_raw(self)).ok()
@@ -13361,7 +13372,7 @@ impl IMFMediaKeySession2 {
     where
         P0: ::windows_core::IntoParam<::windows_core::BSTR>,
     {
-        (::windows_core::Interface::vtable(self).GenerateRequest)(::windows_core::Interface::as_raw(self), initdatatype.into_param().abi(), ::core::mem::transmute(pbinitdata.as_ptr()), pbinitdata.len() as _).ok()
+        (::windows_core::Interface::vtable(self).GenerateRequest)(::windows_core::Interface::as_raw(self), initdatatype.into_param().abi(), ::core::mem::transmute(pbinitdata.as_ptr()), pbinitdata.len().try_into().unwrap()).ok()
     }
     pub unsafe fn Expiration(&self) -> ::windows_core::Result<f64> {
         let mut result__ = ::std::mem::zeroed();
@@ -13403,7 +13414,7 @@ impl IMFMediaKeySessionNotify {
     where
         P0: ::windows_core::IntoParam<::windows_core::BSTR>,
     {
-        (::windows_core::Interface::vtable(self).KeyMessage)(::windows_core::Interface::as_raw(self), destinationurl.into_param().abi(), ::core::mem::transmute(message.as_ptr()), message.len() as _)
+        (::windows_core::Interface::vtable(self).KeyMessage)(::windows_core::Interface::as_raw(self), destinationurl.into_param().abi(), ::core::mem::transmute(message.as_ptr()), message.len().try_into().unwrap())
     }
     pub unsafe fn KeyAdded(&self) {
         (::windows_core::Interface::vtable(self).KeyAdded)(::windows_core::Interface::as_raw(self))
@@ -13435,7 +13446,7 @@ impl IMFMediaKeySessionNotify2 {
     where
         P0: ::windows_core::IntoParam<::windows_core::BSTR>,
     {
-        (::windows_core::Interface::vtable(self).base__.KeyMessage)(::windows_core::Interface::as_raw(self), destinationurl.into_param().abi(), ::core::mem::transmute(message.as_ptr()), message.len() as _)
+        (::windows_core::Interface::vtable(self).base__.KeyMessage)(::windows_core::Interface::as_raw(self), destinationurl.into_param().abi(), ::core::mem::transmute(message.as_ptr()), message.len().try_into().unwrap())
     }
     pub unsafe fn KeyAdded(&self) {
         (::windows_core::Interface::vtable(self).base__.KeyAdded)(::windows_core::Interface::as_raw(self))
@@ -13447,7 +13458,7 @@ impl IMFMediaKeySessionNotify2 {
     where
         P0: ::windows_core::IntoParam<::windows_core::BSTR>,
     {
-        (::windows_core::Interface::vtable(self).KeyMessage2)(::windows_core::Interface::as_raw(self), emessagetype, destinationurl.into_param().abi(), ::core::mem::transmute(pbmessage.as_ptr()), pbmessage.len() as _)
+        (::windows_core::Interface::vtable(self).KeyMessage2)(::windows_core::Interface::as_raw(self), emessagetype, destinationurl.into_param().abi(), ::core::mem::transmute(pbmessage.as_ptr()), pbmessage.len().try_into().unwrap())
     }
     pub unsafe fn KeyStatusChange(&self) {
         (::windows_core::Interface::vtable(self).KeyStatusChange)(::windows_core::Interface::as_raw(self))
@@ -13522,7 +13533,7 @@ impl IMFMediaKeys {
         P1: ::windows_core::IntoParam<IMFMediaKeySessionNotify>,
     {
         let mut result__ = ::std::mem::zeroed();
-        (::windows_core::Interface::vtable(self).CreateSession)(::windows_core::Interface::as_raw(self), mimetype.into_param().abi(), ::core::mem::transmute(initdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), initdata.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(customdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), customdata.as_deref().map_or(0, |slice| slice.len() as _), notify.into_param().abi(), &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).CreateSession)(::windows_core::Interface::as_raw(self), mimetype.into_param().abi(), ::core::mem::transmute(initdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), initdata.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(customdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), customdata.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), notify.into_param().abi(), &mut result__).from_abi(result__)
     }
     pub unsafe fn KeySystem(&self) -> ::windows_core::Result<::windows_core::BSTR> {
         let mut result__ = ::std::mem::zeroed();
@@ -13562,7 +13573,7 @@ impl IMFMediaKeys2 {
         P1: ::windows_core::IntoParam<IMFMediaKeySessionNotify>,
     {
         let mut result__ = ::std::mem::zeroed();
-        (::windows_core::Interface::vtable(self).base__.CreateSession)(::windows_core::Interface::as_raw(self), mimetype.into_param().abi(), ::core::mem::transmute(initdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), initdata.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(customdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), customdata.as_deref().map_or(0, |slice| slice.len() as _), notify.into_param().abi(), &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).base__.CreateSession)(::windows_core::Interface::as_raw(self), mimetype.into_param().abi(), ::core::mem::transmute(initdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), initdata.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(customdata.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), customdata.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), notify.into_param().abi(), &mut result__).from_abi(result__)
     }
     pub unsafe fn KeySystem(&self) -> ::windows_core::Result<::windows_core::BSTR> {
         let mut result__ = ::std::mem::zeroed();
@@ -13583,7 +13594,7 @@ impl IMFMediaKeys2 {
         (::windows_core::Interface::vtable(self).CreateSession2)(::windows_core::Interface::as_raw(self), esessiontype, pmfmediakeysessionnotify2.into_param().abi(), &mut result__).from_abi(result__)
     }
     pub unsafe fn SetServerCertificate(&self, pbservercertificate: ::core::option::Option<&[u8]>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).SetServerCertificate)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbservercertificate.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pbservercertificate.as_deref().map_or(0, |slice| slice.len() as _)).ok()
+        (::windows_core::Interface::vtable(self).SetServerCertificate)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbservercertificate.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pbservercertificate.as_deref().map_or(0, |slice| slice.len().try_into().unwrap())).ok()
     }
     pub unsafe fn GetDOMException(&self, systemcode: ::windows_core::HRESULT) -> ::windows_core::Result<::windows_core::HRESULT> {
         let mut result__ = ::std::mem::zeroed();
@@ -14665,7 +14676,7 @@ impl IMFMediaType {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -14675,7 +14686,7 @@ impl IMFMediaType {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -14717,7 +14728,7 @@ impl IMFMediaType {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -15060,7 +15071,7 @@ impl IMFNetCredential {
     where
         P0: ::windows_core::IntoParam<super::super::Foundation::BOOL>,
     {
-        (::windows_core::Interface::vtable(self).SetUser)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbdata.as_ptr()), pbdata.len() as _, fdataisencrypted.into_param().abi()).ok()
+        (::windows_core::Interface::vtable(self).SetUser)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbdata.as_ptr()), pbdata.len().try_into().unwrap(), fdataisencrypted.into_param().abi()).ok()
     }
     #[doc = "Required features: `\"Win32_Foundation\"`"]
     #[cfg(feature = "Win32_Foundation")]
@@ -15068,7 +15079,7 @@ impl IMFNetCredential {
     where
         P0: ::windows_core::IntoParam<super::super::Foundation::BOOL>,
     {
-        (::windows_core::Interface::vtable(self).SetPassword)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbdata.as_ptr()), pbdata.len() as _, fdataisencrypted.into_param().abi()).ok()
+        (::windows_core::Interface::vtable(self).SetPassword)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbdata.as_ptr()), pbdata.len().try_into().unwrap(), fdataisencrypted.into_param().abi()).ok()
     }
     #[doc = "Required features: `\"Win32_Foundation\"`"]
     #[cfg(feature = "Win32_Foundation")]
@@ -15479,7 +15490,7 @@ impl IMFOutputPolicy {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -15489,7 +15500,7 @@ impl IMFOutputPolicy {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -15531,7 +15542,7 @@ impl IMFOutputPolicy {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -15637,7 +15648,7 @@ impl IMFOutputSchema {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -15647,7 +15658,7 @@ impl IMFOutputSchema {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -15689,7 +15700,7 @@ impl IMFOutputSchema {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -15755,7 +15766,7 @@ impl IMFOutputTrustAuthority {
         (::windows_core::Interface::vtable(self).GetAction)(::windows_core::Interface::as_raw(self), &mut result__).from_abi(result__)
     }
     pub unsafe fn SetPolicy(&self, pppolicy: ::core::option::Option<&[::core::option::Option<IMFOutputPolicy>]>, ppbticket: ::core::option::Option<*mut *mut u8>, pcbticket: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).SetPolicy)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pppolicy.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pppolicy.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(ppbticket.unwrap_or(::std::ptr::null_mut())), ::core::mem::transmute(pcbticket.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).SetPolicy)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pppolicy.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pppolicy.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(ppbticket.unwrap_or(::std::ptr::null_mut())), ::core::mem::transmute(pcbticket.unwrap_or(::std::ptr::null_mut()))).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFOutputTrustAuthority, ::windows_core::IUnknown);
@@ -16630,7 +16641,7 @@ impl IMFPresentationDescriptor {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -16640,7 +16651,7 @@ impl IMFPresentationDescriptor {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -16682,7 +16693,7 @@ impl IMFPresentationDescriptor {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -16796,7 +16807,7 @@ pub struct IMFPresentationTimeSource_Vtbl {
 pub struct IMFProtectedEnvironmentAccess(::windows_core::IUnknown);
 impl IMFProtectedEnvironmentAccess {
     pub unsafe fn Call(&self, input: &[u8], output: &mut [u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).Call)(::windows_core::Interface::as_raw(self), input.len() as _, ::core::mem::transmute(input.as_ptr()), output.len() as _, ::core::mem::transmute(output.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).Call)(::windows_core::Interface::as_raw(self), input.len().try_into().unwrap(), ::core::mem::transmute(input.as_ptr()), output.len().try_into().unwrap(), ::core::mem::transmute(output.as_ptr())).ok()
     }
     pub unsafe fn ReadGRL(&self, outputlength: *mut u32, output: *mut *mut u8) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).ReadGRL)(::windows_core::Interface::as_raw(self), outputlength, output).ok()
@@ -17400,7 +17411,7 @@ impl IMFSSLCertificateManager {
         P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
     {
         let mut result__ = ::std::mem::zeroed();
-        (::windows_core::Interface::vtable(self).OnServerCertificate)(::windows_core::Interface::as_raw(self), pszurl.into_param().abi(), ::core::mem::transmute(pbdata.as_ptr()), pbdata.len() as _, &mut result__).from_abi(result__)
+        (::windows_core::Interface::vtable(self).OnServerCertificate)(::windows_core::Interface::as_raw(self), pszurl.into_param().abi(), ::core::mem::transmute(pbdata.as_ptr()), pbdata.len().try_into().unwrap(), &mut result__).from_abi(result__)
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFSSLCertificateManager, ::windows_core::IUnknown);
@@ -17475,7 +17486,7 @@ impl IMFSample {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -17485,7 +17496,7 @@ impl IMFSample {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -17527,7 +17538,7 @@ impl IMFSample {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -17692,7 +17703,7 @@ impl IMFSampleGrabberSinkCallback {
         (::windows_core::Interface::vtable(self).OnSetPresentationClock)(::windows_core::Interface::as_raw(self), ppresentationclock.into_param().abi()).ok()
     }
     pub unsafe fn OnProcessSample(&self, guidmajormediatype: *const ::windows_core::GUID, dwsampleflags: u32, llsampletime: i64, llsampleduration: i64, psamplebuffer: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).OnProcessSample)(::windows_core::Interface::as_raw(self), guidmajormediatype, dwsampleflags, llsampletime, llsampleduration, ::core::mem::transmute(psamplebuffer.as_ptr()), psamplebuffer.len() as _).ok()
+        (::windows_core::Interface::vtable(self).OnProcessSample)(::windows_core::Interface::as_raw(self), guidmajormediatype, dwsampleflags, llsampletime, llsampleduration, ::core::mem::transmute(psamplebuffer.as_ptr()), psamplebuffer.len().try_into().unwrap()).ok()
     }
     pub unsafe fn OnShutdown(&self) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).OnShutdown)(::windows_core::Interface::as_raw(self)).ok()
@@ -17739,7 +17750,7 @@ impl IMFSampleGrabberSinkCallback2 {
         (::windows_core::Interface::vtable(self).base__.OnSetPresentationClock)(::windows_core::Interface::as_raw(self), ppresentationclock.into_param().abi()).ok()
     }
     pub unsafe fn OnProcessSample(&self, guidmajormediatype: *const ::windows_core::GUID, dwsampleflags: u32, llsampletime: i64, llsampleduration: i64, psamplebuffer: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.OnProcessSample)(::windows_core::Interface::as_raw(self), guidmajormediatype, dwsampleflags, llsampletime, llsampleduration, ::core::mem::transmute(psamplebuffer.as_ptr()), psamplebuffer.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.OnProcessSample)(::windows_core::Interface::as_raw(self), guidmajormediatype, dwsampleflags, llsampletime, llsampleduration, ::core::mem::transmute(psamplebuffer.as_ptr()), psamplebuffer.len().try_into().unwrap()).ok()
     }
     pub unsafe fn OnShutdown(&self) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.OnShutdown)(::windows_core::Interface::as_raw(self)).ok()
@@ -17748,7 +17759,7 @@ impl IMFSampleGrabberSinkCallback2 {
     where
         P0: ::windows_core::IntoParam<IMFAttributes>,
     {
-        (::windows_core::Interface::vtable(self).OnProcessSampleEx)(::windows_core::Interface::as_raw(self), guidmajormediatype, dwsampleflags, llsampletime, llsampleduration, ::core::mem::transmute(psamplebuffer.as_ptr()), psamplebuffer.len() as _, pattributes.into_param().abi()).ok()
+        (::windows_core::Interface::vtable(self).OnProcessSampleEx)(::windows_core::Interface::as_raw(self), guidmajormediatype, dwsampleflags, llsampletime, llsampleduration, ::core::mem::transmute(psamplebuffer.as_ptr()), psamplebuffer.len().try_into().unwrap(), pattributes.into_param().abi()).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFSampleGrabberSinkCallback2, ::windows_core::IUnknown, IMFClockStateSink, IMFSampleGrabberSinkCallback);
@@ -17958,7 +17969,7 @@ impl IMFSecureChannel {
         (::windows_core::Interface::vtable(self).GetCertificate)(::windows_core::Interface::as_raw(self), ppcert, pcbcert).ok()
     }
     pub unsafe fn SetupSession(&self, pbencryptedsessionkey: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).SetupSession)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbencryptedsessionkey.as_ptr()), pbencryptedsessionkey.len() as _).ok()
+        (::windows_core::Interface::vtable(self).SetupSession)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pbencryptedsessionkey.as_ptr()), pbencryptedsessionkey.len().try_into().unwrap()).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFSecureChannel, ::windows_core::IUnknown);
@@ -18090,10 +18101,10 @@ pub struct IMFSensorActivityMonitor_Vtbl {
 pub struct IMFSensorActivityReport(::windows_core::IUnknown);
 impl IMFSensorActivityReport {
     pub unsafe fn GetFriendlyName(&self, friendlyname: &mut [u16], pcchwritten: *mut u32) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetFriendlyName)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(friendlyname.as_ptr()), friendlyname.len() as _, pcchwritten).ok()
+        (::windows_core::Interface::vtable(self).GetFriendlyName)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(friendlyname.as_ptr()), friendlyname.len().try_into().unwrap(), pcchwritten).ok()
     }
     pub unsafe fn GetSymbolicLink(&self, symboliclink: &mut [u16], pcchwritten: *mut u32) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetSymbolicLink)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(symboliclink.as_ptr()), symboliclink.len() as _, pcchwritten).ok()
+        (::windows_core::Interface::vtable(self).GetSymbolicLink)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(symboliclink.as_ptr()), symboliclink.len().try_into().unwrap(), pcchwritten).ok()
     }
     pub unsafe fn GetProcessCount(&self) -> ::windows_core::Result<u32> {
         let mut result__ = ::std::mem::zeroed();
@@ -18137,7 +18148,7 @@ impl IMFSensorDevice {
         (::windows_core::Interface::vtable(self).GetFlags)(::windows_core::Interface::as_raw(self), &mut result__).from_abi(result__)
     }
     pub unsafe fn GetSymbolicLink(&self, symboliclink: &mut [u16], pcchwritten: *mut i32) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetSymbolicLink)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(symboliclink.as_ptr()), symboliclink.len() as _, pcchwritten).ok()
+        (::windows_core::Interface::vtable(self).GetSymbolicLink)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(symboliclink.as_ptr()), symboliclink.len().try_into().unwrap(), pcchwritten).ok()
     }
     pub unsafe fn GetDeviceAttributes(&self) -> ::windows_core::Result<IMFAttributes> {
         let mut result__ = ::std::mem::zeroed();
@@ -18185,7 +18196,7 @@ pub struct IMFSensorDevice_Vtbl {
 pub struct IMFSensorGroup(::windows_core::IUnknown);
 impl IMFSensorGroup {
     pub unsafe fn GetSymbolicLink(&self, symboliclink: &mut [u16], pcchwritten: *mut i32) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetSymbolicLink)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(symboliclink.as_ptr()), symboliclink.len() as _, pcchwritten).ok()
+        (::windows_core::Interface::vtable(self).GetSymbolicLink)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(symboliclink.as_ptr()), symboliclink.len().try_into().unwrap(), pcchwritten).ok()
     }
     pub unsafe fn GetFlags(&self) -> ::windows_core::Result<u64> {
         let mut result__ = ::std::mem::zeroed();
@@ -18425,7 +18436,7 @@ impl IMFSensorStream {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -18435,7 +18446,7 @@ impl IMFSensorStream {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -18477,7 +18488,7 @@ impl IMFSensorStream {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -19008,7 +19019,7 @@ impl IMFSourceBuffer {
         (::windows_core::Interface::vtable(self).SetAppendWindowEnd)(::windows_core::Interface::as_raw(self), time).ok()
     }
     pub unsafe fn Append(&self, pdata: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).Append)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pdata.as_ptr()), pdata.len() as _).ok()
+        (::windows_core::Interface::vtable(self).Append)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(pdata.as_ptr()), pdata.len().try_into().unwrap()).ok()
     }
     pub unsafe fn AppendByteStream<P0>(&self, pstream: P0, pmaxlen: ::core::option::Option<*const u64>) -> ::windows_core::Result<()>
     where
@@ -19628,7 +19639,7 @@ impl IMFSpatialAudioSample {
         (::windows_core::Interface::vtable(self).base__.base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -19638,7 +19649,7 @@ impl IMFSpatialAudioSample {
         (::windows_core::Interface::vtable(self).base__.base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -19680,7 +19691,7 @@ impl IMFSpatialAudioSample {
         (::windows_core::Interface::vtable(self).base__.base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -19843,7 +19854,7 @@ impl IMFStreamDescriptor {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -19853,7 +19864,7 @@ impl IMFStreamDescriptor {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -19895,7 +19906,7 @@ impl IMFStreamDescriptor {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -20059,7 +20070,7 @@ impl IMFSystemId {
         (::windows_core::Interface::vtable(self).GetData)(::windows_core::Interface::as_raw(self), size, data).ok()
     }
     pub unsafe fn Setup(&self, stage: u32, pbin: &[u8], pcbout: *mut u32, ppbout: *mut *mut u8) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).Setup)(::windows_core::Interface::as_raw(self), stage, pbin.len() as _, ::core::mem::transmute(pbin.as_ptr()), pcbout, ppbout).ok()
+        (::windows_core::Interface::vtable(self).Setup)(::windows_core::Interface::as_raw(self), stage, pbin.len().try_into().unwrap(), ::core::mem::transmute(pbin.as_ptr()), pcbout, ppbout).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFSystemId, ::windows_core::IUnknown);
@@ -20417,7 +20428,7 @@ impl IMFTimedTextCueList {
         (::windows_core::Interface::vtable(self).AddTextCue)(::windows_core::Interface::as_raw(self), start, duration, text.into_param().abi(), ::core::mem::transmute(cue.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn AddDataCue(&self, start: f64, duration: f64, data: &[u8], cue: ::core::option::Option<*mut ::core::option::Option<IMFTimedTextCue>>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).AddDataCue)(::windows_core::Interface::as_raw(self), start, duration, ::core::mem::transmute(data.as_ptr()), data.len() as _, ::core::mem::transmute(cue.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).AddDataCue)(::windows_core::Interface::as_raw(self), start, duration, ::core::mem::transmute(data.as_ptr()), data.len().try_into().unwrap(), ::core::mem::transmute(cue.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn RemoveCue<P0>(&self, cue: P0) -> ::windows_core::Result<()>
     where
@@ -21017,7 +21028,7 @@ impl IMFTopology {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -21027,7 +21038,7 @@ impl IMFTopology {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -21069,7 +21080,7 @@ impl IMFTopology {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -21215,7 +21226,7 @@ impl IMFTopologyNode {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -21225,7 +21236,7 @@ impl IMFTopologyNode {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -21267,7 +21278,7 @@ impl IMFTopologyNode {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -21400,7 +21411,7 @@ pub struct IMFTopologyNode_Vtbl {
 pub struct IMFTopologyNodeAttributeEditor(::windows_core::IUnknown);
 impl IMFTopologyNodeAttributeEditor {
     pub unsafe fn UpdateNodeAttributes(&self, topoid: u64, pupdates: &[MFTOPONODE_ATTRIBUTE_UPDATE]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).UpdateNodeAttributes)(::windows_core::Interface::as_raw(self), topoid, pupdates.len() as _, ::core::mem::transmute(pupdates.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).UpdateNodeAttributes)(::windows_core::Interface::as_raw(self), topoid, pupdates.len().try_into().unwrap(), ::core::mem::transmute(pupdates.as_ptr())).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFTopologyNodeAttributeEditor, ::windows_core::IUnknown);
@@ -21597,7 +21608,7 @@ impl IMFTransform {
         (::windows_core::Interface::vtable(self).GetStreamCount)(::windows_core::Interface::as_raw(self), pcinputstreams, pcoutputstreams).ok()
     }
     pub unsafe fn GetStreamIDs(&self, pdwinputids: &mut [u32], pdwoutputids: &mut [u32]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetStreamIDs)(::windows_core::Interface::as_raw(self), pdwinputids.len() as _, ::core::mem::transmute(pdwinputids.as_ptr()), pdwoutputids.len() as _, ::core::mem::transmute(pdwoutputids.as_ptr())).ok()
+        (::windows_core::Interface::vtable(self).GetStreamIDs)(::windows_core::Interface::as_raw(self), pdwinputids.len().try_into().unwrap(), ::core::mem::transmute(pdwinputids.as_ptr()), pdwoutputids.len().try_into().unwrap(), ::core::mem::transmute(pdwoutputids.as_ptr())).ok()
     }
     pub unsafe fn GetInputStreamInfo(&self, dwinputstreamid: u32, pstreaminfo: *mut MFT_INPUT_STREAM_INFO) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).GetInputStreamInfo)(::windows_core::Interface::as_raw(self), dwinputstreamid, pstreaminfo).ok()
@@ -21679,7 +21690,7 @@ impl IMFTransform {
         (::windows_core::Interface::vtable(self).ProcessInput)(::windows_core::Interface::as_raw(self), dwinputstreamid, psample.into_param().abi(), dwflags).ok()
     }
     pub unsafe fn ProcessOutput(&self, dwflags: u32, poutputsamples: &mut [MFT_OUTPUT_DATA_BUFFER], pdwstatus: *mut u32) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).ProcessOutput)(::windows_core::Interface::as_raw(self), dwflags, poutputsamples.len() as _, ::core::mem::transmute(poutputsamples.as_ptr()), pdwstatus).ok()
+        (::windows_core::Interface::vtable(self).ProcessOutput)(::windows_core::Interface::as_raw(self), dwflags, poutputsamples.len().try_into().unwrap(), ::core::mem::transmute(poutputsamples.as_ptr()), pdwstatus).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IMFTransform, ::windows_core::IUnknown);
@@ -22041,7 +22052,7 @@ impl IMFVideoMediaType {
         (::windows_core::Interface::vtable(self).base__.base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -22051,7 +22062,7 @@ impl IMFVideoMediaType {
         (::windows_core::Interface::vtable(self).base__.base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -22093,7 +22104,7 @@ impl IMFVideoMediaType {
         (::windows_core::Interface::vtable(self).base__.base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -22906,7 +22917,7 @@ impl IMFVirtualCamera {
         (::windows_core::Interface::vtable(self).base__.GetStringLength)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetString(&self, guidkey: *const ::windows_core::GUID, pwszvalue: &mut [u16], pcchlength: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len() as _, ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetString)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pwszvalue.as_ptr()), pwszvalue.len().try_into().unwrap(), ::core::mem::transmute(pcchlength.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedString(&self, guidkey: *const ::windows_core::GUID, ppwszvalue: *mut ::windows_core::PWSTR, pcchlength: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedString)(::windows_core::Interface::as_raw(self), guidkey, ppwszvalue, pcchlength).ok()
@@ -22916,7 +22927,7 @@ impl IMFVirtualCamera {
         (::windows_core::Interface::vtable(self).base__.GetBlobSize)(::windows_core::Interface::as_raw(self), guidkey, &mut result__).from_abi(result__)
     }
     pub unsafe fn GetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &mut [u8], pcbblobsize: ::core::option::Option<*mut u32>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _, ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
+        (::windows_core::Interface::vtable(self).base__.GetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap(), ::core::mem::transmute(pcbblobsize.unwrap_or(::std::ptr::null_mut()))).ok()
     }
     pub unsafe fn GetAllocatedBlob(&self, guidkey: *const ::windows_core::GUID, ppbuf: *mut *mut u8, pcbsize: *mut u32) -> ::windows_core::Result<()> {
         (::windows_core::Interface::vtable(self).base__.GetAllocatedBlob)(::windows_core::Interface::as_raw(self), guidkey, ppbuf, pcbsize).ok()
@@ -22958,7 +22969,7 @@ impl IMFVirtualCamera {
         (::windows_core::Interface::vtable(self).base__.SetString)(::windows_core::Interface::as_raw(self), guidkey, wszvalue.into_param().abi()).ok()
     }
     pub unsafe fn SetBlob(&self, guidkey: *const ::windows_core::GUID, pbuf: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len() as _).ok()
+        (::windows_core::Interface::vtable(self).base__.SetBlob)(::windows_core::Interface::as_raw(self), guidkey, ::core::mem::transmute(pbuf.as_ptr()), pbuf.len().try_into().unwrap()).ok()
     }
     pub unsafe fn SetUnknown<P0>(&self, guidkey: *const ::windows_core::GUID, punknown: P0) -> ::windows_core::Result<()>
     where
@@ -22996,14 +23007,14 @@ impl IMFVirtualCamera {
     #[doc = "Required features: `\"Win32_Devices_Properties\"`"]
     #[cfg(feature = "Win32_Devices_Properties")]
     pub unsafe fn AddProperty(&self, pkey: *const super::super::Devices::Properties::DEVPROPKEY, r#type: super::super::Devices::Properties::DEVPROPTYPE, pbdata: &[u8]) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).AddProperty)(::windows_core::Interface::as_raw(self), pkey, r#type, ::core::mem::transmute(pbdata.as_ptr()), pbdata.len() as _).ok()
+        (::windows_core::Interface::vtable(self).AddProperty)(::windows_core::Interface::as_raw(self), pkey, r#type, ::core::mem::transmute(pbdata.as_ptr()), pbdata.len().try_into().unwrap()).ok()
     }
     pub unsafe fn AddRegistryEntry<P0, P1>(&self, entryname: P0, subkeypath: P1, dwregtype: u32, pbdata: &[u8]) -> ::windows_core::Result<()>
     where
         P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
         P1: ::windows_core::IntoParam<::windows_core::PCWSTR>,
     {
-        (::windows_core::Interface::vtable(self).AddRegistryEntry)(::windows_core::Interface::as_raw(self), entryname.into_param().abi(), subkeypath.into_param().abi(), dwregtype, ::core::mem::transmute(pbdata.as_ptr()), pbdata.len() as _).ok()
+        (::windows_core::Interface::vtable(self).AddRegistryEntry)(::windows_core::Interface::as_raw(self), entryname.into_param().abi(), subkeypath.into_param().abi(), dwregtype, ::core::mem::transmute(pbdata.as_ptr()), pbdata.len().try_into().unwrap()).ok()
     }
     pub unsafe fn Start<P0>(&self, pcallback: P0) -> ::windows_core::Result<()>
     where
@@ -23296,7 +23307,7 @@ impl IOPMVideoOutput {
         (::windows_core::Interface::vtable(self).COPPCompatibleGetInformation)(::windows_core::Interface::as_raw(self), pparameters, prequestedinformation).ok()
     }
     pub unsafe fn Configure(&self, pparameters: *const OPM_CONFIGURE_PARAMETERS, pbadditionalparameters: ::core::option::Option<&[u8]>) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).Configure)(::windows_core::Interface::as_raw(self), pparameters, pbadditionalparameters.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(pbadditionalparameters.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr()))).ok()
+        (::windows_core::Interface::vtable(self).Configure)(::windows_core::Interface::as_raw(self), pparameters, pbadditionalparameters.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(pbadditionalparameters.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr()))).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IOPMVideoOutput, ::windows_core::IUnknown);
@@ -23673,7 +23684,7 @@ pub struct ITocParser_Vtbl {
 pub struct IValidateBinding(::windows_core::IUnknown);
 impl IValidateBinding {
     pub unsafe fn GetIdentifier(&self, guidlicensorid: ::windows_core::GUID, pbephemeron: &[u8], ppbblobvalidationid: *mut *mut u8, pcbblobsize: *mut u32) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetIdentifier)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(guidlicensorid), ::core::mem::transmute(pbephemeron.as_ptr()), pbephemeron.len() as _, ppbblobvalidationid, pcbblobsize).ok()
+        (::windows_core::Interface::vtable(self).GetIdentifier)(::windows_core::Interface::as_raw(self), ::core::mem::transmute(guidlicensorid), ::core::mem::transmute(pbephemeron.as_ptr()), pbephemeron.len().try_into().unwrap(), ppbblobvalidationid, pcbblobsize).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IValidateBinding, ::windows_core::IUnknown);
@@ -23816,12 +23827,12 @@ impl IWMCodecStrings {
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Media_DxMediaObjects\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Media_DxMediaObjects"))]
     pub unsafe fn GetName(&self, pmt: *mut super::DxMediaObjects::DMO_MEDIA_TYPE, szname: ::core::option::Option<&mut [u16]>, pcchlength: *mut u32) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetName)(::windows_core::Interface::as_raw(self), pmt, szname.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(szname.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pcchlength).ok()
+        (::windows_core::Interface::vtable(self).GetName)(::windows_core::Interface::as_raw(self), pmt, szname.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(szname.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pcchlength).ok()
     }
     #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Media_DxMediaObjects\"`"]
     #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Media_DxMediaObjects"))]
     pub unsafe fn GetDescription(&self, pmt: *mut super::DxMediaObjects::DMO_MEDIA_TYPE, szdescription: ::core::option::Option<&mut [u16]>, pcchlength: *mut u32) -> ::windows_core::Result<()> {
-        (::windows_core::Interface::vtable(self).GetDescription)(::windows_core::Interface::as_raw(self), pmt, szdescription.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(szdescription.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pcchlength).ok()
+        (::windows_core::Interface::vtable(self).GetDescription)(::windows_core::Interface::as_raw(self), pmt, szdescription.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(szdescription.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pcchlength).ok()
     }
 }
 ::windows_core::imp::interface_hierarchy!(IWMCodecStrings, ::windows_core::IUnknown);
@@ -24865,6 +24876,7 @@ pub const D3D12_FEATURE_VIDEO_DECODE_SUPPORT: D3D12_FEATURE_VIDEO = D3D12_FEATUR
 pub const D3D12_FEATURE_VIDEO_ENCODER_CODEC: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(33i32);
 pub const D3D12_FEATURE_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(42i32);
 pub const D3D12_FEATURE_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(44i32);
+pub const D3D12_FEATURE_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(46i32);
 pub const D3D12_FEATURE_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(40i32);
 pub const D3D12_FEATURE_VIDEO_ENCODER_HEAP_SIZE: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(41i32);
 pub const D3D12_FEATURE_VIDEO_ENCODER_INPUT_FORMAT: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(37i32);
@@ -24875,6 +24887,7 @@ pub const D3D12_FEATURE_VIDEO_ENCODER_PROFILE_LEVEL: D3D12_FEATURE_VIDEO = D3D12
 pub const D3D12_FEATURE_VIDEO_ENCODER_RATE_CONTROL_MODE: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(38i32);
 pub const D3D12_FEATURE_VIDEO_ENCODER_RESOURCE_REQUIREMENTS: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(45i32);
 pub const D3D12_FEATURE_VIDEO_ENCODER_SUPPORT: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(43i32);
+pub const D3D12_FEATURE_VIDEO_ENCODER_SUPPORT1: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(47i32);
 pub const D3D12_FEATURE_VIDEO_EXTENSION_COMMANDS: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(23i32);
 pub const D3D12_FEATURE_VIDEO_EXTENSION_COMMAND_COUNT: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(22i32);
 pub const D3D12_FEATURE_VIDEO_EXTENSION_COMMAND_PARAMETERS: D3D12_FEATURE_VIDEO = D3D12_FEATURE_VIDEO(25i32);
@@ -24928,6 +24941,16 @@ pub const D3D12_VIDEO_DECODE_PROFILE_H264_STEREO: ::windows_core::GUID = ::windo
 pub const D3D12_VIDEO_DECODE_PROFILE_H264_STEREO_PROGRESSIVE: ::windows_core::GUID = ::windows_core::GUID::from_u128(0xd79be8da_0cf1_4c81_b82a_69a4e236f43d);
 pub const D3D12_VIDEO_DECODE_PROFILE_HEVC_MAIN: ::windows_core::GUID = ::windows_core::GUID::from_u128(0x5b11d51b_2f4c_4452_bcc3_09f2a1160cc0);
 pub const D3D12_VIDEO_DECODE_PROFILE_HEVC_MAIN10: ::windows_core::GUID = ::windows_core::GUID::from_u128(0x107af0e0_ef1a_4d19_aba8_67a163073d13);
+pub const D3D12_VIDEO_DECODE_PROFILE_HEVC_MAIN10_422: ::windows_core::GUID = ::windows_core::GUID::from_u128(0x0bac4fe5_1532_4429_a854_f84de04953db);
+pub const D3D12_VIDEO_DECODE_PROFILE_HEVC_MAIN10_444: ::windows_core::GUID = ::windows_core::GUID::from_u128(0x0dabeffa_4458_4602_bc03_0795659d617c);
+pub const D3D12_VIDEO_DECODE_PROFILE_HEVC_MAIN10_EXT: ::windows_core::GUID = ::windows_core::GUID::from_u128(0x9cc55490_e37c_4932_8684_4920f9f6409c);
+pub const D3D12_VIDEO_DECODE_PROFILE_HEVC_MAIN12: ::windows_core::GUID = ::windows_core::GUID::from_u128(0x1a72925f_0c2c_4f15_96fb_b17d1473603f);
+pub const D3D12_VIDEO_DECODE_PROFILE_HEVC_MAIN12_422: ::windows_core::GUID = ::windows_core::GUID::from_u128(0x55bcac81_f311_4093_a7d0_1cbc0b849bee);
+pub const D3D12_VIDEO_DECODE_PROFILE_HEVC_MAIN12_444: ::windows_core::GUID = ::windows_core::GUID::from_u128(0x9798634d_fe9d_48e5_b4da_dbec45b3df01);
+pub const D3D12_VIDEO_DECODE_PROFILE_HEVC_MAIN16: ::windows_core::GUID = ::windows_core::GUID::from_u128(0xa4fbdbb0_a113_482b_a232_635cc0697f6d);
+pub const D3D12_VIDEO_DECODE_PROFILE_HEVC_MAIN_444: ::windows_core::GUID = ::windows_core::GUID::from_u128(0x4008018f_f537_4b36_98cf_61af8a2c1a33);
+pub const D3D12_VIDEO_DECODE_PROFILE_HEVC_MONOCHROME: ::windows_core::GUID = ::windows_core::GUID::from_u128(0x0685b993_3d8c_43a0_8b28_d74c2d6899a4);
+pub const D3D12_VIDEO_DECODE_PROFILE_HEVC_MONOCHROME10: ::windows_core::GUID = ::windows_core::GUID::from_u128(0x142a1d0f_69dd_4ec9_8591_b12ffcb91a29);
 pub const D3D12_VIDEO_DECODE_PROFILE_MPEG1_AND_MPEG2: ::windows_core::GUID = ::windows_core::GUID::from_u128(0x86695f12_340e_4f04_9fd3_9253dd327460);
 pub const D3D12_VIDEO_DECODE_PROFILE_MPEG2: ::windows_core::GUID = ::windows_core::GUID::from_u128(0xee27417f_5e28_4e65_beea_1d26b508adc9);
 pub const D3D12_VIDEO_DECODE_PROFILE_MPEG4PT2_ADVSIMPLE_NOGMC: ::windows_core::GUID = ::windows_core::GUID::from_u128(0xed418a9f_010d_4eda_9ae3_9a65358d8d2e);
@@ -24948,6 +24971,174 @@ pub const D3D12_VIDEO_DECODE_TIER_1: D3D12_VIDEO_DECODE_TIER = D3D12_VIDEO_DECOD
 pub const D3D12_VIDEO_DECODE_TIER_2: D3D12_VIDEO_DECODE_TIER = D3D12_VIDEO_DECODE_TIER(2i32);
 pub const D3D12_VIDEO_DECODE_TIER_3: D3D12_VIDEO_DECODE_TIER = D3D12_VIDEO_DECODE_TIER(3i32);
 pub const D3D12_VIDEO_DECODE_TIER_NOT_SUPPORTED: D3D12_VIDEO_DECODE_TIER = D3D12_VIDEO_DECODE_TIER(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE_COMPOUND_REFERENCE: D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE = D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE_SINGLE_REFERENCE: D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE = D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_128x128_SUPERBLOCK: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_ALLOW_HIGH_PRECISION_MV: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(8388608i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_AUTO_SEGMENTATION: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(65536i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_CDEF_FILTERING: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(4096i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_CUSTOM_SEGMENTATION: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(131072i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_DELTA_LF_PARAMS: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(33554432i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_DUAL_FILTER: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(64i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_FILTER_INTRA: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_FORCED_INTEGER_MOTION_VECTORS: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(256i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_FRAME_REFERENCE_MOTION_VECTORS: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(16384i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_INTERINTRA_COMPOUND: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(8i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_INTRA_BLOCK_COPY: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(8192i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_INTRA_EDGE_FILTER: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_JNT_COMP: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(128i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_LOOP_FILTER_DELTAS: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(262144i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_LOOP_RESTORATION_FILTER: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(1024i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_MASKED_COMPOUND: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(16i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_MOTION_MODE_SWITCHABLE: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(4194304i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_NONE: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_ORDER_HINT_TOOLS: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(32768i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_PALETTE_ENCODING: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(2048i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_QUANTIZATION_DELTAS: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(524288i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_QUANTIZATION_MATRIX: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(1048576i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_REDUCED_TX_SET: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(2097152i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_SKIP_MODE_PRESENT: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(16777216i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_SUPER_RESOLUTION: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(512i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAG_WARPED_MOTION: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(32i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAG_AREA: D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS(64i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAG_CODEC_CONSTRAINT: D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAG_COLS_COUNT: D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS(16i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAG_HARDWARE_CONSTRAINT: D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAG_NONE: D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAG_NOT_SPECIFIED: D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAG_ROWS_COUNT: D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS(8i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAG_TOTAL_TILES: D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS(128i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAG_WIDTH: D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS(32i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAG_INTER_FRAME: D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAG_INTRA_ONLY_FRAME: D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAG_KEY_FRAME: D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAG_NONE: D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAG_SWITCH_FRAME: D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS = D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS(8i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_INTER_FRAME: D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE = D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_INTRA_ONLY_FRAME: D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE = D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_KEY_FRAME: D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE = D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_SWITCH_FRAME: D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE = D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE(3i32);
+pub const D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_BILINEAR: D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS = D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS(3i32);
+pub const D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_EIGHTTAP: D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS = D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_EIGHTTAP_SHARP: D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS = D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_EIGHTTAP_SMOOTH: D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS = D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAG_BILINEAR: D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS = D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS(8i32);
+pub const D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAG_EIGHTTAP: D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS = D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAG_EIGHTTAP_SHARP: D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS = D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAG_EIGHTTAP_SMOOTH: D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS = D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAG_NONE: D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS = D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAG_SWITCHABLE: D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS = D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS(16i32);
+pub const D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_SWITCHABLE: D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS = D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_2_0: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_2_1: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_2_2: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_2_3: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(3i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_3_0: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_3_1: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(5i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_3_2: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(6i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_3_3: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(7i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_4_0: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(8i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_4_1: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(9i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_4_2: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(10i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_4_3: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(11i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_5_0: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(12i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_5_1: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(13i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_5_2: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(14i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_5_3: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(15i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_6_0: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(16i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_6_1: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(17i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_6_2: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(18i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_6_3: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(19i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_7_0: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(20i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_7_1: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(21i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_7_2: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(22i32);
+pub const D3D12_VIDEO_ENCODER_AV1_LEVELS_7_3: D3D12_VIDEO_ENCODER_AV1_LEVELS = D3D12_VIDEO_ENCODER_AV1_LEVELS(23i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_ALLOW_HIGH_PRECISION_MV: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(16384i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_ALLOW_INTRA_BLOCK_COPY: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(64i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_DISABLE_CDF_UPDATE: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_DISABLE_FRAME_END_UPDATE_CDF: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(256i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_ENABLE_ERROR_RESILIENT_MODE: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_ENABLE_FRAME_SEGMENTATION_AUTO: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(512i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_ENABLE_FRAME_SEGMENTATION_CUSTOM: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(1024i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_ENABLE_PALETTE_ENCODING: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_ENABLE_SKIP_MODE: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(8i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_ENABLE_WARPED_MOTION: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(2048i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_FORCE_INTEGER_MOTION_VECTORS: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(32i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_FRAME_REFERENCE_MOTION_VECTORS: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(16i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_MOTION_MODE_SWITCHABLE: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(8192i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_NONE: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_REDUCED_TX_SET: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(4096i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAG_USE_SUPER_RESOLUTION: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(128i32);
+pub const D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAG_CDEF_DATA: D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS = D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS(16i32);
+pub const D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAG_COMPOUND_PREDICTION_MODE: D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS = D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS(64i32);
+pub const D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAG_CONTEXT_UPDATE_TILE_ID: D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS = D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS(32i32);
+pub const D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAG_LOOP_FILTER: D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS = D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAG_LOOP_FILTER_DELTA: D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS = D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS(8i32);
+pub const D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAG_NONE: D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS = D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAG_PRIMARY_REF_FRAME: D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS = D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS(128i32);
+pub const D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAG_QUANTIZATION: D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS = D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAG_QUANTIZATION_DELTA: D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS = D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAG_REFERENCE_INDICES: D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS = D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS(256i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PROFILE_HIGH: D3D12_VIDEO_ENCODER_AV1_PROFILE = D3D12_VIDEO_ENCODER_AV1_PROFILE(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PROFILE_MAIN: D3D12_VIDEO_ENCODER_AV1_PROFILE = D3D12_VIDEO_ENCODER_AV1_PROFILE(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_PROFILE_PROFESSIONAL: D3D12_VIDEO_ENCODER_AV1_PROFILE = D3D12_VIDEO_ENCODER_AV1_PROFILE(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_AFFINE: D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION = D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION(3i32);
+pub const D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAG_AFFINE: D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS(8i32);
+pub const D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAG_IDENTITY: D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAG_NONE: D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAG_ROTZOOM: D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAG_TRANSLATION: D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS = D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_IDENTITY: D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION = D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_ROTZOOM: D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION = D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_TRANSLATION: D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION = D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAG_128x128: D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAG_256x256: D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS(8i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAG_32x32: D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAG_64x64: D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAG_NOT_SUPPORTED: D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE_128x128: D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE = D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE(3i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE_256x256: D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE = D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE_32x32: D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE = D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE_64x64: D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE = D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE_DISABLED: D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE = D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE_DISABLED: D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE = D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE_SGRPROJ: D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE = D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE(3i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE_SWITCHABLE: D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE = D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE_WIENER: D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE = D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE_16x16: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE_32x32: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE(3i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE_4x4: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE_64x64: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE_8x8: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_ALT_GLOBALMV: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE(8i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_ALT_LF_U: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_ALT_LF_V: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE(5i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_ALT_LF_Y_H: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE(3i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_ALT_LF_Y_V: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_ALT_Q: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_ALT_REF_FRAME: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE(6i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_ALT_SKIP: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE(7i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_DISABLED: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAG_ALT_GLOBALMV: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS(256i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAG_ALT_LF_U: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS(16i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAG_ALT_LF_V: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS(32i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAG_ALT_LF_Y_H: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS(8i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAG_ALT_LF_Y_V: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAG_ALT_Q: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAG_ALT_SKIP: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS(128i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAG_DISABLED: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAG_NONE: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAG_REF_FRAME: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS(64i32);
+pub const D3D12_VIDEO_ENCODER_AV1_TIER_HIGH: D3D12_VIDEO_ENCODER_AV1_TIER = D3D12_VIDEO_ENCODER_AV1_TIER(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_TIER_MAIN: D3D12_VIDEO_ENCODER_AV1_TIER = D3D12_VIDEO_ENCODER_AV1_TIER(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAG_LARGEST: D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS(2i32);
+pub const D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAG_NONE: D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAG_ONLY4x4: D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAG_SELECT: D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS = D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS(4i32);
+pub const D3D12_VIDEO_ENCODER_AV1_TX_MODE_LARGEST: D3D12_VIDEO_ENCODER_AV1_TX_MODE = D3D12_VIDEO_ENCODER_AV1_TX_MODE(1i32);
+pub const D3D12_VIDEO_ENCODER_AV1_TX_MODE_ONLY4x4: D3D12_VIDEO_ENCODER_AV1_TX_MODE = D3D12_VIDEO_ENCODER_AV1_TX_MODE(0i32);
+pub const D3D12_VIDEO_ENCODER_AV1_TX_MODE_SELECT: D3D12_VIDEO_ENCODER_AV1_TX_MODE = D3D12_VIDEO_ENCODER_AV1_TX_MODE(2i32);
+pub const D3D12_VIDEO_ENCODER_CODEC_AV1: D3D12_VIDEO_ENCODER_CODEC = D3D12_VIDEO_ENCODER_CODEC(2i32);
 pub const D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES_DISABLED: D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES = D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES(0i32);
 pub const D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES_SPATIAL: D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES = D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES(2i32);
 pub const D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES_TEMPORAL: D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES = D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES(1i32);
@@ -25015,8 +25206,10 @@ pub const D3D12_VIDEO_ENCODER_ENCODE_ERROR_FLAG_RECONFIGURATION_REQUEST_NOT_SUPP
 pub const D3D12_VIDEO_ENCODER_ENCODE_ERROR_FLAG_SUBREGION_LAYOUT_CONFIGURATION_NOT_SUPPORTED: D3D12_VIDEO_ENCODER_ENCODE_ERROR_FLAGS = D3D12_VIDEO_ENCODER_ENCODE_ERROR_FLAGS(2i32);
 pub const D3D12_VIDEO_ENCODER_FLAG_NONE: D3D12_VIDEO_ENCODER_FLAGS = D3D12_VIDEO_ENCODER_FLAGS(0i32);
 pub const D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE_BYTES_PER_SUBREGION: D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE = D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE(1i32);
+pub const D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE_CONFIGURABLE_GRID_PARTITION: D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE = D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE(6i32);
 pub const D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE_FULL_FRAME: D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE = D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE(0i32);
 pub const D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE_SQUARE_UNITS_PER_SUBREGION_ROW_UNALIGNED: D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE = D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE(2i32);
+pub const D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE_UNIFORM_GRID_PARTITION: D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE = D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE(5i32);
 pub const D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE_UNIFORM_PARTITIONING_ROWS_PER_SUBREGION: D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE = D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE(3i32);
 pub const D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE_UNIFORM_PARTITIONING_SUBREGIONS_PER_FRAME: D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE = D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE(4i32);
 pub const D3D12_VIDEO_ENCODER_FRAME_TYPE_H264_B_FRAME: D3D12_VIDEO_ENCODER_FRAME_TYPE_H264 = D3D12_VIDEO_ENCODER_FRAME_TYPE_H264(2i32);
@@ -25063,6 +25256,7 @@ pub const D3D12_VIDEO_ENCODER_LEVELS_HEVC_52: D3D12_VIDEO_ENCODER_LEVELS_HEVC = 
 pub const D3D12_VIDEO_ENCODER_LEVELS_HEVC_6: D3D12_VIDEO_ENCODER_LEVELS_HEVC = D3D12_VIDEO_ENCODER_LEVELS_HEVC(10i32);
 pub const D3D12_VIDEO_ENCODER_LEVELS_HEVC_61: D3D12_VIDEO_ENCODER_LEVELS_HEVC = D3D12_VIDEO_ENCODER_LEVELS_HEVC(11i32);
 pub const D3D12_VIDEO_ENCODER_LEVELS_HEVC_62: D3D12_VIDEO_ENCODER_LEVELS_HEVC = D3D12_VIDEO_ENCODER_LEVELS_HEVC(12i32);
+pub const D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE_EIGHTH_PIXEL: D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE = D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE(4i32);
 pub const D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE_FULL_PIXEL: D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE = D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE(1i32);
 pub const D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE_HALF_PIXEL: D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE = D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE(2i32);
 pub const D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE_MAXIMUM: D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE = D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE(0i32);
@@ -25079,10 +25273,12 @@ pub const D3D12_VIDEO_ENCODER_PROFILE_H264_MAIN: D3D12_VIDEO_ENCODER_PROFILE_H26
 pub const D3D12_VIDEO_ENCODER_PROFILE_HEVC_MAIN: D3D12_VIDEO_ENCODER_PROFILE_HEVC = D3D12_VIDEO_ENCODER_PROFILE_HEVC(0i32);
 pub const D3D12_VIDEO_ENCODER_PROFILE_HEVC_MAIN10: D3D12_VIDEO_ENCODER_PROFILE_HEVC = D3D12_VIDEO_ENCODER_PROFILE_HEVC(1i32);
 pub const D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_DELTA_QP: D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS(1i32);
+pub const D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_EXTENSION1_SUPPORT: D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS(64i32);
 pub const D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_FRAME_ANALYSIS: D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS(2i32);
 pub const D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_INITIAL_QP: D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS(8i32);
 pub const D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_MAX_FRAME_SIZE: D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS(16i32);
 pub const D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_QP_RANGE: D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS(4i32);
+pub const D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_QUALITY_VS_SPEED: D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS(128i32);
 pub const D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_VBV_SIZES: D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS(32i32);
 pub const D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_NONE: D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS = D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS(0i32);
 pub const D3D12_VIDEO_ENCODER_RATE_CONTROL_MODE_ABSOLUTE_QP_MAP: D3D12_VIDEO_ENCODER_RATE_CONTROL_MODE = D3D12_VIDEO_ENCODER_RATE_CONTROL_MODE(0i32);
@@ -25101,9 +25297,11 @@ pub const D3D12_VIDEO_ENCODER_SUPPORT_FLAG_MOTION_ESTIMATION_PRECISION_MODE_LIMI
 pub const D3D12_VIDEO_ENCODER_SUPPORT_FLAG_NONE: D3D12_VIDEO_ENCODER_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_SUPPORT_FLAGS(0i32);
 pub const D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_ADJUSTABLE_QP_RANGE_AVAILABLE: D3D12_VIDEO_ENCODER_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_SUPPORT_FLAGS(256i32);
 pub const D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_DELTA_QP_AVAILABLE: D3D12_VIDEO_ENCODER_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_SUPPORT_FLAGS(64i32);
+pub const D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_EXTENSION1_SUPPORT: D3D12_VIDEO_ENCODER_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_SUPPORT_FLAGS(8192i32);
 pub const D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_FRAME_ANALYSIS_AVAILABLE: D3D12_VIDEO_ENCODER_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_SUPPORT_FLAGS(16i32);
 pub const D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_INITIAL_QP_AVAILABLE: D3D12_VIDEO_ENCODER_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_SUPPORT_FLAGS(512i32);
 pub const D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_MAX_FRAME_SIZE_AVAILABLE: D3D12_VIDEO_ENCODER_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_SUPPORT_FLAGS(1024i32);
+pub const D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_QUALITY_VS_SPEED_AVAILABLE: D3D12_VIDEO_ENCODER_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_SUPPORT_FLAGS(16384i32);
 pub const D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_RECONFIGURATION_AVAILABLE: D3D12_VIDEO_ENCODER_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_SUPPORT_FLAGS(2i32);
 pub const D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_VBV_SIZE_CONFIG_AVAILABLE: D3D12_VIDEO_ENCODER_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_SUPPORT_FLAGS(8i32);
 pub const D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RECONSTRUCTED_FRAMES_REQUIRE_TEXTURE_ARRAYS: D3D12_VIDEO_ENCODER_SUPPORT_FLAGS = D3D12_VIDEO_ENCODER_SUPPORT_FLAGS(32i32);
@@ -25121,6 +25319,7 @@ pub const D3D12_VIDEO_ENCODER_VALIDATION_FLAG_NONE: D3D12_VIDEO_ENCODER_VALIDATI
 pub const D3D12_VIDEO_ENCODER_VALIDATION_FLAG_RATE_CONTROL_CONFIGURATION_NOT_SUPPORTED: D3D12_VIDEO_ENCODER_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_VALIDATION_FLAGS(64i32);
 pub const D3D12_VIDEO_ENCODER_VALIDATION_FLAG_RATE_CONTROL_MODE_NOT_SUPPORTED: D3D12_VIDEO_ENCODER_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_VALIDATION_FLAGS(32i32);
 pub const D3D12_VIDEO_ENCODER_VALIDATION_FLAG_RESOLUTION_NOT_SUPPORTED_IN_LIST: D3D12_VIDEO_ENCODER_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_VALIDATION_FLAGS(512i32);
+pub const D3D12_VIDEO_ENCODER_VALIDATION_FLAG_SUBREGION_LAYOUT_DATA_NOT_SUPPORTED: D3D12_VIDEO_ENCODER_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_VALIDATION_FLAGS(4096i32);
 pub const D3D12_VIDEO_ENCODER_VALIDATION_FLAG_SUBREGION_LAYOUT_MODE_NOT_SUPPORTED: D3D12_VIDEO_ENCODER_VALIDATION_FLAGS = D3D12_VIDEO_ENCODER_VALIDATION_FLAGS(256i32);
 pub const D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_FLAG_NONE: D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_FLAGS = D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_FLAGS(0i32);
 pub const D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_FLAG_READ: D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_FLAGS = D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_FLAGS(1i32);
@@ -29320,6 +29519,820 @@ impl ::windows_core::TypeKind for D3D12_VIDEO_DECODE_TIER {
 impl ::core::fmt::Debug for D3D12_VIDEO_DECODE_TIER {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
         f.debug_tuple("D3D12_VIDEO_DECODE_TIER").field(&self.0).finish()
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE").field(&self.0).finish()
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS").field(&self.0).finish()
+    }
+}
+impl D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS {
+    pub const fn contains(&self, other: Self) -> bool {
+        self.0 & other.0 == other.0
+    }
+}
+impl ::core::ops::BitOr for D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS {
+    type Output = Self;
+    fn bitor(self, other: Self) -> Self {
+        Self(self.0 | other.0)
+    }
+}
+impl ::core::ops::BitAnd for D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS {
+    type Output = Self;
+    fn bitand(self, other: Self) -> Self {
+        Self(self.0 & other.0)
+    }
+}
+impl ::core::ops::BitOrAssign for D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS {
+    fn bitor_assign(&mut self, other: Self) {
+        self.0.bitor_assign(other.0)
+    }
+}
+impl ::core::ops::BitAndAssign for D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS {
+    fn bitand_assign(&mut self, other: Self) {
+        self.0.bitand_assign(other.0)
+    }
+}
+impl ::core::ops::Not for D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS {
+    type Output = Self;
+    fn not(self) -> Self {
+        Self(self.0.not())
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS").field(&self.0).finish()
+    }
+}
+impl D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS {
+    pub const fn contains(&self, other: Self) -> bool {
+        self.0 & other.0 == other.0
+    }
+}
+impl ::core::ops::BitOr for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS {
+    type Output = Self;
+    fn bitor(self, other: Self) -> Self {
+        Self(self.0 | other.0)
+    }
+}
+impl ::core::ops::BitAnd for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS {
+    type Output = Self;
+    fn bitand(self, other: Self) -> Self {
+        Self(self.0 & other.0)
+    }
+}
+impl ::core::ops::BitOrAssign for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS {
+    fn bitor_assign(&mut self, other: Self) {
+        self.0.bitor_assign(other.0)
+    }
+}
+impl ::core::ops::BitAndAssign for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS {
+    fn bitand_assign(&mut self, other: Self) {
+        self.0.bitand_assign(other.0)
+    }
+}
+impl ::core::ops::Not for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS {
+    type Output = Self;
+    fn not(self) -> Self {
+        Self(self.0.not())
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE").field(&self.0).finish()
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS").field(&self.0).finish()
+    }
+}
+impl D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS {
+    pub const fn contains(&self, other: Self) -> bool {
+        self.0 & other.0 == other.0
+    }
+}
+impl ::core::ops::BitOr for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS {
+    type Output = Self;
+    fn bitor(self, other: Self) -> Self {
+        Self(self.0 | other.0)
+    }
+}
+impl ::core::ops::BitAnd for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS {
+    type Output = Self;
+    fn bitand(self, other: Self) -> Self {
+        Self(self.0 & other.0)
+    }
+}
+impl ::core::ops::BitOrAssign for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS {
+    fn bitor_assign(&mut self, other: Self) {
+        self.0.bitor_assign(other.0)
+    }
+}
+impl ::core::ops::BitAndAssign for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS {
+    fn bitand_assign(&mut self, other: Self) {
+        self.0.bitand_assign(other.0)
+    }
+}
+impl ::core::ops::Not for D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS {
+    type Output = Self;
+    fn not(self) -> Self {
+        Self(self.0.not())
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS").field(&self.0).finish()
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS").field(&self.0).finish()
+    }
+}
+impl D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS {
+    pub const fn contains(&self, other: Self) -> bool {
+        self.0 & other.0 == other.0
+    }
+}
+impl ::core::ops::BitOr for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS {
+    type Output = Self;
+    fn bitor(self, other: Self) -> Self {
+        Self(self.0 | other.0)
+    }
+}
+impl ::core::ops::BitAnd for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS {
+    type Output = Self;
+    fn bitand(self, other: Self) -> Self {
+        Self(self.0 & other.0)
+    }
+}
+impl ::core::ops::BitOrAssign for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS {
+    fn bitor_assign(&mut self, other: Self) {
+        self.0.bitor_assign(other.0)
+    }
+}
+impl ::core::ops::BitAndAssign for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS {
+    fn bitand_assign(&mut self, other: Self) {
+        self.0.bitand_assign(other.0)
+    }
+}
+impl ::core::ops::Not for D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS {
+    type Output = Self;
+    fn not(self) -> Self {
+        Self(self.0.not())
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_LEVELS(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_LEVELS {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_LEVELS {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_LEVELS {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_LEVELS {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_LEVELS {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_LEVELS").field(&self.0).finish()
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS").field(&self.0).finish()
+    }
+}
+impl D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS {
+    pub const fn contains(&self, other: Self) -> bool {
+        self.0 & other.0 == other.0
+    }
+}
+impl ::core::ops::BitOr for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS {
+    type Output = Self;
+    fn bitor(self, other: Self) -> Self {
+        Self(self.0 | other.0)
+    }
+}
+impl ::core::ops::BitAnd for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS {
+    type Output = Self;
+    fn bitand(self, other: Self) -> Self {
+        Self(self.0 & other.0)
+    }
+}
+impl ::core::ops::BitOrAssign for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS {
+    fn bitor_assign(&mut self, other: Self) {
+        self.0.bitor_assign(other.0)
+    }
+}
+impl ::core::ops::BitAndAssign for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS {
+    fn bitand_assign(&mut self, other: Self) {
+        self.0.bitand_assign(other.0)
+    }
+}
+impl ::core::ops::Not for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS {
+    type Output = Self;
+    fn not(self) -> Self {
+        Self(self.0.not())
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS").field(&self.0).finish()
+    }
+}
+impl D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS {
+    pub const fn contains(&self, other: Self) -> bool {
+        self.0 & other.0 == other.0
+    }
+}
+impl ::core::ops::BitOr for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS {
+    type Output = Self;
+    fn bitor(self, other: Self) -> Self {
+        Self(self.0 | other.0)
+    }
+}
+impl ::core::ops::BitAnd for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS {
+    type Output = Self;
+    fn bitand(self, other: Self) -> Self {
+        Self(self.0 & other.0)
+    }
+}
+impl ::core::ops::BitOrAssign for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS {
+    fn bitor_assign(&mut self, other: Self) {
+        self.0.bitor_assign(other.0)
+    }
+}
+impl ::core::ops::BitAndAssign for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS {
+    fn bitand_assign(&mut self, other: Self) {
+        self.0.bitand_assign(other.0)
+    }
+}
+impl ::core::ops::Not for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS {
+    type Output = Self;
+    fn not(self) -> Self {
+        Self(self.0.not())
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_PROFILE(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_PROFILE {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_PROFILE {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_PROFILE {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_PROFILE {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_PROFILE {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_PROFILE").field(&self.0).finish()
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION").field(&self.0).finish()
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS").field(&self.0).finish()
+    }
+}
+impl D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS {
+    pub const fn contains(&self, other: Self) -> bool {
+        self.0 & other.0 == other.0
+    }
+}
+impl ::core::ops::BitOr for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS {
+    type Output = Self;
+    fn bitor(self, other: Self) -> Self {
+        Self(self.0 | other.0)
+    }
+}
+impl ::core::ops::BitAnd for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS {
+    type Output = Self;
+    fn bitand(self, other: Self) -> Self {
+        Self(self.0 & other.0)
+    }
+}
+impl ::core::ops::BitOrAssign for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS {
+    fn bitor_assign(&mut self, other: Self) {
+        self.0.bitor_assign(other.0)
+    }
+}
+impl ::core::ops::BitAndAssign for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS {
+    fn bitand_assign(&mut self, other: Self) {
+        self.0.bitand_assign(other.0)
+    }
+}
+impl ::core::ops::Not for D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS {
+    type Output = Self;
+    fn not(self) -> Self {
+        Self(self.0.not())
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS").field(&self.0).finish()
+    }
+}
+impl D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS {
+    pub const fn contains(&self, other: Self) -> bool {
+        self.0 & other.0 == other.0
+    }
+}
+impl ::core::ops::BitOr for D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS {
+    type Output = Self;
+    fn bitor(self, other: Self) -> Self {
+        Self(self.0 | other.0)
+    }
+}
+impl ::core::ops::BitAnd for D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS {
+    type Output = Self;
+    fn bitand(self, other: Self) -> Self {
+        Self(self.0 & other.0)
+    }
+}
+impl ::core::ops::BitOrAssign for D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS {
+    fn bitor_assign(&mut self, other: Self) {
+        self.0.bitor_assign(other.0)
+    }
+}
+impl ::core::ops::BitAndAssign for D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS {
+    fn bitand_assign(&mut self, other: Self) {
+        self.0.bitand_assign(other.0)
+    }
+}
+impl ::core::ops::Not for D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS {
+    type Output = Self;
+    fn not(self) -> Self {
+        Self(self.0.not())
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE").field(&self.0).finish()
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE").field(&self.0).finish()
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE").field(&self.0).finish()
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE").field(&self.0).finish()
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS").field(&self.0).finish()
+    }
+}
+impl D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS {
+    pub const fn contains(&self, other: Self) -> bool {
+        self.0 & other.0 == other.0
+    }
+}
+impl ::core::ops::BitOr for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS {
+    type Output = Self;
+    fn bitor(self, other: Self) -> Self {
+        Self(self.0 | other.0)
+    }
+}
+impl ::core::ops::BitAnd for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS {
+    type Output = Self;
+    fn bitand(self, other: Self) -> Self {
+        Self(self.0 & other.0)
+    }
+}
+impl ::core::ops::BitOrAssign for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS {
+    fn bitor_assign(&mut self, other: Self) {
+        self.0.bitor_assign(other.0)
+    }
+}
+impl ::core::ops::BitAndAssign for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS {
+    fn bitand_assign(&mut self, other: Self) {
+        self.0.bitand_assign(other.0)
+    }
+}
+impl ::core::ops::Not for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS {
+    type Output = Self;
+    fn not(self) -> Self {
+        Self(self.0.not())
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_TIER(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_TIER {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_TIER {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_TIER {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_TIER {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_TIER {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_TIER").field(&self.0).finish()
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_TX_MODE(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_TX_MODE {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_TX_MODE {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_TX_MODE {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_TX_MODE {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_TX_MODE {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_TX_MODE").field(&self.0).finish()
+    }
+}
+#[repr(transparent)]
+#[derive(::core::cmp::PartialEq, ::core::cmp::Eq)]
+pub struct D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS(pub i32);
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_tuple("D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS").field(&self.0).finish()
+    }
+}
+impl D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS {
+    pub const fn contains(&self, other: Self) -> bool {
+        self.0 & other.0 == other.0
+    }
+}
+impl ::core::ops::BitOr for D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS {
+    type Output = Self;
+    fn bitor(self, other: Self) -> Self {
+        Self(self.0 | other.0)
+    }
+}
+impl ::core::ops::BitAnd for D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS {
+    type Output = Self;
+    fn bitand(self, other: Self) -> Self {
+        Self(self.0 & other.0)
+    }
+}
+impl ::core::ops::BitOrAssign for D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS {
+    fn bitor_assign(&mut self, other: Self) {
+        self.0.bitor_assign(other.0)
+    }
+}
+impl ::core::ops::BitAndAssign for D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS {
+    fn bitand_assign(&mut self, other: Self) {
+        self.0.bitand_assign(other.0)
+    }
+}
+impl ::core::ops::Not for D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS {
+    type Output = Self;
+    fn not(self) -> Self {
+        Self(self.0.not())
     }
 }
 #[repr(transparent)]
@@ -39658,6 +40671,37 @@ impl ::core::default::Default for D3D12_FEATURE_DATA_VIDEO_ENCODER_CODEC_PICTURE
 #[repr(C)]
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
+pub struct D3D12_FEATURE_DATA_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG {
+    pub NodeIndex: u32,
+    pub Codec: D3D12_VIDEO_ENCODER_CODEC,
+    pub Profile: D3D12_VIDEO_ENCODER_PROFILE_DESC,
+    pub Level: D3D12_VIDEO_ENCODER_LEVEL_SETTING,
+    pub SubregionMode: D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE,
+    pub FrameResolution: D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC,
+    pub CodecSupport: D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT,
+    pub IsSupported: super::super::Foundation::BOOL,
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::marker::Copy for D3D12_FEATURE_DATA_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG {}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::clone::Clone for D3D12_FEATURE_DATA_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::windows_core::TypeKind for D3D12_FEATURE_DATA_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG {
+    type TypeKind = ::windows_core::CopyType;
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::default::Default for D3D12_FEATURE_DATA_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[doc = "Required features: `\"Win32_Foundation\"`"]
+#[cfg(feature = "Win32_Foundation")]
 pub struct D3D12_FEATURE_DATA_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE {
     pub NodeIndex: u32,
     pub Codec: D3D12_VIDEO_ENCODER_CODEC,
@@ -40024,6 +41068,47 @@ impl ::windows_core::TypeKind for D3D12_FEATURE_DATA_VIDEO_ENCODER_SUPPORT {
 }
 #[cfg(feature = "Win32_Graphics_Dxgi_Common")]
 impl ::core::default::Default for D3D12_FEATURE_DATA_VIDEO_ENCODER_SUPPORT {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[doc = "Required features: `\"Win32_Graphics_Dxgi_Common\"`"]
+#[cfg(feature = "Win32_Graphics_Dxgi_Common")]
+pub struct D3D12_FEATURE_DATA_VIDEO_ENCODER_SUPPORT1 {
+    pub NodeIndex: u32,
+    pub Codec: D3D12_VIDEO_ENCODER_CODEC,
+    pub InputFormat: super::super::Graphics::Dxgi::Common::DXGI_FORMAT,
+    pub CodecConfiguration: D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION,
+    pub CodecGopSequence: D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE,
+    pub RateControl: D3D12_VIDEO_ENCODER_RATE_CONTROL,
+    pub IntraRefresh: D3D12_VIDEO_ENCODER_INTRA_REFRESH_MODE,
+    pub SubregionFrameEncoding: D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE,
+    pub ResolutionsListCount: u32,
+    pub pResolutionList: *const D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC,
+    pub MaxReferenceFramesInDPB: u32,
+    pub ValidationFlags: D3D12_VIDEO_ENCODER_VALIDATION_FLAGS,
+    pub SupportFlags: D3D12_VIDEO_ENCODER_SUPPORT_FLAGS,
+    pub SuggestedProfile: D3D12_VIDEO_ENCODER_PROFILE_DESC,
+    pub SuggestedLevel: D3D12_VIDEO_ENCODER_LEVEL_SETTING,
+    pub pResolutionDependentSupport: *mut D3D12_FEATURE_DATA_VIDEO_ENCODER_RESOLUTION_SUPPORT_LIMITS,
+    pub SubregionFrameEncodingData: D3D12_VIDEO_ENCODER_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA,
+    pub MaxQualityVsSpeed: u32,
+}
+#[cfg(feature = "Win32_Graphics_Dxgi_Common")]
+impl ::core::marker::Copy for D3D12_FEATURE_DATA_VIDEO_ENCODER_SUPPORT1 {}
+#[cfg(feature = "Win32_Graphics_Dxgi_Common")]
+impl ::core::clone::Clone for D3D12_FEATURE_DATA_VIDEO_ENCODER_SUPPORT1 {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+#[cfg(feature = "Win32_Graphics_Dxgi_Common")]
+impl ::windows_core::TypeKind for D3D12_FEATURE_DATA_VIDEO_ENCODER_SUPPORT1 {
+    type TypeKind = ::windows_core::CopyType;
+}
+#[cfg(feature = "Win32_Graphics_Dxgi_Common")]
+impl ::core::default::Default for D3D12_FEATURE_DATA_VIDEO_ENCODER_SUPPORT1 {
     fn default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
@@ -41263,6 +42348,815 @@ impl ::core::default::Default for D3D12_VIDEO_DECODE_REFERENCE_FRAMES {
     }
 }
 #[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_AV1_CDEF_CONFIG {
+    pub CdefBits: u64,
+    pub CdefDampingMinus3: u64,
+    pub CdefYPriStrength: [u64; 8],
+    pub CdefUVPriStrength: [u64; 8],
+    pub CdefYSecStrength: [u64; 8],
+    pub CdefUVSecStrength: [u64; 8],
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_CDEF_CONFIG {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_CDEF_CONFIG {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_CDEF_CONFIG {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_CDEF_CONFIG").field("CdefBits", &self.CdefBits).field("CdefDampingMinus3", &self.CdefDampingMinus3).field("CdefYPriStrength", &self.CdefYPriStrength).field("CdefUVPriStrength", &self.CdefUVPriStrength).field("CdefYSecStrength", &self.CdefYSecStrength).field("CdefUVSecStrength", &self.CdefUVSecStrength).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_CDEF_CONFIG {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_CDEF_CONFIG {
+    fn eq(&self, other: &Self) -> bool {
+        self.CdefBits == other.CdefBits && self.CdefDampingMinus3 == other.CdefDampingMinus3 && self.CdefYPriStrength == other.CdefYPriStrength && self.CdefUVPriStrength == other.CdefUVPriStrength && self.CdefYSecStrength == other.CdefYSecStrength && self.CdefUVSecStrength == other.CdefUVSecStrength
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_CDEF_CONFIG {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_CDEF_CONFIG {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION {
+    pub FeatureFlags: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS,
+    pub OrderHintBitsMinus1: u32,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION").field("FeatureFlags", &self.FeatureFlags).field("OrderHintBitsMinus1", &self.OrderHintBitsMinus1).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION {
+    fn eq(&self, other: &Self) -> bool {
+        self.FeatureFlags == other.FeatureFlags && self.OrderHintBitsMinus1 == other.OrderHintBitsMinus1
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION_SUPPORT {
+    pub SupportedFeatureFlags: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS,
+    pub RequiredFeatureFlags: D3D12_VIDEO_ENCODER_AV1_FEATURE_FLAGS,
+    pub SupportedInterpolationFilters: D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS_FLAGS,
+    pub SupportedRestorationParams: [D3D12_VIDEO_ENCODER_AV1_RESTORATION_SUPPORT_FLAGS; 9],
+    pub SupportedSegmentationModes: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MODE_FLAGS,
+    pub SupportedTxModes: [D3D12_VIDEO_ENCODER_AV1_TX_MODE_FLAGS; 4],
+    pub SegmentationBlockSize: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_BLOCK_SIZE,
+    pub PostEncodeValuesFlags: D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES_FLAGS,
+    pub MaxTemporalLayers: u32,
+    pub MaxSpatialLayers: u32,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION_SUPPORT {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION_SUPPORT {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION_SUPPORT {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION_SUPPORT")
+            .field("SupportedFeatureFlags", &self.SupportedFeatureFlags)
+            .field("RequiredFeatureFlags", &self.RequiredFeatureFlags)
+            .field("SupportedInterpolationFilters", &self.SupportedInterpolationFilters)
+            .field("SupportedRestorationParams", &self.SupportedRestorationParams)
+            .field("SupportedSegmentationModes", &self.SupportedSegmentationModes)
+            .field("SupportedTxModes", &self.SupportedTxModes)
+            .field("SegmentationBlockSize", &self.SegmentationBlockSize)
+            .field("PostEncodeValuesFlags", &self.PostEncodeValuesFlags)
+            .field("MaxTemporalLayers", &self.MaxTemporalLayers)
+            .field("MaxSpatialLayers", &self.MaxSpatialLayers)
+            .finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION_SUPPORT {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION_SUPPORT {
+    fn eq(&self, other: &Self) -> bool {
+        self.SupportedFeatureFlags == other.SupportedFeatureFlags && self.RequiredFeatureFlags == other.RequiredFeatureFlags && self.SupportedInterpolationFilters == other.SupportedInterpolationFilters && self.SupportedRestorationParams == other.SupportedRestorationParams && self.SupportedSegmentationModes == other.SupportedSegmentationModes && self.SupportedTxModes == other.SupportedTxModes && self.SegmentationBlockSize == other.SegmentationBlockSize && self.PostEncodeValuesFlags == other.PostEncodeValuesFlags && self.MaxTemporalLayers == other.MaxTemporalLayers && self.MaxSpatialLayers == other.MaxSpatialLayers
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION_SUPPORT {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION_SUPPORT {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[doc = "Required features: `\"Win32_Foundation\"`"]
+#[cfg(feature = "Win32_Foundation")]
+pub struct D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT {
+    pub Use128SuperBlocks: super::super::Foundation::BOOL,
+    pub TilesConfiguration: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_TILES,
+    pub ValidationFlags: D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_VALIDATION_FLAGS,
+    pub MinTileRows: u32,
+    pub MaxTileRows: u32,
+    pub MinTileCols: u32,
+    pub MaxTileCols: u32,
+    pub MinTileWidth: u32,
+    pub MaxTileWidth: u32,
+    pub MinTileArea: u32,
+    pub MaxTileArea: u32,
+    pub TileSizeBytesMinus1: u32,
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT {}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT")
+            .field("Use128SuperBlocks", &self.Use128SuperBlocks)
+            .field("TilesConfiguration", &self.TilesConfiguration)
+            .field("ValidationFlags", &self.ValidationFlags)
+            .field("MinTileRows", &self.MinTileRows)
+            .field("MaxTileRows", &self.MaxTileRows)
+            .field("MinTileCols", &self.MinTileCols)
+            .field("MaxTileCols", &self.MaxTileCols)
+            .field("MinTileWidth", &self.MinTileWidth)
+            .field("MaxTileWidth", &self.MaxTileWidth)
+            .field("MinTileArea", &self.MinTileArea)
+            .field("MaxTileArea", &self.MaxTileArea)
+            .field("TileSizeBytesMinus1", &self.TileSizeBytesMinus1)
+            .finish()
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT {
+    type TypeKind = ::windows_core::CopyType;
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT {
+    fn eq(&self, other: &Self) -> bool {
+        self.Use128SuperBlocks == other.Use128SuperBlocks && self.TilesConfiguration == other.TilesConfiguration && self.ValidationFlags == other.ValidationFlags && self.MinTileRows == other.MinTileRows && self.MaxTileRows == other.MaxTileRows && self.MinTileCols == other.MinTileCols && self.MaxTileCols == other.MaxTileCols && self.MinTileWidth == other.MinTileWidth && self.MaxTileWidth == other.MaxTileWidth && self.MinTileArea == other.MinTileArea && self.MaxTileArea == other.MaxTileArea && self.TileSizeBytesMinus1 == other.TileSizeBytesMinus1
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT {}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_AV1_LEVEL_TIER_CONSTRAINTS {
+    pub Level: D3D12_VIDEO_ENCODER_AV1_LEVELS,
+    pub Tier: D3D12_VIDEO_ENCODER_AV1_TIER,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_LEVEL_TIER_CONSTRAINTS {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_LEVEL_TIER_CONSTRAINTS {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_LEVEL_TIER_CONSTRAINTS {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_LEVEL_TIER_CONSTRAINTS").field("Level", &self.Level).field("Tier", &self.Tier).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_LEVEL_TIER_CONSTRAINTS {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_LEVEL_TIER_CONSTRAINTS {
+    fn eq(&self, other: &Self) -> bool {
+        self.Level == other.Level && self.Tier == other.Tier
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_LEVEL_TIER_CONSTRAINTS {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_LEVEL_TIER_CONSTRAINTS {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[doc = "Required features: `\"Win32_Foundation\"`"]
+#[cfg(feature = "Win32_Foundation")]
+pub struct D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_CODEC_DATA {
+    pub Flags: D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_FLAGS,
+    pub FrameType: D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE,
+    pub CompoundPredictionType: D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE,
+    pub InterpolationFilter: D3D12_VIDEO_ENCODER_AV1_INTERPOLATION_FILTERS,
+    pub FrameRestorationConfig: D3D12_VIDEO_ENCODER_AV1_RESTORATION_CONFIG,
+    pub TxMode: D3D12_VIDEO_ENCODER_AV1_TX_MODE,
+    pub SuperResDenominator: u32,
+    pub OrderHint: u32,
+    pub PictureIndex: u32,
+    pub TemporalLayerIndexPlus1: u32,
+    pub SpatialLayerIndexPlus1: u32,
+    pub ReferenceFramesReconPictureDescriptors: [D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_DESCRIPTOR; 8],
+    pub ReferenceIndices: [u32; 7],
+    pub PrimaryRefFrame: u32,
+    pub RefreshFrameFlags: u32,
+    pub LoopFilter: D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_CONFIG,
+    pub LoopFilterDelta: D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_DELTA_CONFIG,
+    pub Quantization: D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_CONFIG,
+    pub QuantizationDelta: D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_DELTA_CONFIG,
+    pub CDEF: D3D12_VIDEO_ENCODER_AV1_CDEF_CONFIG,
+    pub QPMapValuesCount: u32,
+    pub pRateControlQPMap: *mut i16,
+    pub CustomSegmentation: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_CONFIG,
+    pub CustomSegmentsMap: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MAP,
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_CODEC_DATA {}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_CODEC_DATA {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_CODEC_DATA {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_CODEC_DATA")
+            .field("Flags", &self.Flags)
+            .field("FrameType", &self.FrameType)
+            .field("CompoundPredictionType", &self.CompoundPredictionType)
+            .field("InterpolationFilter", &self.InterpolationFilter)
+            .field("FrameRestorationConfig", &self.FrameRestorationConfig)
+            .field("TxMode", &self.TxMode)
+            .field("SuperResDenominator", &self.SuperResDenominator)
+            .field("OrderHint", &self.OrderHint)
+            .field("PictureIndex", &self.PictureIndex)
+            .field("TemporalLayerIndexPlus1", &self.TemporalLayerIndexPlus1)
+            .field("SpatialLayerIndexPlus1", &self.SpatialLayerIndexPlus1)
+            .field("ReferenceFramesReconPictureDescriptors", &self.ReferenceFramesReconPictureDescriptors)
+            .field("ReferenceIndices", &self.ReferenceIndices)
+            .field("PrimaryRefFrame", &self.PrimaryRefFrame)
+            .field("RefreshFrameFlags", &self.RefreshFrameFlags)
+            .field("LoopFilter", &self.LoopFilter)
+            .field("LoopFilterDelta", &self.LoopFilterDelta)
+            .field("Quantization", &self.Quantization)
+            .field("QuantizationDelta", &self.QuantizationDelta)
+            .field("CDEF", &self.CDEF)
+            .field("QPMapValuesCount", &self.QPMapValuesCount)
+            .field("pRateControlQPMap", &self.pRateControlQPMap)
+            .field("CustomSegmentation", &self.CustomSegmentation)
+            .field("CustomSegmentsMap", &self.CustomSegmentsMap)
+            .finish()
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_CODEC_DATA {
+    type TypeKind = ::windows_core::CopyType;
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_CODEC_DATA {
+    fn eq(&self, other: &Self) -> bool {
+        self.Flags == other.Flags
+            && self.FrameType == other.FrameType
+            && self.CompoundPredictionType == other.CompoundPredictionType
+            && self.InterpolationFilter == other.InterpolationFilter
+            && self.FrameRestorationConfig == other.FrameRestorationConfig
+            && self.TxMode == other.TxMode
+            && self.SuperResDenominator == other.SuperResDenominator
+            && self.OrderHint == other.OrderHint
+            && self.PictureIndex == other.PictureIndex
+            && self.TemporalLayerIndexPlus1 == other.TemporalLayerIndexPlus1
+            && self.SpatialLayerIndexPlus1 == other.SpatialLayerIndexPlus1
+            && self.ReferenceFramesReconPictureDescriptors == other.ReferenceFramesReconPictureDescriptors
+            && self.ReferenceIndices == other.ReferenceIndices
+            && self.PrimaryRefFrame == other.PrimaryRefFrame
+            && self.RefreshFrameFlags == other.RefreshFrameFlags
+            && self.LoopFilter == other.LoopFilter
+            && self.LoopFilterDelta == other.LoopFilterDelta
+            && self.Quantization == other.Quantization
+            && self.QuantizationDelta == other.QuantizationDelta
+            && self.CDEF == other.CDEF
+            && self.QPMapValuesCount == other.QPMapValuesCount
+            && self.pRateControlQPMap == other.pRateControlQPMap
+            && self.CustomSegmentation == other.CustomSegmentation
+            && self.CustomSegmentsMap == other.CustomSegmentsMap
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_CODEC_DATA {}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_CODEC_DATA {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_TILES {
+    pub RowCount: u64,
+    pub ColCount: u64,
+    pub RowHeights: [u64; 64],
+    pub ColWidths: [u64; 64],
+    pub ContextUpdateTileId: u64,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_TILES {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_TILES {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_TILES {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_TILES").field("RowCount", &self.RowCount).field("ColCount", &self.ColCount).field("RowHeights", &self.RowHeights).field("ColWidths", &self.ColWidths).field("ContextUpdateTileId", &self.ContextUpdateTileId).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_TILES {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_TILES {
+    fn eq(&self, other: &Self) -> bool {
+        self.RowCount == other.RowCount && self.ColCount == other.ColCount && self.RowHeights == other.RowHeights && self.ColWidths == other.ColWidths && self.ContextUpdateTileId == other.ContextUpdateTileId
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_TILES {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_TILES {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES {
+    pub CompoundPredictionType: u64,
+    pub LoopFilter: D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_CONFIG,
+    pub LoopFilterDelta: D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_DELTA_CONFIG,
+    pub Quantization: D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_CONFIG,
+    pub QuantizationDelta: D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_DELTA_CONFIG,
+    pub CDEF: D3D12_VIDEO_ENCODER_AV1_CDEF_CONFIG,
+    pub SegmentationConfig: D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_CONFIG,
+    pub PrimaryRefFrame: u64,
+    pub ReferenceIndices: [u64; 7],
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES")
+            .field("CompoundPredictionType", &self.CompoundPredictionType)
+            .field("LoopFilter", &self.LoopFilter)
+            .field("LoopFilterDelta", &self.LoopFilterDelta)
+            .field("Quantization", &self.Quantization)
+            .field("QuantizationDelta", &self.QuantizationDelta)
+            .field("CDEF", &self.CDEF)
+            .field("SegmentationConfig", &self.SegmentationConfig)
+            .field("PrimaryRefFrame", &self.PrimaryRefFrame)
+            .field("ReferenceIndices", &self.ReferenceIndices)
+            .finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES {
+    fn eq(&self, other: &Self) -> bool {
+        self.CompoundPredictionType == other.CompoundPredictionType && self.LoopFilter == other.LoopFilter && self.LoopFilterDelta == other.LoopFilterDelta && self.Quantization == other.Quantization && self.QuantizationDelta == other.QuantizationDelta && self.CDEF == other.CDEF && self.SegmentationConfig == other.SegmentationConfig && self.PrimaryRefFrame == other.PrimaryRefFrame && self.ReferenceIndices == other.ReferenceIndices
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_POST_ENCODE_VALUES {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[doc = "Required features: `\"Win32_Foundation\"`"]
+#[cfg(feature = "Win32_Foundation")]
+pub struct D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_DESCRIPTOR {
+    pub ReconstructedPictureResourceIndex: u32,
+    pub TemporalLayerIndexPlus1: u32,
+    pub SpatialLayerIndexPlus1: u32,
+    pub FrameType: D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE,
+    pub WarpedMotionInfo: D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_WARPED_MOTION_INFO,
+    pub OrderHint: u32,
+    pub PictureIndex: u32,
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_DESCRIPTOR {}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_DESCRIPTOR {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_DESCRIPTOR {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_DESCRIPTOR").field("ReconstructedPictureResourceIndex", &self.ReconstructedPictureResourceIndex).field("TemporalLayerIndexPlus1", &self.TemporalLayerIndexPlus1).field("SpatialLayerIndexPlus1", &self.SpatialLayerIndexPlus1).field("FrameType", &self.FrameType).field("WarpedMotionInfo", &self.WarpedMotionInfo).field("OrderHint", &self.OrderHint).field("PictureIndex", &self.PictureIndex).finish()
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_DESCRIPTOR {
+    type TypeKind = ::windows_core::CopyType;
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_DESCRIPTOR {
+    fn eq(&self, other: &Self) -> bool {
+        self.ReconstructedPictureResourceIndex == other.ReconstructedPictureResourceIndex && self.TemporalLayerIndexPlus1 == other.TemporalLayerIndexPlus1 && self.SpatialLayerIndexPlus1 == other.SpatialLayerIndexPlus1 && self.FrameType == other.FrameType && self.WarpedMotionInfo == other.WarpedMotionInfo && self.OrderHint == other.OrderHint && self.PictureIndex == other.PictureIndex
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_DESCRIPTOR {}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_DESCRIPTOR {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[doc = "Required features: `\"Win32_Foundation\"`"]
+#[cfg(feature = "Win32_Foundation")]
+pub struct D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_WARPED_MOTION_INFO {
+    pub TransformationType: D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION,
+    pub TransformationMatrix: [i32; 8],
+    pub InvalidAffineSet: super::super::Foundation::BOOL,
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_WARPED_MOTION_INFO {}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_WARPED_MOTION_INFO {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_WARPED_MOTION_INFO {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_WARPED_MOTION_INFO").field("TransformationType", &self.TransformationType).field("TransformationMatrix", &self.TransformationMatrix).field("InvalidAffineSet", &self.InvalidAffineSet).finish()
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_WARPED_MOTION_INFO {
+    type TypeKind = ::windows_core::CopyType;
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_WARPED_MOTION_INFO {
+    fn eq(&self, other: &Self) -> bool {
+        self.TransformationType == other.TransformationType && self.TransformationMatrix == other.TransformationMatrix && self.InvalidAffineSet == other.InvalidAffineSet
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_WARPED_MOTION_INFO {}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_REFERENCE_PICTURE_WARPED_MOTION_INFO {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_AV1_RESTORATION_CONFIG {
+    pub FrameRestorationType: [D3D12_VIDEO_ENCODER_AV1_RESTORATION_TYPE; 3],
+    pub LoopRestorationPixelSize: [D3D12_VIDEO_ENCODER_AV1_RESTORATION_TILESIZE; 3],
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_RESTORATION_CONFIG {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_RESTORATION_CONFIG {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_RESTORATION_CONFIG {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_RESTORATION_CONFIG").field("FrameRestorationType", &self.FrameRestorationType).field("LoopRestorationPixelSize", &self.LoopRestorationPixelSize).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_RESTORATION_CONFIG {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_RESTORATION_CONFIG {
+    fn eq(&self, other: &Self) -> bool {
+        self.FrameRestorationType == other.FrameRestorationType && self.LoopRestorationPixelSize == other.LoopRestorationPixelSize
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_RESTORATION_CONFIG {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_RESTORATION_CONFIG {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_CONFIG {
+    pub UpdateMap: u64,
+    pub TemporalUpdate: u64,
+    pub UpdateData: u64,
+    pub NumSegments: u64,
+    pub SegmentsData: [D3D12_VIDEO_ENCODER_AV1_SEGMENT_DATA; 8],
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_CONFIG {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_CONFIG {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_CONFIG {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_CONFIG").field("UpdateMap", &self.UpdateMap).field("TemporalUpdate", &self.TemporalUpdate).field("UpdateData", &self.UpdateData).field("NumSegments", &self.NumSegments).field("SegmentsData", &self.SegmentsData).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_CONFIG {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_CONFIG {
+    fn eq(&self, other: &Self) -> bool {
+        self.UpdateMap == other.UpdateMap && self.TemporalUpdate == other.TemporalUpdate && self.UpdateData == other.UpdateData && self.NumSegments == other.NumSegments && self.SegmentsData == other.SegmentsData
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_CONFIG {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_CONFIG {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MAP {
+    pub SegmentsMapByteSize: u32,
+    pub pSegmentsMap: *mut u8,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MAP {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MAP {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MAP {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MAP").field("SegmentsMapByteSize", &self.SegmentsMapByteSize).field("pSegmentsMap", &self.pSegmentsMap).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MAP {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MAP {
+    fn eq(&self, other: &Self) -> bool {
+        self.SegmentsMapByteSize == other.SegmentsMapByteSize && self.pSegmentsMap == other.pSegmentsMap
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MAP {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_SEGMENTATION_MAP {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_AV1_SEGMENT_DATA {
+    pub EnabledFeatures: u64,
+    pub FeatureValue: [i64; 8],
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_SEGMENT_DATA {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_SEGMENT_DATA {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_SEGMENT_DATA {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_SEGMENT_DATA").field("EnabledFeatures", &self.EnabledFeatures).field("FeatureValue", &self.FeatureValue).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_SEGMENT_DATA {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_SEGMENT_DATA {
+    fn eq(&self, other: &Self) -> bool {
+        self.EnabledFeatures == other.EnabledFeatures && self.FeatureValue == other.FeatureValue
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_SEGMENT_DATA {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_SEGMENT_DATA {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_AV1_SEQUENCE_STRUCTURE {
+    pub IntraDistance: u32,
+    pub InterFramePeriod: u32,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_AV1_SEQUENCE_STRUCTURE {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_AV1_SEQUENCE_STRUCTURE {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_AV1_SEQUENCE_STRUCTURE {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_AV1_SEQUENCE_STRUCTURE").field("IntraDistance", &self.IntraDistance).field("InterFramePeriod", &self.InterFramePeriod).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_AV1_SEQUENCE_STRUCTURE {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_AV1_SEQUENCE_STRUCTURE {
+    fn eq(&self, other: &Self) -> bool {
+        self.IntraDistance == other.IntraDistance && self.InterFramePeriod == other.InterFramePeriod
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_AV1_SEQUENCE_STRUCTURE {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_AV1_SEQUENCE_STRUCTURE {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_CONFIG {
+    pub LoopFilterLevel: [u64; 2],
+    pub LoopFilterLevelU: u64,
+    pub LoopFilterLevelV: u64,
+    pub LoopFilterSharpnessLevel: u64,
+    pub LoopFilterDeltaEnabled: u64,
+    pub UpdateRefDelta: u64,
+    pub RefDeltas: [i64; 8],
+    pub UpdateModeDelta: u64,
+    pub ModeDeltas: [i64; 2],
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_CONFIG {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_CONFIG {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_CONFIG {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_CONFIG")
+            .field("LoopFilterLevel", &self.LoopFilterLevel)
+            .field("LoopFilterLevelU", &self.LoopFilterLevelU)
+            .field("LoopFilterLevelV", &self.LoopFilterLevelV)
+            .field("LoopFilterSharpnessLevel", &self.LoopFilterSharpnessLevel)
+            .field("LoopFilterDeltaEnabled", &self.LoopFilterDeltaEnabled)
+            .field("UpdateRefDelta", &self.UpdateRefDelta)
+            .field("RefDeltas", &self.RefDeltas)
+            .field("UpdateModeDelta", &self.UpdateModeDelta)
+            .field("ModeDeltas", &self.ModeDeltas)
+            .finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_CONFIG {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_CONFIG {
+    fn eq(&self, other: &Self) -> bool {
+        self.LoopFilterLevel == other.LoopFilterLevel && self.LoopFilterLevelU == other.LoopFilterLevelU && self.LoopFilterLevelV == other.LoopFilterLevelV && self.LoopFilterSharpnessLevel == other.LoopFilterSharpnessLevel && self.LoopFilterDeltaEnabled == other.LoopFilterDeltaEnabled && self.UpdateRefDelta == other.UpdateRefDelta && self.RefDeltas == other.RefDeltas && self.UpdateModeDelta == other.UpdateModeDelta && self.ModeDeltas == other.ModeDeltas
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_CONFIG {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_CONFIG {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_DELTA_CONFIG {
+    pub DeltaLFPresent: u64,
+    pub DeltaLFMulti: u64,
+    pub DeltaLFRes: u64,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_DELTA_CONFIG {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_DELTA_CONFIG {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_DELTA_CONFIG {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_DELTA_CONFIG").field("DeltaLFPresent", &self.DeltaLFPresent).field("DeltaLFMulti", &self.DeltaLFMulti).field("DeltaLFRes", &self.DeltaLFRes).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_DELTA_CONFIG {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_DELTA_CONFIG {
+    fn eq(&self, other: &Self) -> bool {
+        self.DeltaLFPresent == other.DeltaLFPresent && self.DeltaLFMulti == other.DeltaLFMulti && self.DeltaLFRes == other.DeltaLFRes
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_DELTA_CONFIG {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_CODEC_AV1_LOOP_FILTER_DELTA_CONFIG {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_CODEC_AV1_PICTURE_CONTROL_SUPPORT {
+    pub PredictionMode: D3D12_VIDEO_ENCODER_AV1_COMP_PREDICTION_TYPE,
+    pub MaxUniqueReferencesPerFrame: u32,
+    pub SupportedFrameTypes: D3D12_VIDEO_ENCODER_AV1_FRAME_TYPE_FLAGS,
+    pub SupportedReferenceWarpedMotionFlags: D3D12_VIDEO_ENCODER_AV1_REFERENCE_WARPED_MOTION_TRANSFORMATION_FLAGS,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_CODEC_AV1_PICTURE_CONTROL_SUPPORT {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_CODEC_AV1_PICTURE_CONTROL_SUPPORT {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_CODEC_AV1_PICTURE_CONTROL_SUPPORT {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_CODEC_AV1_PICTURE_CONTROL_SUPPORT").field("PredictionMode", &self.PredictionMode).field("MaxUniqueReferencesPerFrame", &self.MaxUniqueReferencesPerFrame).field("SupportedFrameTypes", &self.SupportedFrameTypes).field("SupportedReferenceWarpedMotionFlags", &self.SupportedReferenceWarpedMotionFlags).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_CODEC_AV1_PICTURE_CONTROL_SUPPORT {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_CODEC_AV1_PICTURE_CONTROL_SUPPORT {
+    fn eq(&self, other: &Self) -> bool {
+        self.PredictionMode == other.PredictionMode && self.MaxUniqueReferencesPerFrame == other.MaxUniqueReferencesPerFrame && self.SupportedFrameTypes == other.SupportedFrameTypes && self.SupportedReferenceWarpedMotionFlags == other.SupportedReferenceWarpedMotionFlags
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_CODEC_AV1_PICTURE_CONTROL_SUPPORT {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_CODEC_AV1_PICTURE_CONTROL_SUPPORT {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_CONFIG {
+    pub BaseQIndex: u64,
+    pub YDCDeltaQ: i64,
+    pub UDCDeltaQ: i64,
+    pub UACDeltaQ: i64,
+    pub VDCDeltaQ: i64,
+    pub VACDeltaQ: i64,
+    pub UsingQMatrix: u64,
+    pub QMY: u64,
+    pub QMU: u64,
+    pub QMV: u64,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_CONFIG {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_CONFIG {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_CONFIG {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_CONFIG").field("BaseQIndex", &self.BaseQIndex).field("YDCDeltaQ", &self.YDCDeltaQ).field("UDCDeltaQ", &self.UDCDeltaQ).field("UACDeltaQ", &self.UACDeltaQ).field("VDCDeltaQ", &self.VDCDeltaQ).field("VACDeltaQ", &self.VACDeltaQ).field("UsingQMatrix", &self.UsingQMatrix).field("QMY", &self.QMY).field("QMU", &self.QMU).field("QMV", &self.QMV).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_CONFIG {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_CONFIG {
+    fn eq(&self, other: &Self) -> bool {
+        self.BaseQIndex == other.BaseQIndex && self.YDCDeltaQ == other.YDCDeltaQ && self.UDCDeltaQ == other.UDCDeltaQ && self.UACDeltaQ == other.UACDeltaQ && self.VDCDeltaQ == other.VDCDeltaQ && self.VACDeltaQ == other.VACDeltaQ && self.UsingQMatrix == other.UsingQMatrix && self.QMY == other.QMY && self.QMU == other.QMU && self.QMV == other.QMV
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_CONFIG {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_CONFIG {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_DELTA_CONFIG {
+    pub DeltaQPresent: u64,
+    pub DeltaQRes: u64,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_DELTA_CONFIG {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_DELTA_CONFIG {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_DELTA_CONFIG {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_DELTA_CONFIG").field("DeltaQPresent", &self.DeltaQPresent).field("DeltaQRes", &self.DeltaQRes).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_DELTA_CONFIG {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_DELTA_CONFIG {
+    fn eq(&self, other: &Self) -> bool {
+        self.DeltaQPresent == other.DeltaQPresent && self.DeltaQRes == other.DeltaQRes
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_DELTA_CONFIG {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_CODEC_AV1_QUANTIZATION_DELTA_CONFIG {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
 pub struct D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION {
     pub DataSize: u32,
     pub Anonymous: D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_0,
@@ -41285,6 +43179,7 @@ impl ::core::default::Default for D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION {
 pub union D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_0 {
     pub pH264Config: *mut D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264,
     pub pHEVCConfig: *mut D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC,
+    pub pAV1Config: *mut D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION,
 }
 impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_0 {}
 impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_0 {
@@ -41397,6 +43292,7 @@ impl ::core::default::Default for D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPOR
 pub union D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_0 {
     pub pH264Support: *mut D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_H264,
     pub pHEVCSupport: *mut D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC,
+    pub pAV1Support: *mut D3D12_VIDEO_ENCODER_AV1_CODEC_CONFIGURATION_SUPPORT,
 }
 impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_0 {}
 impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_0 {
@@ -41508,6 +43404,7 @@ impl ::core::default::Default for D3D12_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPP
 pub union D3D12_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT_0 {
     pub pH264Support: *mut D3D12_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT_H264,
     pub pHEVCSupport: *mut D3D12_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT_HEVC,
+    pub pAV1Support: *mut D3D12_VIDEO_ENCODER_CODEC_AV1_PICTURE_CONTROL_SUPPORT,
 }
 impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT_0 {}
 impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT_0 {
@@ -41758,6 +43655,55 @@ impl ::core::default::Default for D3D12_VIDEO_ENCODER_ENCODE_OPERATION_METADATA_
     }
 }
 #[repr(C)]
+#[doc = "Required features: `\"Win32_Foundation\"`"]
+#[cfg(feature = "Win32_Foundation")]
+pub struct D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT {
+    pub DataSize: u32,
+    pub Anonymous: D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT_0,
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT {}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT {
+    type TypeKind = ::windows_core::CopyType;
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[doc = "Required features: `\"Win32_Foundation\"`"]
+#[cfg(feature = "Win32_Foundation")]
+pub union D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT_0 {
+    pub pAV1Support: *mut D3D12_VIDEO_ENCODER_AV1_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT,
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT_0 {}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT_0 {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT_0 {
+    type TypeKind = ::windows_core::CopyType;
+}
+#[cfg(feature = "Win32_Foundation")]
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_CONFIG_SUPPORT_0 {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
 pub struct D3D12_VIDEO_ENCODER_FRAME_SUBREGION_METADATA {
     pub bSize: u64,
     pub bStartOffset: u64,
@@ -41865,6 +43811,7 @@ impl ::core::default::Default for D3D12_VIDEO_ENCODER_LEVEL_SETTING {
 pub union D3D12_VIDEO_ENCODER_LEVEL_SETTING_0 {
     pub pH264LevelSetting: *mut D3D12_VIDEO_ENCODER_LEVELS_H264,
     pub pHEVCLevelSetting: *mut D3D12_VIDEO_ENCODER_LEVEL_TIER_CONSTRAINTS_HEVC,
+    pub pAV1LevelSetting: *mut D3D12_VIDEO_ENCODER_AV1_LEVEL_TIER_CONSTRAINTS,
 }
 impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_LEVEL_SETTING_0 {}
 impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_LEVEL_SETTING_0 {
@@ -42007,6 +43954,7 @@ impl ::core::default::Default for D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA
 pub union D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_0 {
     pub pH264PicData: *mut D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264,
     pub pHEVCPicData: *mut D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_HEVC,
+    pub pAV1PicData: *mut D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_CODEC_DATA,
 }
 #[cfg(feature = "Win32_Foundation")]
 impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_0 {}
@@ -42331,6 +44279,7 @@ impl ::core::default::Default for D3D12_VIDEO_ENCODER_PICTURE_CONTROL_SUBREGIONS
 pub union D3D12_VIDEO_ENCODER_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_0 {
     pub pSlicesPartition_H264: *const D3D12_VIDEO_ENCODER_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_SLICES,
     pub pSlicesPartition_HEVC: *const D3D12_VIDEO_ENCODER_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_SLICES,
+    pub pTilesPartition_AV1: *const D3D12_VIDEO_ENCODER_AV1_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_TILES,
 }
 impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_0 {}
 impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_0 {
@@ -42468,6 +44417,7 @@ impl ::core::default::Default for D3D12_VIDEO_ENCODER_PROFILE_DESC {
 pub union D3D12_VIDEO_ENCODER_PROFILE_DESC_0 {
     pub pH264Profile: *mut D3D12_VIDEO_ENCODER_PROFILE_H264,
     pub pHEVCProfile: *mut D3D12_VIDEO_ENCODER_PROFILE_HEVC,
+    pub pAV1Profile: *mut D3D12_VIDEO_ENCODER_AV1_PROFILE,
 }
 impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_PROFILE_DESC_0 {}
 impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_PROFILE_DESC_0 {
@@ -42511,6 +44461,35 @@ impl ::core::default::Default for D3D12_VIDEO_ENCODER_RATE_CONTROL {
     }
 }
 #[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_RATE_CONTROL_ABSOLUTE_QP_MAP {
+    pub QualityVsSpeed: u32,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_RATE_CONTROL_ABSOLUTE_QP_MAP {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_RATE_CONTROL_ABSOLUTE_QP_MAP {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_RATE_CONTROL_ABSOLUTE_QP_MAP {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_RATE_CONTROL_ABSOLUTE_QP_MAP").field("QualityVsSpeed", &self.QualityVsSpeed).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_RATE_CONTROL_ABSOLUTE_QP_MAP {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_RATE_CONTROL_ABSOLUTE_QP_MAP {
+    fn eq(&self, other: &Self) -> bool {
+        self.QualityVsSpeed == other.QualityVsSpeed
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_RATE_CONTROL_ABSOLUTE_QP_MAP {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_RATE_CONTROL_ABSOLUTE_QP_MAP {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
 pub struct D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR {
     pub InitialQP: u32,
     pub MinQP: u32,
@@ -42546,6 +44525,42 @@ impl ::core::default::Default for D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR {
     }
 }
 #[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR1 {
+    pub InitialQP: u32,
+    pub MinQP: u32,
+    pub MaxQP: u32,
+    pub MaxFrameBitSize: u64,
+    pub TargetBitRate: u64,
+    pub VBVCapacity: u64,
+    pub InitialVBVFullness: u64,
+    pub QualityVsSpeed: u32,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR1 {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR1 {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR1 {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR1").field("InitialQP", &self.InitialQP).field("MinQP", &self.MinQP).field("MaxQP", &self.MaxQP).field("MaxFrameBitSize", &self.MaxFrameBitSize).field("TargetBitRate", &self.TargetBitRate).field("VBVCapacity", &self.VBVCapacity).field("InitialVBVFullness", &self.InitialVBVFullness).field("QualityVsSpeed", &self.QualityVsSpeed).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR1 {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR1 {
+    fn eq(&self, other: &Self) -> bool {
+        self.InitialQP == other.InitialQP && self.MinQP == other.MinQP && self.MaxQP == other.MaxQP && self.MaxFrameBitSize == other.MaxFrameBitSize && self.TargetBitRate == other.TargetBitRate && self.VBVCapacity == other.VBVCapacity && self.InitialVBVFullness == other.InitialVBVFullness && self.QualityVsSpeed == other.QualityVsSpeed
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR1 {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR1 {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
 pub struct D3D12_VIDEO_ENCODER_RATE_CONTROL_CONFIGURATION_PARAMS {
     pub DataSize: u32,
     pub Anonymous: D3D12_VIDEO_ENCODER_RATE_CONTROL_CONFIGURATION_PARAMS_0,
@@ -42570,6 +44585,11 @@ pub union D3D12_VIDEO_ENCODER_RATE_CONTROL_CONFIGURATION_PARAMS_0 {
     pub pConfiguration_CBR: *const D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR,
     pub pConfiguration_VBR: *const D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR,
     pub pConfiguration_QVBR: *const D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR,
+    pub pConfiguration_CQP1: *const D3D12_VIDEO_ENCODER_RATE_CONTROL_CQP1,
+    pub pConfiguration_CBR1: *const D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR1,
+    pub pConfiguration_VBR1: *const D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR1,
+    pub pConfiguration_QVBR1: *const D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR1,
+    pub pConfiguration_AbsoluteQPMap: *const D3D12_VIDEO_ENCODER_RATE_CONTROL_ABSOLUTE_QP_MAP,
 }
 impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_RATE_CONTROL_CONFIGURATION_PARAMS_0 {}
 impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_RATE_CONTROL_CONFIGURATION_PARAMS_0 {
@@ -42617,6 +44637,38 @@ impl ::core::default::Default for D3D12_VIDEO_ENCODER_RATE_CONTROL_CQP {
     }
 }
 #[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_RATE_CONTROL_CQP1 {
+    pub ConstantQP_FullIntracodedFrame: u32,
+    pub ConstantQP_InterPredictedFrame_PrevRefOnly: u32,
+    pub ConstantQP_InterPredictedFrame_BiDirectionalRef: u32,
+    pub QualityVsSpeed: u32,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_RATE_CONTROL_CQP1 {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_RATE_CONTROL_CQP1 {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_RATE_CONTROL_CQP1 {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_RATE_CONTROL_CQP1").field("ConstantQP_FullIntracodedFrame", &self.ConstantQP_FullIntracodedFrame).field("ConstantQP_InterPredictedFrame_PrevRefOnly", &self.ConstantQP_InterPredictedFrame_PrevRefOnly).field("ConstantQP_InterPredictedFrame_BiDirectionalRef", &self.ConstantQP_InterPredictedFrame_BiDirectionalRef).field("QualityVsSpeed", &self.QualityVsSpeed).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_RATE_CONTROL_CQP1 {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_RATE_CONTROL_CQP1 {
+    fn eq(&self, other: &Self) -> bool {
+        self.ConstantQP_FullIntracodedFrame == other.ConstantQP_FullIntracodedFrame && self.ConstantQP_InterPredictedFrame_PrevRefOnly == other.ConstantQP_InterPredictedFrame_PrevRefOnly && self.ConstantQP_InterPredictedFrame_BiDirectionalRef == other.ConstantQP_InterPredictedFrame_BiDirectionalRef && self.QualityVsSpeed == other.QualityVsSpeed
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_RATE_CONTROL_CQP1 {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_RATE_CONTROL_CQP1 {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
 pub struct D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR {
     pub InitialQP: u32,
     pub MinQP: u32,
@@ -42647,6 +44699,55 @@ impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR {
 }
 impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR {}
 impl ::core::default::Default for D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR1 {
+    pub InitialQP: u32,
+    pub MinQP: u32,
+    pub MaxQP: u32,
+    pub MaxFrameBitSize: u64,
+    pub TargetAvgBitRate: u64,
+    pub PeakBitRate: u64,
+    pub ConstantQualityTarget: u32,
+    pub VBVCapacity: u64,
+    pub InitialVBVFullness: u64,
+    pub QualityVsSpeed: u32,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR1 {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR1 {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR1 {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR1")
+            .field("InitialQP", &self.InitialQP)
+            .field("MinQP", &self.MinQP)
+            .field("MaxQP", &self.MaxQP)
+            .field("MaxFrameBitSize", &self.MaxFrameBitSize)
+            .field("TargetAvgBitRate", &self.TargetAvgBitRate)
+            .field("PeakBitRate", &self.PeakBitRate)
+            .field("ConstantQualityTarget", &self.ConstantQualityTarget)
+            .field("VBVCapacity", &self.VBVCapacity)
+            .field("InitialVBVFullness", &self.InitialVBVFullness)
+            .field("QualityVsSpeed", &self.QualityVsSpeed)
+            .finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR1 {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR1 {
+    fn eq(&self, other: &Self) -> bool {
+        self.InitialQP == other.InitialQP && self.MinQP == other.MinQP && self.MaxQP == other.MaxQP && self.MaxFrameBitSize == other.MaxFrameBitSize && self.TargetAvgBitRate == other.TargetAvgBitRate && self.PeakBitRate == other.PeakBitRate && self.ConstantQualityTarget == other.ConstantQualityTarget && self.VBVCapacity == other.VBVCapacity && self.InitialVBVFullness == other.InitialVBVFullness && self.QualityVsSpeed == other.QualityVsSpeed
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR1 {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR1 {
     fn default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
@@ -42683,6 +44784,43 @@ impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR {
 }
 impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR {}
 impl ::core::default::Default for D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+pub struct D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR1 {
+    pub InitialQP: u32,
+    pub MinQP: u32,
+    pub MaxQP: u32,
+    pub MaxFrameBitSize: u64,
+    pub TargetAvgBitRate: u64,
+    pub PeakBitRate: u64,
+    pub VBVCapacity: u64,
+    pub InitialVBVFullness: u64,
+    pub QualityVsSpeed: u32,
+}
+impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR1 {}
+impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR1 {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl ::core::fmt::Debug for D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR1 {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        f.debug_struct("D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR1").field("InitialQP", &self.InitialQP).field("MinQP", &self.MinQP).field("MaxQP", &self.MaxQP).field("MaxFrameBitSize", &self.MaxFrameBitSize).field("TargetAvgBitRate", &self.TargetAvgBitRate).field("PeakBitRate", &self.PeakBitRate).field("VBVCapacity", &self.VBVCapacity).field("InitialVBVFullness", &self.InitialVBVFullness).field("QualityVsSpeed", &self.QualityVsSpeed).finish()
+    }
+}
+impl ::windows_core::TypeKind for D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR1 {
+    type TypeKind = ::windows_core::CopyType;
+}
+impl ::core::cmp::PartialEq for D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR1 {
+    fn eq(&self, other: &Self) -> bool {
+        self.InitialQP == other.InitialQP && self.MinQP == other.MinQP && self.MaxQP == other.MaxQP && self.MaxFrameBitSize == other.MaxFrameBitSize && self.TargetAvgBitRate == other.TargetAvgBitRate && self.PeakBitRate == other.PeakBitRate && self.VBVCapacity == other.VBVCapacity && self.InitialVBVFullness == other.InitialVBVFullness && self.QualityVsSpeed == other.QualityVsSpeed
+    }
+}
+impl ::core::cmp::Eq for D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR1 {}
+impl ::core::default::Default for D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR1 {
     fn default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
@@ -42924,6 +45062,7 @@ impl ::core::default::Default for D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE {
 pub union D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE_0 {
     pub pH264GroupOfPictures: *mut D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE_H264,
     pub pHEVCGroupOfPictures: *mut D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE_HEVC,
+    pub pAV1SequenceStructure: *mut D3D12_VIDEO_ENCODER_AV1_SEQUENCE_STRUCTURE,
 }
 impl ::core::marker::Copy for D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE_0 {}
 impl ::core::clone::Clone for D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE_0 {
@@ -50683,7 +52822,7 @@ impl ::core::default::Default for VIDEOINFOHEADER2_0 {
         unsafe { ::core::mem::zeroed() }
     }
 }
-pub type MFPERIODICCALLBACK = ::core::option::Option<unsafe extern "system" fn(pcontext: ::core::option::Option<::windows_core::IUnknown>) -> ()>;
+pub type MFPERIODICCALLBACK = ::core::option::Option<unsafe extern "system" fn(pcontext: ::core::option::Option<::windows_core::IUnknown>)>;
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Direct3D9\"`"]
 #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Direct3D9"))]
 pub type PDXVAHDSW_CreateDevice = ::core::option::Option<unsafe extern "system" fn(pd3ddevice: ::core::option::Option<super::super::Graphics::Direct3D9::IDirect3DDevice9Ex>, phdevice: *mut super::super::Foundation::HANDLE) -> ::windows_core::HRESULT>;

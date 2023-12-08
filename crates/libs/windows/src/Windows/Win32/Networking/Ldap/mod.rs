@@ -13,12 +13,12 @@ pub unsafe fn LdapMapErrorToWin32(ldaperror: LDAP_RETCODE) -> ::windows_core::Re
 #[inline]
 pub unsafe fn LdapUTF8ToUnicode(lpsrcstr: &[u8], lpdeststr: &mut [u16]) -> i32 {
     ::windows_targets::link!("wldap32.dll" "cdecl" fn LdapUTF8ToUnicode(lpsrcstr : ::windows_core::PCSTR, cchsrc : i32, lpdeststr : ::windows_core::PWSTR, cchdest : i32) -> i32);
-    LdapUTF8ToUnicode(::core::mem::transmute(lpsrcstr.as_ptr()), lpsrcstr.len() as _, ::core::mem::transmute(lpdeststr.as_ptr()), lpdeststr.len() as _)
+    LdapUTF8ToUnicode(::core::mem::transmute(lpsrcstr.as_ptr()), lpsrcstr.len().try_into().unwrap(), ::core::mem::transmute(lpdeststr.as_ptr()), lpdeststr.len().try_into().unwrap())
 }
 #[inline]
 pub unsafe fn LdapUnicodeToUTF8(lpsrcstr: &[u16], lpdeststr: &mut [u8]) -> i32 {
     ::windows_targets::link!("wldap32.dll" "cdecl" fn LdapUnicodeToUTF8(lpsrcstr : ::windows_core::PCWSTR, cchsrc : i32, lpdeststr : ::windows_core::PSTR, cchdest : i32) -> i32);
-    LdapUnicodeToUTF8(::core::mem::transmute(lpsrcstr.as_ptr()), lpsrcstr.len() as _, ::core::mem::transmute(lpdeststr.as_ptr()), lpdeststr.len() as _)
+    LdapUnicodeToUTF8(::core::mem::transmute(lpsrcstr.as_ptr()), lpsrcstr.len().try_into().unwrap(), ::core::mem::transmute(lpdeststr.as_ptr()), lpdeststr.len().try_into().unwrap())
 }
 #[inline]
 pub unsafe fn ber_alloc_t(options: i32) -> *mut BerElement {
@@ -32,12 +32,12 @@ pub unsafe fn ber_bvdup(pberval: *mut LDAP_BERVAL) -> *mut LDAP_BERVAL {
 }
 #[inline]
 pub unsafe fn ber_bvecfree(pberval: *mut *mut LDAP_BERVAL) {
-    ::windows_targets::link!("wldap32.dll" "cdecl" fn ber_bvecfree(pberval : *mut *mut LDAP_BERVAL) -> ());
+    ::windows_targets::link!("wldap32.dll" "cdecl" fn ber_bvecfree(pberval : *mut *mut LDAP_BERVAL));
     ber_bvecfree(pberval)
 }
 #[inline]
 pub unsafe fn ber_bvfree(bv: *mut LDAP_BERVAL) {
-    ::windows_targets::link!("wldap32.dll" "cdecl" fn ber_bvfree(bv : *mut LDAP_BERVAL) -> ());
+    ::windows_targets::link!("wldap32.dll" "cdecl" fn ber_bvfree(bv : *mut LDAP_BERVAL));
     ber_bvfree(bv)
 }
 #[inline]
@@ -52,7 +52,7 @@ pub unsafe fn ber_flatten(pberelement: *mut BerElement, pberval: *mut *mut LDAP_
 }
 #[inline]
 pub unsafe fn ber_free(pberelement: *mut BerElement, fbuf: i32) {
-    ::windows_targets::link!("wldap32.dll" "cdecl" fn ber_free(pberelement : *mut BerElement, fbuf : i32) -> ());
+    ::windows_targets::link!("wldap32.dll" "cdecl" fn ber_free(pberelement : *mut BerElement, fbuf : i32));
     ber_free(pberelement, fbuf)
 }
 #[inline]
@@ -762,17 +762,17 @@ pub unsafe fn ldap_err2stringW(err: u32) -> ::windows_core::PWSTR {
 #[inline]
 pub unsafe fn ldap_escape_filter_element(sourcefilterelement: &[u8], destfilterelement: ::core::option::Option<&mut [u8]>) -> u32 {
     ::windows_targets::link!("wldap32.dll" "cdecl" fn ldap_escape_filter_element(sourcefilterelement : ::windows_core::PCSTR, sourcelength : u32, destfilterelement : ::windows_core::PSTR, destlength : u32) -> u32);
-    ldap_escape_filter_element(::core::mem::transmute(sourcefilterelement.as_ptr()), sourcefilterelement.len() as _, ::core::mem::transmute(destfilterelement.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), destfilterelement.as_deref().map_or(0, |slice| slice.len() as _))
+    ldap_escape_filter_element(::core::mem::transmute(sourcefilterelement.as_ptr()), sourcefilterelement.len().try_into().unwrap(), ::core::mem::transmute(destfilterelement.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), destfilterelement.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn ldap_escape_filter_elementA(sourcefilterelement: &[u8], destfilterelement: ::core::option::Option<&mut [u8]>) -> u32 {
     ::windows_targets::link!("wldap32.dll" "cdecl" fn ldap_escape_filter_elementA(sourcefilterelement : ::windows_core::PCSTR, sourcelength : u32, destfilterelement : ::windows_core::PSTR, destlength : u32) -> u32);
-    ldap_escape_filter_elementA(::core::mem::transmute(sourcefilterelement.as_ptr()), sourcefilterelement.len() as _, ::core::mem::transmute(destfilterelement.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), destfilterelement.as_deref().map_or(0, |slice| slice.len() as _))
+    ldap_escape_filter_elementA(::core::mem::transmute(sourcefilterelement.as_ptr()), sourcefilterelement.len().try_into().unwrap(), ::core::mem::transmute(destfilterelement.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), destfilterelement.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()))
 }
 #[inline]
 pub unsafe fn ldap_escape_filter_elementW(sourcefilterelement: &[u8], destfilterelement: ::windows_core::PWSTR, destlength: u32) -> u32 {
     ::windows_targets::link!("wldap32.dll" "cdecl" fn ldap_escape_filter_elementW(sourcefilterelement : ::windows_core::PCSTR, sourcelength : u32, destfilterelement : ::windows_core::PWSTR, destlength : u32) -> u32);
-    ldap_escape_filter_elementW(::core::mem::transmute(sourcefilterelement.as_ptr()), sourcefilterelement.len() as _, ::core::mem::transmute(destfilterelement), destlength)
+    ldap_escape_filter_elementW(::core::mem::transmute(sourcefilterelement.as_ptr()), sourcefilterelement.len().try_into().unwrap(), ::core::mem::transmute(destfilterelement), destlength)
 }
 #[inline]
 pub unsafe fn ldap_explode_dn<P0>(dn: P0, notypes: u32) -> *mut ::windows_core::PSTR
@@ -1052,7 +1052,7 @@ pub unsafe fn ldap_memfree<P0>(block: P0)
 where
     P0: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
-    ::windows_targets::link!("wldap32.dll" "cdecl" fn ldap_memfree(block : ::windows_core::PCSTR) -> ());
+    ::windows_targets::link!("wldap32.dll" "cdecl" fn ldap_memfree(block : ::windows_core::PCSTR));
     ldap_memfree(block.into_param().abi())
 }
 #[inline]
@@ -1060,7 +1060,7 @@ pub unsafe fn ldap_memfreeA<P0>(block: P0)
 where
     P0: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
-    ::windows_targets::link!("wldap32.dll" "cdecl" fn ldap_memfreeA(block : ::windows_core::PCSTR) -> ());
+    ::windows_targets::link!("wldap32.dll" "cdecl" fn ldap_memfreeA(block : ::windows_core::PCSTR));
     ldap_memfreeA(block.into_param().abi())
 }
 #[inline]
@@ -1068,7 +1068,7 @@ pub unsafe fn ldap_memfreeW<P0>(block: P0)
 where
     P0: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
-    ::windows_targets::link!("wldap32.dll" "cdecl" fn ldap_memfreeW(block : ::windows_core::PCWSTR) -> ());
+    ::windows_targets::link!("wldap32.dll" "cdecl" fn ldap_memfreeW(block : ::windows_core::PCWSTR));
     ldap_memfreeW(block.into_param().abi())
 }
 #[inline]
@@ -1485,7 +1485,7 @@ pub unsafe fn ldap_perror<P0>(ld: *mut LDAP, msg: P0)
 where
     P0: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
-    ::windows_targets::link!("wldap32.dll" "cdecl" fn ldap_perror(ld : *mut LDAP, msg : ::windows_core::PCSTR) -> ());
+    ::windows_targets::link!("wldap32.dll" "cdecl" fn ldap_perror(ld : *mut LDAP, msg : ::windows_core::PCSTR));
     ldap_perror(ld, msg.into_param().abi())
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1825,7 +1825,7 @@ pub unsafe fn ldap_set_dbg_flags(newflags: u32) -> u32 {
 }
 #[inline]
 pub unsafe fn ldap_set_dbg_routine(debugprintroutine: DBGPRINT) {
-    ::windows_targets::link!("wldap32.dll" "cdecl" fn ldap_set_dbg_routine(debugprintroutine : DBGPRINT) -> ());
+    ::windows_targets::link!("wldap32.dll" "cdecl" fn ldap_set_dbg_routine(debugprintroutine : DBGPRINT));
     ldap_set_dbg_routine(debugprintroutine)
 }
 #[inline]

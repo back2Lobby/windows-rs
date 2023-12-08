@@ -639,42 +639,39 @@ impl Writer {
     pub fn interface_winrt_trait(&self, def: TypeDef, generics: &[Type], ident: &TokenStream, constraints: &TokenStream, _phantoms: &TokenStream, features: &TokenStream) -> TokenStream {
         if def.flags().contains(TypeAttributes::WindowsRuntime) {
             let type_signature = if def.kind() == TypeKind::Class {
-                let type_signature = Literal::byte_string(type_def_signature(def, generics).as_bytes());
-                quote! { ::windows_core::imp::ConstBuffer::from_slice(#type_signature) }
+                quote! { ::windows_core::imp::ConstBuffer::for_class::<Self>() }
+            } else if generics.is_empty() {
+                quote! { ::windows_core::imp::ConstBuffer::for_interface::<Self>() }
             } else {
                 let signature = Literal::byte_string(
                     // TODO: workaround for riddle winmd generation (no attribute support)
                     if let Some(guid) = type_def_guid(def) { format!("{{{:#?}}}", guid) } else { "TODO".to_string() }.as_bytes(),
                 );
 
-                if generics.is_empty() {
-                    quote! { ::windows_core::imp::ConstBuffer::from_slice(#signature) }
-                } else {
-                    let generics = generics.iter().enumerate().map(|(index, g)| {
-                        let g = self.type_name(g);
-                        let semi = if index != generics.len() - 1 {
-                            Some(quote! {
-                                .push_slice(b";")
-                            })
-                        } else {
-                            None
-                        };
-
-                        quote! {
-                            .push_other(<#g as ::windows_core::RuntimeType>::SIGNATURE)
-                            #semi
-                        }
-                    });
+                let generics = generics.iter().enumerate().map(|(index, g)| {
+                    let g = self.type_name(g);
+                    let semi = if index != generics.len() - 1 {
+                        Some(quote! {
+                            .push_slice(b";")
+                        })
+                    } else {
+                        None
+                    };
 
                     quote! {
-                        {
-                            ::windows_core::imp::ConstBuffer::new()
-                            .push_slice(b"pinterface(")
-                            .push_slice(#signature)
-                            .push_slice(b";")
-                            #(#generics)*
-                            .push_slice(b")")
-                        }
+                        .push_other(<#g as ::windows_core::RuntimeType>::SIGNATURE)
+                        #semi
+                    }
+                });
+
+                quote! {
+                    {
+                        ::windows_core::imp::ConstBuffer::new()
+                        .push_slice(b"pinterface(")
+                        .push_slice(#signature)
+                        .push_slice(b";")
+                        #(#generics)*
+                        .push_slice(b")")
                     }
                 }
             };
@@ -880,7 +877,7 @@ impl Writer {
     pub fn return_sig(&self, signature: &Signature) -> TokenStream {
         match &signature.return_type {
             Type::Void if signature.def.has_attribute("DoesNotReturnAttribute") => " -> !".into(),
-            Type::Void => " -> ()".into(),
+            Type::Void => TokenStream::new(),
             _ => {
                 let tokens = self.type_default_name(&signature.return_type);
                 format!(" -> {}", tokens.as_str()).into()
@@ -920,9 +917,9 @@ impl Writer {
                             let name = self.param_name(params[relative].def);
                             let flags = params[relative].def.flags();
                             if flags.contains(ParamAttributes::Optional) {
-                                quote! { #name.as_deref().map_or(0, |slice|slice.len() as _), }
+                                quote! { #name.as_deref().map_or(0, |slice|slice.len().try_into().unwrap()), }
                             } else {
-                                quote! { #name.len() as _, }
+                                quote! { #name.len().try_into().unwrap(), }
                             }
                         }
                         SignatureParamKind::TryInto => {

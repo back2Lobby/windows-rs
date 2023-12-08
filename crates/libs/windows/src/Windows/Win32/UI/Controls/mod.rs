@@ -243,7 +243,7 @@ pub unsafe fn DPA_DestroyCallback<P0>(hdpa: P0, pfncb: PFNDAENUMCALLBACK, pdata:
 where
     P0: ::windows_core::IntoParam<HDPA>,
 {
-    ::windows_targets::link!("comctl32.dll" "system" fn DPA_DestroyCallback(hdpa : HDPA, pfncb : PFNDAENUMCALLBACK, pdata : *const ::core::ffi::c_void) -> ());
+    ::windows_targets::link!("comctl32.dll" "system" fn DPA_DestroyCallback(hdpa : HDPA, pfncb : PFNDAENUMCALLBACK, pdata : *const ::core::ffi::c_void));
     DPA_DestroyCallback(hdpa.into_param().abi(), pfncb, ::core::mem::transmute(pdata.unwrap_or(::std::ptr::null())))
 }
 #[inline]
@@ -251,7 +251,7 @@ pub unsafe fn DPA_EnumCallback<P0>(hdpa: P0, pfncb: PFNDAENUMCALLBACK, pdata: ::
 where
     P0: ::windows_core::IntoParam<HDPA>,
 {
-    ::windows_targets::link!("comctl32.dll" "system" fn DPA_EnumCallback(hdpa : HDPA, pfncb : PFNDAENUMCALLBACK, pdata : *const ::core::ffi::c_void) -> ());
+    ::windows_targets::link!("comctl32.dll" "system" fn DPA_EnumCallback(hdpa : HDPA, pfncb : PFNDAENUMCALLBACK, pdata : *const ::core::ffi::c_void));
     DPA_EnumCallback(hdpa.into_param().abi(), pfncb, ::core::mem::transmute(pdata.unwrap_or(::std::ptr::null())))
 }
 #[inline]
@@ -409,7 +409,7 @@ pub unsafe fn DSA_DestroyCallback<P0>(hdsa: P0, pfncb: PFNDAENUMCALLBACK, pdata:
 where
     P0: ::windows_core::IntoParam<HDSA>,
 {
-    ::windows_targets::link!("comctl32.dll" "system" fn DSA_DestroyCallback(hdsa : HDSA, pfncb : PFNDAENUMCALLBACK, pdata : *const ::core::ffi::c_void) -> ());
+    ::windows_targets::link!("comctl32.dll" "system" fn DSA_DestroyCallback(hdsa : HDSA, pfncb : PFNDAENUMCALLBACK, pdata : *const ::core::ffi::c_void));
     DSA_DestroyCallback(hdsa.into_param().abi(), pfncb, ::core::mem::transmute(pdata.unwrap_or(::std::ptr::null())))
 }
 #[inline]
@@ -417,7 +417,7 @@ pub unsafe fn DSA_EnumCallback<P0>(hdsa: P0, pfncb: PFNDAENUMCALLBACK, pdata: ::
 where
     P0: ::windows_core::IntoParam<HDSA>,
 {
-    ::windows_targets::link!("comctl32.dll" "system" fn DSA_EnumCallback(hdsa : HDSA, pfncb : PFNDAENUMCALLBACK, pdata : *const ::core::ffi::c_void) -> ());
+    ::windows_targets::link!("comctl32.dll" "system" fn DSA_EnumCallback(hdsa : HDSA, pfncb : PFNDAENUMCALLBACK, pdata : *const ::core::ffi::c_void));
     DSA_EnumCallback(hdsa.into_param().abi(), pfncb, ::core::mem::transmute(pdata.unwrap_or(::std::ptr::null())))
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -490,7 +490,7 @@ pub unsafe fn DestroySyntheticPointerDevice<P0>(device: P0)
 where
     P0: ::windows_core::IntoParam<HSYNTHETICPOINTERDEVICE>,
 {
-    ::windows_targets::link!("user32.dll" "system" fn DestroySyntheticPointerDevice(device : HSYNTHETICPOINTERDEVICE) -> ());
+    ::windows_targets::link!("user32.dll" "system" fn DestroySyntheticPointerDevice(device : HSYNTHETICPOINTERDEVICE));
     DestroySyntheticPointerDevice(device.into_param().abi())
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -541,7 +541,7 @@ where
     P0: ::windows_core::IntoParam<super::super::Foundation::HWND>,
 {
     ::windows_targets::link!("user32.dll" "system" fn DlgDirSelectComboBoxExA(hwnddlg : super::super::Foundation:: HWND, lpstring : ::windows_core::PSTR, cchout : i32, idcombobox : i32) -> super::super::Foundation:: BOOL);
-    DlgDirSelectComboBoxExA(hwnddlg.into_param().abi(), ::core::mem::transmute(lpstring.as_ptr()), lpstring.len() as _, idcombobox).ok()
+    DlgDirSelectComboBoxExA(hwnddlg.into_param().abi(), ::core::mem::transmute(lpstring.as_ptr()), lpstring.len().try_into().unwrap(), idcombobox).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -551,7 +551,7 @@ where
     P0: ::windows_core::IntoParam<super::super::Foundation::HWND>,
 {
     ::windows_targets::link!("user32.dll" "system" fn DlgDirSelectComboBoxExW(hwnddlg : super::super::Foundation:: HWND, lpstring : ::windows_core::PWSTR, cchout : i32, idcombobox : i32) -> super::super::Foundation:: BOOL);
-    DlgDirSelectComboBoxExW(hwnddlg.into_param().abi(), ::core::mem::transmute(lpstring.as_ptr()), lpstring.len() as _, idcombobox).ok()
+    DlgDirSelectComboBoxExW(hwnddlg.into_param().abi(), ::core::mem::transmute(lpstring.as_ptr()), lpstring.len().try_into().unwrap(), idcombobox).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -561,7 +561,7 @@ where
     P0: ::windows_core::IntoParam<super::super::Foundation::HWND>,
 {
     ::windows_targets::link!("user32.dll" "system" fn DlgDirSelectExA(hwnddlg : super::super::Foundation:: HWND, lpstring : ::windows_core::PSTR, chcount : i32, idlistbox : i32) -> super::super::Foundation:: BOOL);
-    DlgDirSelectExA(hwnddlg.into_param().abi(), ::core::mem::transmute(lpstring.as_ptr()), lpstring.len() as _, idlistbox).ok()
+    DlgDirSelectExA(hwnddlg.into_param().abi(), ::core::mem::transmute(lpstring.as_ptr()), lpstring.len().try_into().unwrap(), idlistbox).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -571,7 +571,7 @@ where
     P0: ::windows_core::IntoParam<super::super::Foundation::HWND>,
 {
     ::windows_targets::link!("user32.dll" "system" fn DlgDirSelectExW(hwnddlg : super::super::Foundation:: HWND, lpstring : ::windows_core::PWSTR, chcount : i32, idlistbox : i32) -> super::super::Foundation:: BOOL);
-    DlgDirSelectExW(hwnddlg.into_param().abi(), ::core::mem::transmute(lpstring.as_ptr()), lpstring.len() as _, idlistbox).ok()
+    DlgDirSelectExW(hwnddlg.into_param().abi(), ::core::mem::transmute(lpstring.as_ptr()), lpstring.len().try_into().unwrap(), idlistbox).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -581,7 +581,7 @@ where
     P0: ::windows_core::IntoParam<super::super::Foundation::HWND>,
     P1: ::windows_core::IntoParam<super::super::Foundation::HWND>,
 {
-    ::windows_targets::link!("comctl32.dll" "system" fn DrawInsert(handparent : super::super::Foundation:: HWND, hlb : super::super::Foundation:: HWND, nitem : i32) -> ());
+    ::windows_targets::link!("comctl32.dll" "system" fn DrawInsert(handparent : super::super::Foundation:: HWND, hlb : super::super::Foundation:: HWND, nitem : i32));
     DrawInsert(handparent.into_param().abi(), hlb.into_param().abi(), nitem)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Gdi\"`"]
@@ -594,7 +594,7 @@ where
     P2: ::windows_core::IntoParam<super::super::Foundation::COLORREF>,
 {
     ::windows_targets::link!("comctl32.dll" "system" fn DrawShadowText(hdc : super::super::Graphics::Gdi:: HDC, psztext : ::windows_core::PCWSTR, cch : u32, prc : *const super::super::Foundation:: RECT, dwflags : u32, crtext : super::super::Foundation:: COLORREF, crshadow : super::super::Foundation:: COLORREF, ixoffset : i32, iyoffset : i32) -> i32);
-    DrawShadowText(hdc.into_param().abi(), ::core::mem::transmute(psztext.as_ptr()), psztext.len() as _, prc, dwflags, crtext.into_param().abi(), crshadow.into_param().abi(), ixoffset, iyoffset)
+    DrawShadowText(hdc.into_param().abi(), ::core::mem::transmute(psztext.as_ptr()), psztext.len().try_into().unwrap(), prc, dwflags, crtext.into_param().abi(), crshadow.into_param().abi(), ixoffset, iyoffset)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Gdi\"`"]
 #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
@@ -604,7 +604,7 @@ where
     P0: ::windows_core::IntoParam<super::super::Graphics::Gdi::HDC>,
     P1: ::windows_core::IntoParam<::windows_core::PCSTR>,
 {
-    ::windows_targets::link!("comctl32.dll" "system" fn DrawStatusTextA(hdc : super::super::Graphics::Gdi:: HDC, lprc : *mut super::super::Foundation:: RECT, psztext : ::windows_core::PCSTR, uflags : u32) -> ());
+    ::windows_targets::link!("comctl32.dll" "system" fn DrawStatusTextA(hdc : super::super::Graphics::Gdi:: HDC, lprc : *mut super::super::Foundation:: RECT, psztext : ::windows_core::PCSTR, uflags : u32));
     DrawStatusTextA(hdc.into_param().abi(), lprc, psztext.into_param().abi(), uflags)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Gdi\"`"]
@@ -615,7 +615,7 @@ where
     P0: ::windows_core::IntoParam<super::super::Graphics::Gdi::HDC>,
     P1: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
-    ::windows_targets::link!("comctl32.dll" "system" fn DrawStatusTextW(hdc : super::super::Graphics::Gdi:: HDC, lprc : *mut super::super::Foundation:: RECT, psztext : ::windows_core::PCWSTR, uflags : u32) -> ());
+    ::windows_targets::link!("comctl32.dll" "system" fn DrawStatusTextW(hdc : super::super::Graphics::Gdi:: HDC, lprc : *mut super::super::Foundation:: RECT, psztext : ::windows_core::PCWSTR, uflags : u32));
     DrawStatusTextW(hdc.into_param().abi(), lprc, psztext.into_param().abi(), uflags)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Gdi\"`"]
@@ -694,7 +694,7 @@ where
     P1: ::windows_core::IntoParam<super::super::Graphics::Gdi::HDC>,
 {
     ::windows_targets::link!("uxtheme.dll" "system" fn DrawThemeText(htheme : HTHEME, hdc : super::super::Graphics::Gdi:: HDC, ipartid : i32, istateid : i32, psztext : ::windows_core::PCWSTR, cchtext : i32, dwtextflags : super::super::Graphics::Gdi:: DRAW_TEXT_FORMAT, dwtextflags2 : u32, prect : *const super::super::Foundation:: RECT) -> ::windows_core::HRESULT);
-    DrawThemeText(htheme.into_param().abi(), hdc.into_param().abi(), ipartid, istateid, ::core::mem::transmute(psztext.as_ptr()), psztext.len() as _, dwtextflags, dwtextflags2, prect).ok()
+    DrawThemeText(htheme.into_param().abi(), hdc.into_param().abi(), ipartid, istateid, ::core::mem::transmute(psztext.as_ptr()), psztext.len().try_into().unwrap(), dwtextflags, dwtextflags2, prect).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Gdi\"`"]
 #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
@@ -705,7 +705,7 @@ where
     P1: ::windows_core::IntoParam<super::super::Graphics::Gdi::HDC>,
 {
     ::windows_targets::link!("uxtheme.dll" "system" fn DrawThemeTextEx(htheme : HTHEME, hdc : super::super::Graphics::Gdi:: HDC, ipartid : i32, istateid : i32, psztext : ::windows_core::PCWSTR, cchtext : i32, dwtextflags : super::super::Graphics::Gdi:: DRAW_TEXT_FORMAT, prect : *mut super::super::Foundation:: RECT, poptions : *const DTTOPTS) -> ::windows_core::HRESULT);
-    DrawThemeTextEx(htheme.into_param().abi(), hdc.into_param().abi(), ipartid, istateid, ::core::mem::transmute(psztext.as_ptr()), psztext.len() as _, dwtextflags, prect, ::core::mem::transmute(poptions.unwrap_or(::std::ptr::null()))).ok()
+    DrawThemeTextEx(htheme.into_param().abi(), hdc.into_param().abi(), ipartid, istateid, ::core::mem::transmute(psztext.as_ptr()), psztext.len().try_into().unwrap(), dwtextflags, prect, ::core::mem::transmute(poptions.unwrap_or(::std::ptr::null()))).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -773,7 +773,7 @@ where
 #[inline]
 pub unsafe fn EvaluateProximityToPolygon(controlpolygon: &[super::super::Foundation::POINT], phittestinginput: *const TOUCH_HIT_TESTING_INPUT, pproximityeval: *mut TOUCH_HIT_TESTING_PROXIMITY_EVALUATION) -> ::windows_core::Result<()> {
     ::windows_targets::link!("user32.dll" "system" fn EvaluateProximityToPolygon(numvertices : u32, controlpolygon : *const super::super::Foundation:: POINT, phittestinginput : *const TOUCH_HIT_TESTING_INPUT, pproximityeval : *mut TOUCH_HIT_TESTING_PROXIMITY_EVALUATION) -> super::super::Foundation:: BOOL);
-    EvaluateProximityToPolygon(controlpolygon.len() as _, ::core::mem::transmute(controlpolygon.as_ptr()), phittestinginput, pproximityeval).ok()
+    EvaluateProximityToPolygon(controlpolygon.len().try_into().unwrap(), ::core::mem::transmute(controlpolygon.as_ptr()), phittestinginput, pproximityeval).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -929,7 +929,7 @@ where
 #[inline]
 pub unsafe fn GetCurrentThemeName(pszthemefilename: &mut [u16], pszcolorbuff: ::core::option::Option<&mut [u16]>, pszsizebuff: ::core::option::Option<&mut [u16]>) -> ::windows_core::Result<()> {
     ::windows_targets::link!("uxtheme.dll" "system" fn GetCurrentThemeName(pszthemefilename : ::windows_core::PWSTR, cchmaxnamechars : i32, pszcolorbuff : ::windows_core::PWSTR, cchmaxcolorchars : i32, pszsizebuff : ::windows_core::PWSTR, cchmaxsizechars : i32) -> ::windows_core::HRESULT);
-    GetCurrentThemeName(::core::mem::transmute(pszthemefilename.as_ptr()), pszthemefilename.len() as _, ::core::mem::transmute(pszcolorbuff.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pszcolorbuff.as_deref().map_or(0, |slice| slice.len() as _), ::core::mem::transmute(pszsizebuff.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pszsizebuff.as_deref().map_or(0, |slice| slice.len() as _)).ok()
+    GetCurrentThemeName(::core::mem::transmute(pszthemefilename.as_ptr()), pszthemefilename.len().try_into().unwrap(), ::core::mem::transmute(pszcolorbuff.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pszcolorbuff.as_deref().map_or(0, |slice| slice.len().try_into().unwrap()), ::core::mem::transmute(pszsizebuff.as_deref().map_or(::core::ptr::null(), |slice| slice.as_ptr())), pszsizebuff.as_deref().map_or(0, |slice| slice.len().try_into().unwrap())).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -938,7 +938,7 @@ pub unsafe fn GetEffectiveClientRect<P0>(hwnd: P0, lprc: *mut super::super::Foun
 where
     P0: ::windows_core::IntoParam<super::super::Foundation::HWND>,
 {
-    ::windows_targets::link!("comctl32.dll" "system" fn GetEffectiveClientRect(hwnd : super::super::Foundation:: HWND, lprc : *mut super::super::Foundation:: RECT, lpinfo : *const i32) -> ());
+    ::windows_targets::link!("comctl32.dll" "system" fn GetEffectiveClientRect(hwnd : super::super::Foundation:: HWND, lprc : *mut super::super::Foundation:: RECT, lpinfo : *const i32));
     GetEffectiveClientRect(hwnd.into_param().abi(), lprc, lpinfo)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1053,7 +1053,7 @@ where
     P1: ::windows_core::IntoParam<::windows_core::PCWSTR>,
 {
     ::windows_targets::link!("uxtheme.dll" "system" fn GetThemeDocumentationProperty(pszthemename : ::windows_core::PCWSTR, pszpropertyname : ::windows_core::PCWSTR, pszvaluebuff : ::windows_core::PWSTR, cchmaxvalchars : i32) -> ::windows_core::HRESULT);
-    GetThemeDocumentationProperty(pszthemename.into_param().abi(), pszpropertyname.into_param().abi(), ::core::mem::transmute(pszvaluebuff.as_ptr()), pszvaluebuff.len() as _).ok()
+    GetThemeDocumentationProperty(pszthemename.into_param().abi(), pszpropertyname.into_param().abi(), ::core::mem::transmute(pszvaluebuff.as_ptr()), pszvaluebuff.len().try_into().unwrap()).ok()
 }
 #[inline]
 pub unsafe fn GetThemeEnumValue<P0>(htheme: P0, ipartid: i32, istateid: i32, ipropid: THEME_PROPERTY_SYMBOL_ID) -> ::windows_core::Result<i32>
@@ -1070,7 +1070,7 @@ where
     P0: ::windows_core::IntoParam<HTHEME>,
 {
     ::windows_targets::link!("uxtheme.dll" "system" fn GetThemeFilename(htheme : HTHEME, ipartid : i32, istateid : i32, ipropid : i32, pszthemefilename : ::windows_core::PWSTR, cchmaxbuffchars : i32) -> ::windows_core::HRESULT);
-    GetThemeFilename(htheme.into_param().abi(), ipartid, istateid, ipropid.0 as _, ::core::mem::transmute(pszthemefilename.as_ptr()), pszthemefilename.len() as _).ok()
+    GetThemeFilename(htheme.into_param().abi(), ipartid, istateid, ipropid.0 as _, ::core::mem::transmute(pszthemefilename.as_ptr()), pszthemefilename.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Graphics_Gdi\"`"]
 #[cfg(feature = "Win32_Graphics_Gdi")]
@@ -1184,7 +1184,7 @@ where
     P0: ::windows_core::IntoParam<HTHEME>,
 {
     ::windows_targets::link!("uxtheme.dll" "system" fn GetThemeString(htheme : HTHEME, ipartid : i32, istateid : i32, ipropid : i32, pszbuff : ::windows_core::PWSTR, cchmaxbuffchars : i32) -> ::windows_core::HRESULT);
-    GetThemeString(htheme.into_param().abi(), ipartid, istateid, ipropid, ::core::mem::transmute(pszbuff.as_ptr()), pszbuff.len() as _).ok()
+    GetThemeString(htheme.into_param().abi(), ipartid, istateid, ipropid, ::core::mem::transmute(pszbuff.as_ptr()), pszbuff.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
 #[cfg(feature = "Win32_Foundation")]
@@ -1249,7 +1249,7 @@ where
     P0: ::windows_core::IntoParam<HTHEME>,
 {
     ::windows_targets::link!("uxtheme.dll" "system" fn GetThemeSysString(htheme : HTHEME, istringid : i32, pszstringbuff : ::windows_core::PWSTR, cchmaxstringchars : i32) -> ::windows_core::HRESULT);
-    GetThemeSysString(htheme.into_param().abi(), istringid.0 as _, ::core::mem::transmute(pszstringbuff.as_ptr()), pszstringbuff.len() as _).ok()
+    GetThemeSysString(htheme.into_param().abi(), istringid.0 as _, ::core::mem::transmute(pszstringbuff.as_ptr()), pszstringbuff.len().try_into().unwrap()).ok()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`, `\"Win32_Graphics_Gdi\"`"]
 #[cfg(all(feature = "Win32_Foundation", feature = "Win32_Graphics_Gdi"))]
@@ -1261,7 +1261,7 @@ where
 {
     ::windows_targets::link!("uxtheme.dll" "system" fn GetThemeTextExtent(htheme : HTHEME, hdc : super::super::Graphics::Gdi:: HDC, ipartid : i32, istateid : i32, psztext : ::windows_core::PCWSTR, cchcharcount : i32, dwtextflags : super::super::Graphics::Gdi:: DRAW_TEXT_FORMAT, pboundingrect : *const super::super::Foundation:: RECT, pextentrect : *mut super::super::Foundation:: RECT) -> ::windows_core::HRESULT);
     let mut result__ = ::std::mem::zeroed();
-    GetThemeTextExtent(htheme.into_param().abi(), hdc.into_param().abi(), ipartid, istateid, ::core::mem::transmute(psztext.as_ptr()), psztext.len() as _, dwtextflags, ::core::mem::transmute(pboundingrect.unwrap_or(::std::ptr::null())), &mut result__).from_abi(result__)
+    GetThemeTextExtent(htheme.into_param().abi(), hdc.into_param().abi(), ipartid, istateid, ::core::mem::transmute(psztext.as_ptr()), psztext.len().try_into().unwrap(), dwtextflags, ::core::mem::transmute(pboundingrect.unwrap_or(::std::ptr::null())), &mut result__).from_abi(result__)
 }
 #[doc = "Required features: `\"Win32_Graphics_Gdi\"`"]
 #[cfg(feature = "Win32_Graphics_Gdi")]
@@ -1480,7 +1480,7 @@ where
 }
 #[inline]
 pub unsafe fn ImageList_EndDrag() {
-    ::windows_targets::link!("comctl32.dll" "system" fn ImageList_EndDrag() -> ());
+    ::windows_targets::link!("comctl32.dll" "system" fn ImageList_EndDrag());
     ImageList_EndDrag()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1699,7 +1699,7 @@ where
 }
 #[inline]
 pub unsafe fn InitCommonControls() {
-    ::windows_targets::link!("comctl32.dll" "system" fn InitCommonControls() -> ());
+    ::windows_targets::link!("comctl32.dll" "system" fn InitCommonControls());
     InitCommonControls()
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1711,7 +1711,7 @@ pub unsafe fn InitCommonControlsEx(picce: *const INITCOMMONCONTROLSEX) -> super:
 }
 #[inline]
 pub unsafe fn InitMUILanguage(uilang: u16) {
-    ::windows_targets::link!("comctl32.dll" "system" fn InitMUILanguage(uilang : u16) -> ());
+    ::windows_targets::link!("comctl32.dll" "system" fn InitMUILanguage(uilang : u16));
     InitMUILanguage(uilang)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1848,7 +1848,7 @@ where
     P3: ::windows_core::IntoParam<super::super::Foundation::HINSTANCE>,
     P4: ::windows_core::IntoParam<super::super::Foundation::HWND>,
 {
-    ::windows_targets::link!("comctl32.dll" "system" fn MenuHelp(umsg : u32, wparam : super::super::Foundation:: WPARAM, lparam : super::super::Foundation:: LPARAM, hmainmenu : super::WindowsAndMessaging:: HMENU, hinst : super::super::Foundation:: HINSTANCE, hwndstatus : super::super::Foundation:: HWND, lpwids : *const u32) -> ());
+    ::windows_targets::link!("comctl32.dll" "system" fn MenuHelp(umsg : u32, wparam : super::super::Foundation:: WPARAM, lparam : super::super::Foundation:: LPARAM, hmainmenu : super::WindowsAndMessaging:: HMENU, hinst : super::super::Foundation:: HINSTANCE, hwndstatus : super::super::Foundation:: HWND, lpwids : *const u32));
     MenuHelp(umsg, wparam.into_param().abi(), lparam.into_param().abi(), hmainmenu.into_param().abi(), hinst.into_param().abi(), hwndstatus.into_param().abi(), lpwids)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]
@@ -1950,7 +1950,7 @@ where
 }
 #[inline]
 pub unsafe fn SetThemeAppProperties(dwflags: SET_THEME_APP_PROPERTIES_FLAGS) {
-    ::windows_targets::link!("uxtheme.dll" "system" fn SetThemeAppProperties(dwflags : SET_THEME_APP_PROPERTIES_FLAGS) -> ());
+    ::windows_targets::link!("uxtheme.dll" "system" fn SetThemeAppProperties(dwflags : SET_THEME_APP_PROPERTIES_FLAGS));
     SetThemeAppProperties(dwflags)
 }
 #[doc = "Required features: `\"Win32_Foundation\"`"]

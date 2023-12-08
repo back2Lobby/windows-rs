@@ -65,7 +65,7 @@ impl RemoteTextConnection {
     }
     pub fn ReportDataReceived(&self, pdudata: &[u8]) -> ::windows_core::Result<()> {
         let this = self;
-        unsafe { (::windows_core::Interface::vtable(this).ReportDataReceived)(::windows_core::Interface::as_raw(this), pdudata.len() as u32, pdudata.as_ptr()).ok() }
+        unsafe { (::windows_core::Interface::vtable(this).ReportDataReceived)(::windows_core::Interface::as_raw(this), pdudata.len().try_into().unwrap(), pdudata.as_ptr()).ok() }
     }
     pub fn CreateInstance<P0>(connectionid: ::windows_core::GUID, pduforwarder: P0) -> ::windows_core::Result<RemoteTextConnection>
     where
@@ -83,7 +83,7 @@ impl RemoteTextConnection {
     }
 }
 impl ::windows_core::RuntimeType for RemoteTextConnection {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"rc(Windows.System.RemoteDesktop.Input.RemoteTextConnection;{4e7bb02a-183e-5e66-b5e4-3e6e5c570cf1})");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_class::<Self>();
 }
 unsafe impl ::windows_core::Interface for RemoteTextConnection {
     type Vtable = IRemoteTextConnection_Vtbl;
@@ -111,7 +111,7 @@ impl RemoteTextConnectionDataHandler {
         let this = self;
         unsafe {
             let mut result__ = ::std::mem::zeroed();
-            (::windows_core::Interface::vtable(this).Invoke)(::windows_core::Interface::as_raw(this), pdudata.len() as u32, pdudata.as_ptr(), &mut result__).from_abi(result__)
+            (::windows_core::Interface::vtable(this).Invoke)(::windows_core::Interface::as_raw(this), pdudata.len().try_into().unwrap(), pdudata.as_ptr(), &mut result__).from_abi(result__)
         }
     }
 }
@@ -169,7 +169,7 @@ unsafe impl ::windows_core::ComInterface for RemoteTextConnectionDataHandler {
     const IID: ::windows_core::GUID = ::windows_core::GUID::from_u128(0x099ffbc8_8bcb_41b5_b056_57e77021bf1b);
 }
 impl ::windows_core::RuntimeType for RemoteTextConnectionDataHandler {
-    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::from_slice(b"{099ffbc8-8bcb-41b5-b056-57e77021bf1b}");
+    const SIGNATURE: ::windows_core::imp::ConstBuffer = ::windows_core::imp::ConstBuffer::for_interface::<Self>();
 }
 #[repr(C)]
 #[doc(hidden)]
