@@ -1,6 +1,8 @@
 #![allow(non_snake_case)]
 
 use windows::{core::*, Win32::Foundation::*, Win32::System::Com::*};
+use windows_core::*;
+use  windows_core::IUnknown_Vtbl;
 
 /// A custom declaration of implementation of `IUri`
 #[interface("a39ee748-6a27-4817-a6f2-13914bef5890")]

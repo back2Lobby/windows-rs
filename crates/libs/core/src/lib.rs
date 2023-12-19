@@ -57,3 +57,9 @@ pub type Result<T> = std::result::Result<T, Error>;
 pub fn factory<C: RuntimeName, I: ComInterface>() -> Result<I> {
     crate::imp::factory::<C, I>()
 }
+
+#[cfg(feature = "implement")]
+pub use windows_implement::implement;
+
+#[cfg(feature = "implement")]
+pub use windows_interface::interface;

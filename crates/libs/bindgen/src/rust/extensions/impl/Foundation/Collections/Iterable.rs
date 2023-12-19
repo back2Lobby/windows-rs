@@ -1,4 +1,4 @@
-#[::windows_implement::implement(IIterable<T>)]
+#[::windows::core::implement(IIterable<T>)]
 struct StockIterable<T>
 where
     T: ::windows_core::RuntimeType + 'static,
@@ -25,7 +25,7 @@ where
     }
 }
 
-#[::windows_implement::implement(IIterator<T>)]
+#[::windows::core::implement(IIterator<T>)]
 struct StockIterator<T>
 where
     T: ::windows_core::RuntimeType + 'static,

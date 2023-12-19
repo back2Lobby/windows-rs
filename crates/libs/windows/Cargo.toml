@@ -22,15 +22,14 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
 windows-core = { path = "../core", version = "0.52.0" }
+# remove all these and use through windows-core only
 windows-targets = { path = "../targets", version = "0.52.0" }
-windows-implement = { path = "../implement",  version = "0.52.0", optional = true }
-windows-interface = { path = "../interface",  version = "0.52.0", optional = true }
 
 [features]
 default = []
 docs = []
 deprecated = []
-implement = ["windows-implement", "windows-interface", "windows-core/implement"]
+implement = ["windows-core/implement"]
 # generated features
 AI = ["Foundation"]
 AI_MachineLearning = ["AI"]
